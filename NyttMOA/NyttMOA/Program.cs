@@ -10,7 +10,7 @@ namespace NyttMOA
     {
         static void Main(string[] args)
         {
-
+            
         }
     }
 }
