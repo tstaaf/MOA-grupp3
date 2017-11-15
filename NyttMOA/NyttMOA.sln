@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NyttMOA", "NyttMOA\NyttMOA.csproj", "{0029B9F1-642C-4BD9-B5F5-5A47CAEEF4EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NyttMOA.Tests", "NyttMOA.Tests\NyttMOA.Tests.csproj", "{0BD9D863-D890-4D79-A8E2-DFA4AF7EDEA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0029B9F1-642C-4BD9-B5F5-5A47CAEEF4EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0029B9F1-642C-4BD9-B5F5-5A47CAEEF4EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0029B9F1-642C-4BD9-B5F5-5A47CAEEF4EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BD9D863-D890-4D79-A8E2-DFA4AF7EDEA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BD9D863-D890-4D79-A8E2-DFA4AF7EDEA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BD9D863-D890-4D79-A8E2-DFA4AF7EDEA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BD9D863-D890-4D79-A8E2-DFA4AF7EDEA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

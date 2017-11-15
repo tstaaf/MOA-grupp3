@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NyttMOA
 {
-    class Classroom
+    public class Classroom
     {
         public string Name { get; set; }
         public int Seats { get; set; }
