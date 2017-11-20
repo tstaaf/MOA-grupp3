@@ -6,94 +6,146 @@ using System.Threading.Tasks;
 
 namespace NyttMOA
 {
-    public class Schedule
+    public class ScheduleManager
     {
-        List<Lesson> lessons = new List<Lesson>();
-        DateTime Date { get; set; }
+        Schedule mainSchedule = new Schedule();
 
-        List<Lesson> SortLessonsByTime(List<Lesson> lessons)
+        public Schedule GetSchedule(Student student)
         {
-            lessons.Sort((x, y) => DateTime.Compare(x.StartTime, y.StartTime));
-            return lessons;
-        }
-
-        public IEnumerable<Lesson> GetSchedule(Student student)
-        {
-            List<Lesson> schedule = new List<Lesson>();
-            foreach (Lesson i in this.lessons)
+            Schedule schedule = new Schedule();
+            foreach (Lesson i in schedule.Lessons)
             {
                 if (i.Course.Students.Contains(student))
                 {
-                    schedule.Add(i);
-                }
-            }
-            return SortLessonsByTime(schedule);
-        }
-
-        public IEnumerable<Lesson> GetSchedule(Teacher teacher)
-        {
-            List<Lesson> schedule = new List<Lesson>();
-            foreach (Lesson i in this.lessons)
-            {
-                if (i.Teacher == teacher)
-                {
-                    schedule.Add(i);
-                }
-            }
-            return SortLessonsByTime(schedule);
-        }
-
-        public IEnumerable<Lesson> GetSchedule(Classroom classroom)
-        {
-            List<Lesson> schedule = new List<Lesson>();
-            foreach (Lesson i in this.lessons)
-            {
-                if (i.Classroom == classroom)
-                {
-                    schedule.Add(i);
-                }
-            }
-            return SortLessonsByTime(schedule);
-        }
-
-        public IEnumerable<Lesson> GetSchedule(Course course)
-        {
-            List<Lesson> schedule = new List<Lesson>();
-            foreach (Lesson i in this.lessons)
-            {
-                if (i.Course == course)
-                {
-                    schedule.Add(i);
-                }
-            }
-            return SortLessonsByTime(schedule);
-        }
-
-        public IEnumerable<Lesson> GetSchedule(Student student, DateTime startDate, DateTime endDate)
-        {
-            IEnumerable<Lesson> completeSchedule = GetSchedule(student);
-            List<Lesson> schedule = new List<Lesson>();
-            foreach (Lesson i in completeSchedule)
-            {
-                if (i.StartTime > startDate && i.EndTime < endDate)
-                {
-                    schedule.Add(i);
+                    schedule.AddLesson(i);
                 }
             }
             return schedule;
         }
 
-        public bool AddLesson(Lesson lesson) //Här måste vi kolla om lektionen redan är inlagd o sånt...
+        public Schedule GetSchedule(Teacher teacher)
+        {
+            Schedule schedule = new Schedule();
+            foreach (Lesson i in schedule.Lessons)
+            {
+                if (i.Teacher == teacher)
+                {
+                    schedule.AddLesson(i);
+                }
+            }
+            return schedule;
+        }
+
+        public Schedule GetSchedule(Classroom classroom)
+        {
+            Schedule schedule = new Schedule();
+            foreach (Lesson i in schedule.Lessons)
+            {
+                if (i.Classroom == classroom)
+                {
+                    schedule.AddLesson(i);
+                }
+            }
+            return schedule;
+        }
+
+        public Schedule GetSchedule(Course course)
+        {
+            Schedule schedule = new Schedule();
+            foreach (Lesson i in schedule.Lessons)
+            {
+                if (i.Course == course)
+                {
+                    schedule.AddLesson(i);
+                }
+            }
+            return schedule;
+        }
+
+        public Schedule GetSchedule(Student student, DateTime startDate, DateTime endDate)
+        {
+            Schedule completeSchedule = GetSchedule(student);
+            Schedule schedule = new Schedule();
+            foreach (Lesson i in completeSchedule.Lessons)
+            {
+                if (i.StartTime > startDate && i.EndTime < endDate)
+                {
+                    schedule.AddLesson(i);
+                }
+            }
+            return schedule;
+        }
+
+        public Schedule GetSchedule(Teacher teacher, DateTime startDate, DateTime endDate)
+        {
+            Schedule completeSchedule = GetSchedule(teacher);
+            Schedule schedule = new Schedule();
+            foreach (Lesson i in completeSchedule.Lessons)
+            {
+                if (i.StartTime > startDate && i.EndTime < endDate)
+                {
+                    schedule.AddLesson(i);
+                }
+            }
+            return schedule;
+        }
+
+        public Schedule GetSchedule(Classroom classroom, DateTime startDate, DateTime endDate)
+        {
+            Schedule completeSchedule = GetSchedule(classroom);
+            Schedule schedule = new Schedule();
+            foreach (Lesson i in completeSchedule.Lessons)
+            {
+                if (i.StartTime > startDate && i.EndTime < endDate)
+                {
+                    schedule.AddLesson(i);
+                }
+            }
+            return schedule;
+        }
+
+        public Schedule GetSchedule(Course course, DateTime startDate, DateTime endDate)
+        {
+            Schedule completeSchedule = GetSchedule(course);
+            Schedule schedule = new Schedule();
+            foreach (Lesson i in completeSchedule.Lessons)
+            {
+                if (i.StartTime > startDate && i.EndTime < endDate)
+                {
+                    schedule.AddLesson(i);
+                }
+            }
+            return schedule;
+        }
+
+
+        public bool AddLesson(Lesson lesson)
         {
             if (LessonResourcesAreAvailiable(lesson))
             {
-                lessons.Add(lesson);
+                mainSchedule.AddLesson(lesson);
                 return true;
             }
             else
             {
                 return false;
             }
+        }
+
+        public bool AddLesson(IEnumerable<Lesson> lessons)
+        {
+            foreach (Lesson i in lessons)
+            {
+                if (!LessonResourcesAreAvailiable(i))
+                {
+                    return false;
+                }
+            }
+            foreach (Lesson i in lessons)
+            {
+                AddLesson(i);
+            }
+            return true;
         }
 
         bool LessonResourcesAreAvailiable(Lesson lesson)
@@ -103,13 +155,30 @@ namespace NyttMOA
                 if ((lesson.Classroom == i.Classroom ||
                     lesson.Teacher == i.Teacher ||
                     lesson.Course == i.Course) &&
-                    (lesson.EndTime < i.StartTime ||
-                    lesson.StartTime > i.EndTime))
+                    !((lesson.EndTime <= i.StartTime ||
+                    lesson.StartTime >= i.EndTime)))
                 {
                     return false;
                 }
             }
             return true;
+        }
+    }
+
+    public class Schedule
+    {
+        List<Lesson> lessons = new List<Lesson>();
+        public IEnumerable<Lesson> Lessons { get { return lessons; } }
+
+        void SortLessonsByStartTime()
+        {
+            lessons.OrderBy(x => x.StartTime);
+        }
+
+        public void AddLesson(Lesson lesson)
+        {
+            lessons.Add(lesson);
+            SortLessonsByStartTime();
         }
     }
 
