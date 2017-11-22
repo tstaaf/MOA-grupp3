@@ -8,7 +8,8 @@ namespace NyttMOA
 {
     public class ScheduleManager
     {
-        Schedule mainSchedule = new Schedule();
+        public Schedule mainSchedule = new Schedule();
+        public IEnumerable<Lesson> Lessons { get { return mainSchedule.Lessons; } }
 
         public Schedule GetSchedule(Student student)
         {
@@ -150,7 +151,7 @@ namespace NyttMOA
 
         bool LessonResourcesAreAvailiable(Lesson lesson)
         {
-            foreach (Lesson i in lessons)
+            foreach (Lesson i in mainSchedule.Lessons)
             {
                 if ((lesson.Classroom == i.Classroom ||
                     lesson.Teacher == i.Teacher ||
@@ -163,12 +164,27 @@ namespace NyttMOA
             }
             return true;
         }
+
+        public override string ToString()
+        {
+            return mainSchedule.ToString();
+        }
     }
 
     public class Schedule
     {
-        List<Lesson> lessons = new List<Lesson>();
+        List<Lesson> lessons;
         public IEnumerable<Lesson> Lessons { get { return lessons; } }
+
+        public Schedule()
+        {
+            lessons = new List<Lesson>();
+        }
+
+        public Schedule(IEnumerable<Lesson> _lessons)
+        {
+            lessons = new List<Lesson>(_lessons);
+        }
 
         void SortLessonsByStartTime()
         {
@@ -179,6 +195,17 @@ namespace NyttMOA
         {
             lessons.Add(lesson);
             SortLessonsByStartTime();
+        }
+
+        public override string ToString()
+        {
+            string output = "";
+            foreach (Lesson i in lessons)
+            {
+                output += i.ToString() + Environment.NewLine;
+            }
+            output += "----------";
+            return output;
         }
     }
 
@@ -197,6 +224,17 @@ namespace NyttMOA
             Course = course;
             StartTime = startTime;
             EndTime = endTime;
+        }
+
+        public override string ToString()
+        {
+            return
+                "----------" + Environment.NewLine +
+                StartTime.ToString() + Environment.NewLine +
+                EndTime.ToString() + Environment.NewLine +
+                Course.Name + Environment.NewLine +
+                Classroom.Name + Environment.NewLine +
+                Teacher.Name;
         }
     }
 }
