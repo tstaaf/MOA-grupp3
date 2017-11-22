@@ -111,9 +111,11 @@ namespace NyttMOA
 
     public class Student : User
     {
-        public Student(string name, string username, string password) : base(name, username, password)
-        {
+        public string Grade { get; set; }
 
+        public Student(string name, string username, string password, string grade) : base(name, username, password)
+        {
+            Grade = grade;
         }
 
         public override void showMenu()
