@@ -12,7 +12,7 @@ namespace NyttMOA.Tests
     public class SceduleTests
     {
         [Test]
-        public void AddLessonReturnsTrueAndAddsLessonIfTeacherAndClassroomIsAvailable()
+        public void AddLessonReturnsTrueAndAddsLessonIfTeacherAndClassroomIsAvailableAtSpecifiedTime()
         {
             ScheduleManager sut = new ScheduleManager();
             Course testCourse = new Course(
@@ -34,8 +34,8 @@ namespace NyttMOA.Tests
                     "this should be a Course type"
                 ),
                 testCourse,
-                new DateTime(2017, 11, 30, 9, 30, 0),
-                new DateTime(2017, 11, 30, 15, 30, 0)
+                DateTime.Now.AddHours(1),
+                DateTime.Now.AddHours(3)
             );
 
             Assert.True(sut.AddLesson(lesson));
@@ -43,7 +43,7 @@ namespace NyttMOA.Tests
         }
 
         [Test]
-        public void AddLessonReturnsFalseAndDoesNotAddLessonIfClassroomIsUnavailable()
+        public void AddLessonReturnsFalseAndDoesNotAddLessonIfClassroomIsUnavailableAtSpecifiedTime()
         {
             ScheduleManager sut = new ScheduleManager();
             Teacher teacher1 = new Teacher(
@@ -99,7 +99,7 @@ namespace NyttMOA.Tests
         }
 
         [Test]
-        public void AddLessonReturnsFalseAndDoesNotAddLessonIfTeacherIsUnavailable()
+        public void AddLessonReturnsFalseAndDoesNotAddLessonIfTeacherIsUnavailableAtSpecifiedTime()
         {
             ScheduleManager sut = new ScheduleManager();
             Teacher teacher = new Teacher(
@@ -158,6 +158,7 @@ namespace NyttMOA.Tests
         public void GetScheduleStudentReturnsCorrectSchedule()
         {
             ScheduleManager sut = new ScheduleManager();
+            Student student = new Student("Namn Namnsson", "user123", "passAwesome");
             Teacher teacher1 = new Teacher(
                 "Name",
                 "TestTeacher1",
@@ -171,14 +172,14 @@ namespace NyttMOA.Tests
             Course testCourse1 = new Course(
                 "TestCourse1",
                 DateTime.Now,
-                DateTime.Now.AddDays(3),
+                DateTime.Now.AddDays(10),
                 30,
                 "This should be a Teacher type"
             );
             Course testCourse2 = new Course(
                 "TestCourse2",
                 DateTime.Now,
-                DateTime.Now.AddDays(3),
+                DateTime.Now.AddDays(10),
                 30,
                 "This should be a Teacher type"
             );
@@ -198,24 +199,97 @@ namespace NyttMOA.Tests
             DateTime endTime2 = DateTime.Now.AddDays(4);
 
             Lesson lesson1 = new Lesson(
-                teacher1,    //Same teacher
+                teacher1,
                 classroom1,
                 testCourse1,
                 startTime1,
                 endTime1
             );
             Lesson lesson2 = new Lesson(
-                teacher1,    //Same teacher
+                teacher2,
                 classroom2,
                 testCourse2,
                 startTime2,
                 endTime2
             );
+
+            testCourse1.Students.Add(student);
+            testCourse2.Students.Add(student);
+
             sut.AddLesson(lesson1);
             sut.AddLesson(lesson2);
 
-            Assert.AreEqual(lesson1, sut.mainSchedule.Lessons.First());
-            Assert.AreEqual(lesson2, sut.mainSchedule.Lessons.Last());
+            Assert.AreEqual(lesson1, sut.GetSchedule(student).Lessons.First());
+            Assert.AreEqual(lesson2, sut.GetSchedule(student).Lessons.Last());
+        }
+
+        [Test]
+        public void GetScheduleStudentWithSpecifiedTimeReturnsCorrectSchedule()
+        {
+            ScheduleManager sut = new ScheduleManager();
+            Student student = new Student("Namn Namnsson", "user123", "passAwesome");
+            Teacher teacher1 = new Teacher(
+                "Name",
+                "TestTeacher1",
+                "bestPasswordEver"
+            );
+            Teacher teacher2 = new Teacher(
+                "Name",
+                "TestTeacher1",
+                "bestPasswordEver"
+            );
+            Course testCourse1 = new Course(
+                "TestCourse1",
+                DateTime.Now,
+                DateTime.Now.AddDays(10),
+                30,
+                "This should be a Teacher type"
+            );
+            Course testCourse2 = new Course(
+                "TestCourse2",
+                DateTime.Now,
+                DateTime.Now.AddDays(10),
+                30,
+                "This should be a Teacher type"
+            );
+            Classroom classroom1 = new Classroom(
+                "The only classroom",
+                37,
+                "this should be a Course type"
+            );
+            Classroom classroom2 = new Classroom(
+                "The only classroom",
+                37,
+                "this should be a Course type"
+            );
+            DateTime startTime1 = DateTime.Now.AddDays(1);
+            DateTime endTime1 = DateTime.Now.AddDays(2);
+            DateTime startTime2 = DateTime.Now.AddDays(3);
+            DateTime endTime2 = DateTime.Now.AddDays(4);
+
+            Lesson lesson1 = new Lesson(
+                teacher1,
+                classroom1,
+                testCourse1,
+                startTime1,
+                endTime1
+            );
+            Lesson lesson2 = new Lesson(
+                teacher2,
+                classroom2,
+                testCourse2,
+                startTime2,
+                endTime2
+            );
+
+            testCourse1.Students.Add(student);
+            testCourse2.Students.Add(student);
+
+            sut.AddLesson(lesson1);
+            sut.AddLesson(lesson2);
+
+            Assert.AreEqual(lesson1, sut.GetSchedule(student).Lessons.First());
+            Assert.AreEqual(lesson2, sut.GetSchedule(student).Lessons.Last());
         }
     }
 }
