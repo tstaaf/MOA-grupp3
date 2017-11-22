@@ -13,21 +13,23 @@ namespace NyttMOA
 
         public Schedule GetSchedule(Student student)
         {
-            Schedule schedule = new Schedule();
-            foreach (Lesson i in schedule.Lessons)
-            {
-                if (i.Course.Students.Contains(student))
-                {
-                    schedule.AddLesson(i);
-                }
-            }
-            return schedule;
+            return new Schedule(mainSchedule.Lessons.Where(a => a.Course.Students.Contains(student)));
+
+            //Schedule schedule = new Schedule();
+            //foreach (Lesson i in mainSchedule.Lessons)
+            //{
+            //    if (i.Course.Students.Contains(student))
+            //    {
+            //        schedule.AddLesson(i);
+            //    }
+            //}
+            //return schedule;
         }
 
         public Schedule GetSchedule(Teacher teacher)
         {
             Schedule schedule = new Schedule();
-            foreach (Lesson i in schedule.Lessons)
+            foreach (Lesson i in mainSchedule.Lessons)
             {
                 if (i.Teacher == teacher)
                 {
@@ -40,7 +42,7 @@ namespace NyttMOA
         public Schedule GetSchedule(Classroom classroom)
         {
             Schedule schedule = new Schedule();
-            foreach (Lesson i in schedule.Lessons)
+            foreach (Lesson i in mainSchedule.Lessons)
             {
                 if (i.Classroom == classroom)
                 {
@@ -53,7 +55,7 @@ namespace NyttMOA
         public Schedule GetSchedule(Course course)
         {
             Schedule schedule = new Schedule();
-            foreach (Lesson i in schedule.Lessons)
+            foreach (Lesson i in mainSchedule.Lessons)
             {
                 if (i.Course == course)
                 {
@@ -122,7 +124,7 @@ namespace NyttMOA
 
         public bool AddLesson(Lesson lesson)
         {
-            if (LessonResourcesAreAvailiable(lesson))
+            if (LessonCanBeScheduled(lesson))
             {
                 mainSchedule.AddLesson(lesson);
                 return true;
@@ -137,7 +139,7 @@ namespace NyttMOA
         {
             foreach (Lesson i in lessons)
             {
-                if (!LessonResourcesAreAvailiable(i))
+                if (!LessonCanBeScheduled(i))
                 {
                     return false;
                 }
@@ -149,7 +151,7 @@ namespace NyttMOA
             return true;
         }
 
-        bool LessonResourcesAreAvailiable(Lesson lesson)
+        bool LessonCanBeScheduled(Lesson lesson)
         {
             foreach (Lesson i in mainSchedule.Lessons)
             {
@@ -161,6 +163,10 @@ namespace NyttMOA
                 {
                     return false;
                 }
+            }
+            if (lesson.StartTime > lesson.Course.EndDate || lesson.EndTime < lesson.Course.StartDate)
+            {
+                return false;
             }
             return true;
         }
