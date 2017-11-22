@@ -62,7 +62,7 @@ namespace NyttMOA
                         break;
 
                     case "2":
-                        foreach (var student in Register.UserList)
+                        foreach (var student in Register.UserList.OfType<Student>())
                         {
                             Console.WriteLine("Name: {0} Username: {1} Password: {2}", student.Name, student.UserName, student.Password);
 
@@ -71,12 +71,12 @@ namespace NyttMOA
 
                     case "3":
                         Console.WriteLine(" Enter name:  ");
-                        var a = Console.ReadLine();
+                        var teacherName = Console.ReadLine();
                         Console.WriteLine("Enter Username:  ");
-                        var b = Console.ReadLine();
+                        var teacherUserName = Console.ReadLine();
                         Console.WriteLine("Enter Password:  ");
-                        var c = Console.ReadLine();
-                        Register.AddUser(new Student(a, b, c));
+                        var teacherPassword = Console.ReadLine();
+                        Register.AddUser(new Teacher(teacherName, teacherUserName, teacherPassword));
                         Console.WriteLine("Student added, press any key to go back.");
 
                         break;
