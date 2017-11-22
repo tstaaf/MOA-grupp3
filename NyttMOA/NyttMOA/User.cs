@@ -45,11 +45,11 @@ namespace NyttMOA
                 Console.WriteLine("[7] Schedule");
                 Console.WriteLine("[8] Exit");
 
-                var choice = Console.ReadLine();
+                var choice = Console.ReadKey();
 
-                switch (choice)
+                switch (choice.Key)
                 {
-                    case "1":
+                    case ConsoleKey.D1:
                         Console.WriteLine(" Enter name:  ");
                         var studentName = Console.ReadLine();
                         Console.WriteLine("Enter Username:  ");
@@ -61,7 +61,7 @@ namespace NyttMOA
 
                         break;
 
-                    case "2":
+                    case ConsoleKey.D2:
                         foreach (var student in Register.UserList.OfType<Student>())
                         {
                             Console.WriteLine("Name: {0} Username: {1} Password: {2}", student.Name, student.UserName, student.Password);
@@ -69,7 +69,7 @@ namespace NyttMOA
                         }
                         break;
 
-                    case "3":
+                    case ConsoleKey.D3:
                         Console.WriteLine(" Enter name:  ");
                         var teacherName = Console.ReadLine();
                         Console.WriteLine("Enter Username:  ");
@@ -81,23 +81,23 @@ namespace NyttMOA
 
                         break;
 
-                    case "4":
+                    case ConsoleKey.D4:
 
                         break;
 
-                    case "5":
+                    case ConsoleKey.D5:
 
                         break;
 
-                    case "6":
+                    case ConsoleKey.D6:
                         
                         break;
 
-                    case "7":
+                    case ConsoleKey.D7:
                         
                         break;
 
-                    case "8":
+                    case ConsoleKey.D8:
                         menuChoice = false;
                         break;
 
@@ -128,19 +128,19 @@ namespace NyttMOA
                 Console.WriteLine("[2] Grades");
                 Console.WriteLine("[3] Exit");
 
-                var choice = Console.ReadLine();
+                var choice = Console.ReadKey();
 
-                switch (choice)
+                switch (choice.Key)
                 {
-                    case "1":
+                    case ConsoleKey.D1:
 
                         break;
 
-                    case "2":
+                    case ConsoleKey.D2:
 
                         break;
 
-                    case "3":
+                    case ConsoleKey.D3:
                         menuChoice = false;
                         break;
 
@@ -170,23 +170,23 @@ namespace NyttMOA
                 Console.WriteLine("[3] Classrooms / Courses");
                 Console.WriteLine("[4] Exit");
 
-                var choice = Console.ReadLine();
+                var choice = Console.ReadKey();
 
-                switch (choice)
+                switch (choice.Key)
                 {
-                    case "1":
+                    case ConsoleKey.D1:
 
                         break;
 
-                    case "2":
+                    case ConsoleKey.D2:
 
                         break;
 
-                    case "3":
+                    case ConsoleKey.D3:
 
                         break;
 
-                    case "4":
+                    case ConsoleKey.D4:
                         menuChoice = false;
                         break;
 
