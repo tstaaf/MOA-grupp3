@@ -155,7 +155,7 @@ namespace NyttMOA.Tests
         }
 
         [Test]
-        public void GetScheduleStudentReturnsCorrectSchedule() //WIP
+        public void GetScheduleStudentReturnsCorrectSchedule()
         {
             ScheduleManager sut = new ScheduleManager();
             Teacher teacher1 = new Teacher(
@@ -213,6 +213,9 @@ namespace NyttMOA.Tests
             );
             sut.AddLesson(lesson1);
             sut.AddLesson(lesson2);
+
+            Assert.AreEqual(lesson1, sut.mainSchedule.Lessons.First());
+            Assert.AreEqual(lesson2, sut.mainSchedule.Lessons.Last());
         }
     }
 }

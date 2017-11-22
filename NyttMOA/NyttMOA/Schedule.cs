@@ -8,7 +8,7 @@ namespace NyttMOA
 {
     public class ScheduleManager
     {
-        Schedule mainSchedule = new Schedule();
+        public Schedule mainSchedule = new Schedule();
         public IEnumerable<Lesson> Lessons { get { return mainSchedule.Lessons; } }
 
         public Schedule GetSchedule(Student student)
@@ -164,6 +164,11 @@ namespace NyttMOA
             }
             return true;
         }
+
+        public override string ToString()
+        {
+            return mainSchedule.ToString();
+        }
     }
 
     public class Schedule
@@ -191,6 +196,17 @@ namespace NyttMOA
             lessons.Add(lesson);
             SortLessonsByStartTime();
         }
+
+        public override string ToString()
+        {
+            string output = "";
+            foreach (Lesson i in lessons)
+            {
+                output += i.ToString() + Environment.NewLine;
+            }
+            output += "----------";
+            return output;
+        }
     }
 
     public class Lesson
@@ -208,6 +224,17 @@ namespace NyttMOA
             Course = course;
             StartTime = startTime;
             EndTime = endTime;
+        }
+
+        public override string ToString()
+        {
+            return
+                "----------" + Environment.NewLine +
+                StartTime.ToString() + Environment.NewLine +
+                EndTime.ToString() + Environment.NewLine +
+                Course.Name + Environment.NewLine +
+                Classroom.Name + Environment.NewLine +
+                Teacher.Name;
         }
     }
 }
