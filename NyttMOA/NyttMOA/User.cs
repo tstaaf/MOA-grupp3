@@ -56,7 +56,9 @@ namespace NyttMOA
                         var studentUserName = Console.ReadLine();
                         Console.WriteLine("Enter Password:  ");
                         var studentPassword = Console.ReadLine();
-                        Register.AddUser(new Student(studentName, studentUserName, studentPassword));
+                        Console.WriteLine("Enter temporary grade:  ");
+                        var studentGrade = Console.ReadLine();
+                        Register.AddUser(new Student(studentName, studentUserName, studentPassword, studentGrade));
                         Console.WriteLine("Student added, press any key to go back.");
 
                         break;
@@ -77,7 +79,7 @@ namespace NyttMOA
                         Console.WriteLine("Enter Password:  ");
                         var teacherPassword = Console.ReadLine();
                         Register.AddUser(new Teacher(teacherName, teacherUserName, teacherPassword));
-                        Console.WriteLine("Student added, press any key to go back.");
+                        Console.WriteLine("Teacher added, press any key to go back.");
 
                         break;
 
