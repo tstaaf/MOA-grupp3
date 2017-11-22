@@ -62,7 +62,7 @@ namespace NyttMOA
                         break;
 
                     case "2":
-                        foreach (var student in Register.UserList)
+                        foreach (var student in Register.UserList.OfType<Student>())
                         {
                             Console.WriteLine("Name: {0} Username: {1} Password: {2}", student.Name, student.UserName, student.Password);
 
@@ -111,9 +111,11 @@ namespace NyttMOA
 
     public class Student : User
     {
-        public Student(string name, string username, string password) : base(name, username, password)
-        {
+        public string Grade { get; set; }
 
+        public Student(string name, string username, string password, string grade) : base(name, username, password)
+        {
+            Grade = grade;
         }
 
         public override void showMenu()
