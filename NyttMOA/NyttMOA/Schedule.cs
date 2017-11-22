@@ -14,111 +14,41 @@ namespace NyttMOA
         public Schedule GetSchedule(Student student)
         {
             return new Schedule(mainSchedule.Lessons.Where(a => a.Course.Students.Contains(student)));
-
-            //Schedule schedule = new Schedule();
-            //foreach (Lesson i in mainSchedule.Lessons)
-            //{
-            //    if (i.Course.Students.Contains(student))
-            //    {
-            //        schedule.AddLesson(i);
-            //    }
-            //}
-            //return schedule;
         }
 
         public Schedule GetSchedule(Teacher teacher)
         {
-            Schedule schedule = new Schedule();
-            foreach (Lesson i in mainSchedule.Lessons)
-            {
-                if (i.Teacher == teacher)
-                {
-                    schedule.AddLesson(i);
-                }
-            }
-            return schedule;
+            return new Schedule(mainSchedule.Lessons.Where(a => a.Teacher == teacher));
         }
 
         public Schedule GetSchedule(Classroom classroom)
         {
-            Schedule schedule = new Schedule();
-            foreach (Lesson i in mainSchedule.Lessons)
-            {
-                if (i.Classroom == classroom)
-                {
-                    schedule.AddLesson(i);
-                }
-            }
-            return schedule;
+            return new Schedule(mainSchedule.Lessons.Where(a => a.Classroom == classroom));
         }
 
         public Schedule GetSchedule(Course course)
         {
-            Schedule schedule = new Schedule();
-            foreach (Lesson i in mainSchedule.Lessons)
-            {
-                if (i.Course == course)
-                {
-                    schedule.AddLesson(i);
-                }
-            }
-            return schedule;
+            return new Schedule(mainSchedule.Lessons.Where(a => a.Course == course));
         }
 
         public Schedule GetSchedule(Student student, DateTime startDate, DateTime endDate)
         {
-            Schedule completeSchedule = GetSchedule(student);
-            Schedule schedule = new Schedule();
-            foreach (Lesson i in completeSchedule.Lessons)
-            {
-                if (i.StartTime > startDate && i.EndTime < endDate)
-                {
-                    schedule.AddLesson(i);
-                }
-            }
-            return schedule;
+            return new Schedule(GetSchedule(student).Lessons.Where(a => a.StartTime >= startDate && a.EndTime <= endDate));
         }
 
         public Schedule GetSchedule(Teacher teacher, DateTime startDate, DateTime endDate)
         {
-            Schedule completeSchedule = GetSchedule(teacher);
-            Schedule schedule = new Schedule();
-            foreach (Lesson i in completeSchedule.Lessons)
-            {
-                if (i.StartTime > startDate && i.EndTime < endDate)
-                {
-                    schedule.AddLesson(i);
-                }
-            }
-            return schedule;
+            return new Schedule(GetSchedule(teacher).Lessons.Where(a => a.StartTime >= startDate && a.EndTime <= endDate));
         }
 
         public Schedule GetSchedule(Classroom classroom, DateTime startDate, DateTime endDate)
         {
-            Schedule completeSchedule = GetSchedule(classroom);
-            Schedule schedule = new Schedule();
-            foreach (Lesson i in completeSchedule.Lessons)
-            {
-                if (i.StartTime > startDate && i.EndTime < endDate)
-                {
-                    schedule.AddLesson(i);
-                }
-            }
-            return schedule;
+            return new Schedule(GetSchedule(classroom).Lessons.Where(a => a.StartTime >= startDate && a.EndTime <= endDate));
         }
 
         public Schedule GetSchedule(Course course, DateTime startDate, DateTime endDate)
         {
-            Schedule completeSchedule = GetSchedule(course);
-            Schedule schedule = new Schedule();
-            foreach (Lesson i in completeSchedule.Lessons)
-            {
-                if (i.StartTime > startDate && i.EndTime < endDate)
-                {
-                    schedule.AddLesson(i);
-                }
-            }
-            return schedule;
+            return new Schedule(GetSchedule(course).Lessons.Where(a => a.StartTime >= startDate && a.EndTime <= endDate));
         }
 
 
