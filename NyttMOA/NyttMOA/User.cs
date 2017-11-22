@@ -41,7 +41,8 @@ namespace NyttMOA
                 Console.WriteLine("[3] Add Course");
                 Console.WriteLine("[4] Add classroom / View booked classrooms");
                 Console.WriteLine("[5] View Grades");
-                Console.WriteLine("[6] Exit");
+                Console.WriteLine("[6] Schedule");
+                Console.WriteLine("[7] Exit");
 
                 var choice = Console.ReadLine();
 
@@ -68,6 +69,10 @@ namespace NyttMOA
                         break;
 
                     case "6":
+                        
+                        break;
+
+                    case "7":
                         menuChoice = false;
                         break;
 
