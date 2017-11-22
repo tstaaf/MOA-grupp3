@@ -19,7 +19,7 @@ namespace NyttMOA
             UserName = username;
             Password = password;
         }
-        public User() { }
+
     }
 
     public class Admin : User
@@ -28,7 +28,7 @@ namespace NyttMOA
         {
             
         }
-        public Admin() { }
+
     }
 
     public class Student : User
