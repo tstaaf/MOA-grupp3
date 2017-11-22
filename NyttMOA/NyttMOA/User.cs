@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,21 +19,25 @@ namespace NyttMOA
             UserName = username;
             Password = password;
         }
+        public User() { }
     }
 
     public class Admin : User
     {
         public Admin(string name, string username, string password) : base(name, username, password)
         {
-
+            
         }
+        public Admin() { }
     }
 
     public class Student : User
     {
-        public Student(string name, string username, string password) : base(name, username, password)
-        {
+        public string Grade { get; set; }
 
+        public Student(string name, string username, string password, string grade) : base(name, username, password)
+        {
+            Grade = grade;
         }
     }
 
