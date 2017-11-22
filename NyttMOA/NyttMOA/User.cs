@@ -37,26 +37,47 @@ namespace NyttMOA
             while (menuChoice)
             {
                 Console.WriteLine("[1] Add Student");
-                Console.WriteLine("[2] Add Teacher");
-                Console.WriteLine("[3] Add Course");
-                Console.WriteLine("[4] Add classroom / View booked classrooms");
-                Console.WriteLine("[5] View Grades");
-                Console.WriteLine("[6] Schedule");
-                Console.WriteLine("[7] Exit");
+                Console.WriteLine("[2] Show Students");
+                Console.WriteLine("[3] Add Teacher");
+                Console.WriteLine("[4] Add Course");
+                Console.WriteLine("[5] Add classroom / View booked classrooms");
+                Console.WriteLine("[6] View Grades");
+                Console.WriteLine("[7] Schedule");
+                Console.WriteLine("[8] Exit");
 
                 var choice = Console.ReadLine();
 
                 switch (choice)
                 {
                     case "1":
+                        Console.WriteLine(" Enter name:  ");
+                        var studentName = Console.ReadLine();
+                        Console.WriteLine("Enter Username:  ");
+                        var studentUserName = Console.ReadLine();
+                        Console.WriteLine("Enter Password:  ");
+                        var studentPassword = Console.ReadLine();
+                        Register.AddUser(new Student(studentName, studentUserName, studentPassword));
+                        Console.WriteLine("Student added, press any key to go back.");
 
                         break;
 
                     case "2":
+                        foreach (var student in Register.UserList)
+                        {
+                            Console.WriteLine("Name: {0} Username: {1} Password: {2}", student.Name, student.UserName, student.Password);
 
+                        }
                         break;
 
                     case "3":
+                        Console.WriteLine(" Enter name:  ");
+                        var a = Console.ReadLine();
+                        Console.WriteLine("Enter Username:  ");
+                        var b = Console.ReadLine();
+                        Console.WriteLine("Enter Password:  ");
+                        var c = Console.ReadLine();
+                        Register.AddUser(new Student(a, b, c));
+                        Console.WriteLine("Student added, press any key to go back.");
 
                         break;
 
@@ -73,6 +94,10 @@ namespace NyttMOA
                         break;
 
                     case "7":
+                        
+                        break;
+
+                    case "8":
                         menuChoice = false;
                         break;
 
