@@ -8,6 +8,8 @@ namespace NyttMOA
 {
     public class ScheduleManager
     {
+
+
         public Schedule mainSchedule = new Schedule();
         public IEnumerable<Lesson> Lessons { get { return mainSchedule.Lessons; } }
 
@@ -81,6 +83,11 @@ namespace NyttMOA
             return true;
         }
 
+        public void RemoveLesson(Lesson lesson)
+        {
+            mainSchedule.RemoveLesson(lesson);
+        }
+
         bool LessonCanBeScheduled(Lesson lesson)
         {
             foreach (Lesson i in mainSchedule.Lessons)
@@ -131,6 +138,11 @@ namespace NyttMOA
         {
             lessons.Add(lesson);
             SortLessonsByStartTime();
+        }
+
+        public void RemoveLesson(Lesson lesson)
+        {
+            lessons.Remove(lesson);
         }
 
         public override string ToString()
