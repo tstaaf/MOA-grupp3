@@ -40,9 +40,10 @@ namespace NyttMOA
         }
         */
 
-        public void LoadFromXml()
+        /*public void LoadFromXml()
         {
 
         }
+        */
     }
 }

@@ -10,11 +10,12 @@ namespace NyttMOA
     {
         static void Main()
         {
+            Admin user = new Admin("Erik", "Erik14", "1234");
             inloggning();
             Console.ReadLine();
         }
 
-        public static void MainMenu()
+        public static void MainMenu(User user)
         {
             Console.WriteLine("Innloggad som ");
             Console.WriteLine(" 1) Administration");
@@ -27,8 +28,7 @@ namespace NyttMOA
                 case ConsoleKey.D1:
                     {
                         Console.Clear();
-                        Console.WriteLine("11111111111"); //Sida för administrering
-                        loggOutorgoBack();
+                        user.showMenu();
                         break;
                     }
 
@@ -50,15 +50,16 @@ namespace NyttMOA
                 default:
                     Console.WriteLine("Sorry didn't understand that...");
                     Console.Clear();
-                    MainMenu();
+                    MainMenu(user);
                     break;
             }
         }
 
         public static void inloggning()
         {
-            string username = "Ludde"; //Exempel
-            string password = "1234"; //Exempel
+            User user = new Admin("", "", "");
+            string username = ""; //Exempel
+            string password = ""; //Exempel
 
             Console.Write("Användarnamn: ");
             string användarNamnInput = Console.ReadLine();
@@ -69,7 +70,7 @@ namespace NyttMOA
             if (användarNamnInput == username && lösenOrdInput == password)
             {
                 Console.Clear();
-                MainMenu();
+                MainMenu(user);
 
             }
 
@@ -97,7 +98,7 @@ namespace NyttMOA
                 case ConsoleKey.K:
                     {
                         Console.Clear();
-                        MainMenu();
+                        
                         break;
                     }
                 default:
