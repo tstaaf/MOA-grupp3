@@ -10,14 +10,16 @@ namespace NyttMOA
     {
         public string Name { get; set; }
         public int Seats { get; set; }
-        public string Course { get; set; }
 
-        public Classroom(string name, int seats, string course)
+        public Classroom(string name, int seats)
         {
             Name = name;
             Seats = seats;
-            Course = course;
         }
-        
+
+        public Classroom()
+        {
+
+        }
     }
 }

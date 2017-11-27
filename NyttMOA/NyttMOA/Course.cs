@@ -12,20 +12,21 @@ namespace NyttMOA
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int MaxStudents { get; set; }
-        public string Teacher { get; set; }
-
+        public Teacher Teacher { get; set; }
         public List<Student> Students { get; set; } = new List<Student>();
-        //La till den för att få schemat o funka, vi får se om de ska va kvar här sen... :D /Anton
 
-        public Course(string name, DateTime startdate, DateTime enddate, int maxstudents, string teacher)
+        public Course(string name, DateTime startdate, DateTime enddate, int maxstudents, Teacher teacher)
         {
             Name = name;
             StartDate = startdate;
             EndDate = enddate;
             MaxStudents = maxstudents;
             Teacher = teacher;
-
         }
 
+        public Course()
+        {
+
+        }
     }
 }
