@@ -161,15 +161,13 @@ namespace NyttMOA
 
     public class Lesson
     {
-        public Teacher Teacher { get; set; }
         public Classroom Classroom { get; set; }
         public Course Course { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
-        public Lesson(Teacher teacher, Classroom classroom, Course course, DateTime startTime, DateTime endTime)
+        public Lesson(Classroom classroom, Course course, DateTime startTime, DateTime endTime)
         {
-            Teacher = teacher;
             Classroom = classroom;
             Course = course;
             StartTime = startTime;
@@ -184,7 +182,7 @@ namespace NyttMOA
                 EndTime.ToString() + Environment.NewLine +
                 Course.Name + Environment.NewLine +
                 Classroom.Name + Environment.NewLine +
-                Teacher.Name;
+                Course.Teacher.Name;
         }
     }
 }
