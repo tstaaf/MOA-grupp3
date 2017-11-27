@@ -50,6 +50,7 @@ namespace NyttMOA
                 switch (choice.Key)
                 {
                     case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
                         Console.WriteLine(" Enter name:  ");
                         var studentName = Console.ReadLine();
                         Console.WriteLine("Enter Username:  ");
@@ -62,6 +63,7 @@ namespace NyttMOA
                         break;
 
                     case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
                         foreach (var student in Register.UserList.OfType<Student>())
                         {
                             Console.WriteLine("Name: {0} Username: {1} Password: {2}", student.Name, student.UserName, student.Password);
@@ -70,6 +72,7 @@ namespace NyttMOA
                         break;
 
                     case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
                         Console.WriteLine(" Enter name:  ");
                         var teacherName = Console.ReadLine();
                         Console.WriteLine("Enter Username:  ");
@@ -82,22 +85,27 @@ namespace NyttMOA
                         break;
 
                     case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
 
                         break;
 
                     case ConsoleKey.D5:
+                    case ConsoleKey.NumPad5:
 
                         break;
 
                     case ConsoleKey.D6:
+                    case ConsoleKey.NumPad6:
                         
                         break;
 
                     case ConsoleKey.D7:
+                    case ConsoleKey.NumPad7:
                         
                         break;
 
                     case ConsoleKey.D8:
+                    case ConsoleKey.NumPad8:
                         menuChoice = false;
                         break;
 
@@ -133,14 +141,17 @@ namespace NyttMOA
                 switch (choice.Key)
                 {
                     case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
 
                         break;
 
                     case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
 
                         break;
 
                     case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
                         menuChoice = false;
                         break;
 
@@ -175,18 +186,22 @@ namespace NyttMOA
                 switch (choice.Key)
                 {
                     case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
 
                         break;
 
                     case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
 
                         break;
 
                     case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
 
                         break;
 
                     case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
                         menuChoice = false;
                         break;
 
