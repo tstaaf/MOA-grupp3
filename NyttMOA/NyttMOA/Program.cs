@@ -10,7 +10,7 @@ namespace NyttMOA
     {
         static void Main()
         {
-            Register.LoadFromXml();
+            Register.LoadUserListFromXml();
             inloggning();
 
         }
