@@ -15,23 +15,22 @@ namespace NyttMOA.Tests
         public void AddLessonReturnsTrueAndAddsLessonIfTeacherAndClassroomIsAvailableAtSpecifiedTime()
         {
             ScheduleManager sut = new ScheduleManager();
+            Teacher teacher = new Teacher(
+                    "Name",
+                    "TestTeacher1",
+                    "bestPasswordEver"
+                );
             Course testCourse = new Course(
                 "TestCourse1",
                 DateTime.Now,
                 DateTime.Now.AddDays(3),
-                30,
-                "This should be a Teacher type"
+                30
             );
             Lesson lesson = new Lesson(
-                new Teacher(
-                    "Name",
-                    "TestTeacher1",
-                    "bestPasswordEver"
-                ),
+                teacher,
                 new Classroom(
                     "Classroom1",
-                    37,
-                    "this should be a Course type"
+                    37
                 ),
                 testCourse,
                 DateTime.Now.AddHours(1),
@@ -60,20 +59,17 @@ namespace NyttMOA.Tests
                 "TestCourse1",
                 DateTime.Now,
                 DateTime.Now.AddDays(3),
-                30,
-                "This should be a Teacher type"
+                30
             );
             Course testCourse2 = new Course(
                 "TestCourse2",
                 DateTime.Now,
                 DateTime.Now.AddDays(3),
-                30,
-                "This should be a Teacher type"
+                30
             );
             Classroom classroom =  new Classroom(
                 "The only classroom",
-                37,
-                "this should be a Course type"
+                37
             );
             DateTime startTime = DateTime.Now.AddDays(1);
             DateTime endTime = DateTime.Now.AddDays(3);
@@ -111,25 +107,21 @@ namespace NyttMOA.Tests
                 "TestCourse1",
                 DateTime.Now,
                 DateTime.Now.AddDays(3),
-                30,
-                "This should be a Teacher type"
+                30
             );
             Course testCourse2 = new Course(
                 "TestCourse2",
                 DateTime.Now,
                 DateTime.Now.AddDays(3),
-                30,
-                "This should be a Teacher type"
+                30
             );
             Classroom classroom1 = new Classroom(
                 "The only classroom",
-                37,
-                "this should be a Course type"
+                37
             );
             Classroom classroom2 = new Classroom(
                 "The only classroom",
-                37,
-                "this should be a Course type"
+                37
             );
             DateTime startTime = DateTime.Now.AddDays(1);
             DateTime endTime = DateTime.Now.AddDays(3);
@@ -173,25 +165,21 @@ namespace NyttMOA.Tests
                 "TestCourse1",
                 DateTime.Now,
                 DateTime.Now.AddDays(10),
-                30,
-                "This should be a Teacher type"
+                30
             );
             Course testCourse2 = new Course(
                 "TestCourse2",
                 DateTime.Now,
                 DateTime.Now.AddDays(10),
-                30,
-                "This should be a Teacher type"
+                30
             );
             Classroom classroom1 = new Classroom(
                 "The only classroom",
-                37,
-                "this should be a Course type"
+                37
             );
             Classroom classroom2 = new Classroom(
                 "The only classroom",
-                37,
-                "this should be a Course type"
+                37
             );
             DateTime startTime1 = DateTime.Now.AddDays(1);
             DateTime endTime1 = DateTime.Now.AddDays(2);
@@ -242,25 +230,21 @@ namespace NyttMOA.Tests
                 "TestCourse1",
                 DateTime.Now,
                 DateTime.Now.AddDays(10),
-                30,
-                "This should be a Teacher type"
+                30
             );
             Course testCourse2 = new Course(
                 "TestCourse2",
                 DateTime.Now,
                 DateTime.Now.AddDays(10),
-                30,
-                "This should be a Teacher type"
+                30
             );
             Classroom classroom1 = new Classroom(
                 "The only classroom",
-                37,
-                "this should be a Course type"
+                37
             );
             Classroom classroom2 = new Classroom(
                 "The only classroom",
-                37,
-                "this should be a Course type"
+                37
             );
             DateTime startTime1 = DateTime.Now.AddHours(1);
             DateTime endTime1 = DateTime.Now.AddHours(2);
@@ -308,25 +292,21 @@ namespace NyttMOA.Tests
                 "TestCourse1",
                 DateTime.Now,
                 DateTime.Now.AddDays(10),
-                30,
-                "This should be a Teacher type"
+                30
             );
             Course testCourse2 = new Course(
                 "TestCourse2",
                 DateTime.Now,
                 DateTime.Now.AddDays(10),
-                30,
-                "This should be a Teacher type"
+                30
             );
             Classroom classroom1 = new Classroom(
                 "The only classroom",
-                37,
-                "this should be a Course type"
+                37
             );
             Classroom classroom2 = new Classroom(
                 "The only classroom",
-                37,
-                "this should be a Course type"
+                37
             );
             DateTime startTime1 = DateTime.Now.AddDays(1);
             DateTime endTime1 = DateTime.Now.AddDays(2);
@@ -368,25 +348,21 @@ namespace NyttMOA.Tests
                 "TestCourse1",
                 DateTime.Now,
                 DateTime.Now.AddDays(10),
-                30,
-                "This should be a Teacher type"
+                30
             );
             Course testCourse2 = new Course(
                 "TestCourse2",
                 DateTime.Now,
                 DateTime.Now.AddDays(10),
-                30,
-                "This should be a Teacher type"
+                30
             );
             Classroom classroom1 = new Classroom(
                 "The only classroom",
-                37,
-                "this should be a Course type"
+                37
             );
             Classroom classroom2 = new Classroom(
                 "The only classroom",
-                37,
-                "this should be a Course type"
+                37
             );
             DateTime startTime1 = DateTime.Now.AddHours(1);
             DateTime endTime1 = DateTime.Now.AddHours(2);

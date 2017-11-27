@@ -12,16 +12,14 @@ namespace NyttMOA
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int MaxStudents { get; set; }
-        public Teacher Teacher { get; set; }
         public List<Student> Students { get; set; } = new List<Student>();
 
-        public Course(string name, DateTime startdate, DateTime enddate, int maxstudents, Teacher teacher)
+        public Course(string name, DateTime startdate, DateTime enddate, int maxstudents)
         {
             Name = name;
             StartDate = startdate;
             EndDate = enddate;
             MaxStudents = maxstudents;
-            Teacher = teacher;
         }
 
         public Course()
