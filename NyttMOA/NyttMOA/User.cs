@@ -36,21 +36,21 @@ namespace NyttMOA
 
             while (menuChoice)
             {
-                Console.WriteLine("[1] Add Student");
-                Console.WriteLine("[2] Show Students");
-                Console.WriteLine("[3] Add Teacher");
-                Console.WriteLine("[4] Add Course");
-                Console.WriteLine("[5] Add classroom / View booked classrooms");
-                Console.WriteLine("[6] View Grades");
-                Console.WriteLine("[7] Schedule");
-                Console.WriteLine("[8] Exit");
+                Console.WriteLine("[1] Add student");
+                Console.WriteLine("[2] Display students");
+                Console.WriteLine("[3] Add teacher");
+                Console.WriteLine("[4] Display teachers");
+                Console.WriteLine("[5] Add course");
+                Console.WriteLine("[6] Add classroom / View booked classrooms");
+                Console.WriteLine("[7] View Grades");
+                Console.WriteLine("[8] Schedule");
+                Console.WriteLine("[9] Exit");
 
                 var choice = Console.ReadKey();
 
                 switch (choice.Key)
                 {
                     case ConsoleKey.D1:
-                    case ConsoleKey.NumPad1:
                         Console.WriteLine(" Enter name:  ");
                         var studentName = Console.ReadLine();
                         Console.WriteLine("Enter Username:  ");
@@ -58,12 +58,11 @@ namespace NyttMOA
                         Console.WriteLine("Enter Password:  ");
                         var studentPassword = Console.ReadLine();
                         Register.AddUser(new Student(studentName, studentUserName, studentPassword));
-                        Console.WriteLine("Student added, press any key to go back.");
+                        Console.WriteLine("Student added!");
 
                         break;
 
                     case ConsoleKey.D2:
-                    case ConsoleKey.NumPad2:
                         foreach (var student in Register.UserList.OfType<Student>())
                         {
                             Console.WriteLine("Name: {0} Username: {1} Password: {2}", student.Name, student.UserName, student.Password);
@@ -72,7 +71,6 @@ namespace NyttMOA
                         break;
 
                     case ConsoleKey.D3:
-                    case ConsoleKey.NumPad3:
                         Console.WriteLine(" Enter name:  ");
                         var teacherName = Console.ReadLine();
                         Console.WriteLine("Enter Username:  ");
@@ -80,32 +78,58 @@ namespace NyttMOA
                         Console.WriteLine("Enter Password:  ");
                         var teacherPassword = Console.ReadLine();
                         Register.AddUser(new Teacher(teacherName, teacherUserName, teacherPassword));
-                        Console.WriteLine("Teacher added, press any key to go back.");
+                        Console.WriteLine("Teacher added!");
 
                         break;
 
                     case ConsoleKey.D4:
-                    case ConsoleKey.NumPad4:
+                        foreach (var teacher in Register.UserList.OfType<Teacher>())
+                        {
+                            Console.WriteLine("Name: {0} Username: {1} Password: {2}", teacher.Name, teacher.UserName, teacher.Password);
+                        }
 
                         break;
 
                     case ConsoleKey.D5:
-                    case ConsoleKey.NumPad5:
+                        Console.WriteLine("Enter name of the course: ");
+                        var courseName = Console.ReadLine();
+                        Console.WriteLine("Enter Startdate of the course: ");
+                        var startDate = Convert.ToDateTime(Console.ReadLine());
+                        Console.WriteLine("Enter end date of the course: ");
+                        var endDate = Convert.ToDateTime(Console.ReadLine());
+                        Console.WriteLine("Enter max amount of students: ");
+                        var maxStudents = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Pick teacher for the class: ");
+                        int n;
+                        foreach (var teacher in Register.UserList.OfType<Teacher>())
+                        {
+                            n = Register.UserList.IndexOf(teacher);
+                            Console.WriteLine("[{0}] : {1}", n, teacher.Name);
+                        }
+
+                        n = int.Parse(Console.ReadKey().KeyChar.ToString());
+                        var courseTeacher = Convert.ToString(n);
+                        Register.AddCourse(new Course(courseName, startDate, endDate, maxStudents, courseTeacher));
 
                         break;
 
                     case ConsoleKey.D6:
-                    case ConsoleKey.NumPad6:
-                        
+                        foreach (var course in Register.CourseList)
+                        {
+                            Console.WriteLine("Course: {0} Startdate: {1} Enddate: {2} Max students: {3} Teacher: {4}", course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher);
+                        }
+
                         break;
 
                     case ConsoleKey.D7:
-                    case ConsoleKey.NumPad7:
-                        
+
                         break;
 
                     case ConsoleKey.D8:
-                    case ConsoleKey.NumPad8:
+
+                        break;
+
+                    case ConsoleKey.D9:
                         menuChoice = false;
                         break;
 
