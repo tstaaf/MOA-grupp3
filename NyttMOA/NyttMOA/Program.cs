@@ -10,55 +10,16 @@ namespace NyttMOA
     {
         static void Main()
         {
-            Admin user = new Admin("Erik", "Erik14", "1234");
             inloggning();
             Console.ReadLine();
         }
 
-        public static void MainMenu(User user)
-        {
-            Console.WriteLine("Innloggad som " + user.Name);
-            Console.WriteLine(" 1) Administration");
-            Console.WriteLine(" 2) Your Schedule");
-            Console.WriteLine(" 3) Your Courses");
-            var userValue = Console.ReadKey();
+        public static User user;
 
-            switch (userValue.Key)
-            {
-                case ConsoleKey.D1:
-                    {
-                        Console.Clear();
-                        user.showMenu();
-                        break;
-                    }
-
-                case ConsoleKey.D2:
-                    {
-                        Console.Clear();
-                        Console.WriteLine("2222222"); //Sida för schema
-                        loggOutorgoBack();
-                        break;
-                    }
-
-                case ConsoleKey.D3:
-                    {
-                        Console.Clear();
-                        Console.WriteLine("333333333"); //Sida för kurser
-                        loggOutorgoBack();
-                        break;
-                    }
-                default:
-                    Console.WriteLine("Sorry didn't understand that...");
-                    Console.Clear();
-                    MainMenu(user);
-                    break;
-            }
-        }
+        
 
         public static void inloggning()
         {
-            User user;
-
             Console.Write("Användarnamn: ");
             user = Register.SearchForUsername(Console.ReadLine());
 
@@ -67,7 +28,7 @@ namespace NyttMOA
             if (Register.CheckPassword(user, Console.ReadLine()))
             {
                 Console.Clear();
-                MainMenu(user);
+                user.showMenu();
             }
 
             else
@@ -94,13 +55,13 @@ namespace NyttMOA
                 case ConsoleKey.K:
                     {
                         Console.Clear();
-                        
+                        user.showMenu();
                         break;
                     }
                 default:
                     {
                         Console.WriteLine("Sorry did not understand that");
-                        loggOutorgoBack();
+                        
                         break;
                     }
             }

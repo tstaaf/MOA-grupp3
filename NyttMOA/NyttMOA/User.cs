@@ -4,9 +4,11 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace NyttMOA
 {
+    
     public abstract class User
     {
         public string Name { get; set; }
@@ -21,6 +23,11 @@ namespace NyttMOA
         }
 
         public abstract void showMenu();
+
+        public User()
+        {
+            
+        }
     }
 
     public class Admin : User
@@ -28,6 +35,11 @@ namespace NyttMOA
         public Admin(string name, string username, string password) : base(name, username, password)
         {
 
+        }
+
+        public Admin()
+        {
+            
         }
 
         public override void showMenu()
@@ -59,6 +71,7 @@ namespace NyttMOA
                         var studentPassword = Console.ReadLine();
                         Register.AddUser(new Student(studentName, studentUserName, studentPassword));
                         Console.WriteLine("Student added!");
+                        Register.SaveToXml();
 
                         break;
 
@@ -108,15 +121,15 @@ namespace NyttMOA
                         }
 
                         n = int.Parse(Console.ReadKey().KeyChar.ToString());
-                        var courseTeacher = Convert.ToString(n);
-                        //Register.AddCourse(new Course(courseName, startDate, endDate, maxStudents, courseTeacher));
+                        var courseTeacher = Register.UserList.OfType<Teacher>().ToArray()[n];
+                        Register.AddCourse(new Course(courseName, startDate, endDate, maxStudents, courseTeacher));
 
                         break;
 
                     case ConsoleKey.D6:
                         foreach (var course in Register.CourseList)
                         {
-                            Console.WriteLine("Course: {0} Startdate: {1} Enddate: {2} Max students: {3} Teacher: {4}", course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher);
+                            Console.WriteLine("Course: {0} Startdate: {1} Enddate: {2} Max students: {3} Teacher: {4}", course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher.Name);
                         }
 
                         break;
@@ -130,7 +143,7 @@ namespace NyttMOA
                         break;
 
                     case ConsoleKey.D9:
-                        menuChoice = false;
+                        Program.inloggning();
                         break;
 
                     default:
@@ -149,6 +162,11 @@ namespace NyttMOA
         {
             
         }
+        
+        public Student()
+        {
+            
+        }
 
         public override void showMenu()
         {
@@ -156,6 +174,7 @@ namespace NyttMOA
 
             while (menuChoice)
             {
+                Console.WriteLine("Logged in as " + UserName);
                 Console.WriteLine("[1] Schedule");
                 Console.WriteLine("[2] Grades");
                 Console.WriteLine("[3] Exit");
@@ -176,7 +195,7 @@ namespace NyttMOA
 
                     case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
-                        menuChoice = false;
+                        Program.inloggning();
                         break;
 
                     default:
@@ -226,7 +245,7 @@ namespace NyttMOA
 
                     case ConsoleKey.D4:
                     case ConsoleKey.NumPad4:
-                        menuChoice = false;
+                        Program.inloggning();
                         break;
 
                     default:
