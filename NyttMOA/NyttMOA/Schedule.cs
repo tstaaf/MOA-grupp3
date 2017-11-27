@@ -18,7 +18,7 @@ namespace NyttMOA
 
         public Schedule GetSchedule(Teacher teacher)
         {
-            return new Schedule(mainSchedule.Lessons.Where(a => a.Teacher == teacher));
+            return new Schedule(mainSchedule.Lessons.Where(a => a.Course.Teacher == teacher));
         }
 
         public Schedule GetSchedule(Classroom classroom)
@@ -91,7 +91,7 @@ namespace NyttMOA
             foreach (Lesson i in mainSchedule.Lessons)
             {
                 if ((lesson.Classroom == i.Classroom ||
-                    lesson.Teacher == i.Teacher ||
+                    lesson.Course.Teacher == i.Course.Teacher ||
                     lesson.Course == i.Course) &&
                     !((lesson.EndTime <= i.StartTime ||
                     lesson.StartTime >= i.EndTime)))

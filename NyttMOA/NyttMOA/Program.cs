@@ -17,7 +17,7 @@ namespace NyttMOA
 
         public static void MainMenu(User user)
         {
-            Console.WriteLine("Innloggad som ");
+            Console.WriteLine("Innloggad som " + user.Name);
             Console.WriteLine(" 1) Administration");
             Console.WriteLine(" 2) Your Schedule");
             Console.WriteLine(" 3) Your Courses");
@@ -57,21 +57,17 @@ namespace NyttMOA
 
         public static void inloggning()
         {
-            User user = new Admin("", "", "");
-            string username = ""; //Exempel
-            string password = ""; //Exempel
+            User user;
 
             Console.Write("Användarnamn: ");
-            string användarNamnInput = Console.ReadLine();
+            user = Register.SearchForUsername(Console.ReadLine());
 
             Console.Write("Lösenord: ");
-            string lösenOrdInput = Console.ReadLine();
 
-            if (användarNamnInput == username && lösenOrdInput == password)
+            if (Register.CheckPassword(user, Console.ReadLine()))
             {
                 Console.Clear();
                 MainMenu(user);
-
             }
 
             else

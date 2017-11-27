@@ -12,11 +12,11 @@ namespace NyttMOA
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int MaxStudents { get; set; }
-        public string Teacher { get; set; }
+        public Teacher Teacher { get; set; }
         List<Student> students = new List<Student>();
         public IEnumerable<Student> Students => students;
 
-        public Course(string name, DateTime startdate, DateTime enddate, int maxstudents, string teacher)
+        public Course(string name, DateTime startdate, DateTime enddate, int maxstudents, Teacher teacher)
         {
             Name = name;
             StartDate = startdate;

@@ -109,7 +109,7 @@ namespace NyttMOA
 
                         n = int.Parse(Console.ReadKey().KeyChar.ToString());
                         var courseTeacher = Convert.ToString(n);
-                        Register.AddCourse(new Course(courseName, startDate, endDate, maxStudents, courseTeacher));
+                        //Register.AddCourse(new Course(courseName, startDate, endDate, maxStudents, courseTeacher));
 
                         break;
 

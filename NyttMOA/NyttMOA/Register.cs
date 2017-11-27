@@ -10,6 +10,11 @@ namespace NyttMOA
 {
     public static class Register
     {
+        static Register()
+        {
+            AddUser(new Admin("Admin", "admin", "admin"));
+        }
+
         public static List<User> UserList = new List<User>();
 
         public static void AddUser(User user)
@@ -39,5 +44,26 @@ namespace NyttMOA
             filestream.Close();
         }
         */
+
+        public static User SearchForUsername(string username)
+        {
+            foreach (User i in UserList)
+            {
+                if (i.UserName == username)
+                {
+                    return i;
+                }
+            }
+            return null;
+        }
+
+        public static bool CheckPassword(User user, string password)
+        {
+            if (user != null)
+            {
+                return password == user.Password;
+            }
+            return false;
+        }
     }
 }
