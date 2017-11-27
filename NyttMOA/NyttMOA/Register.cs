@@ -55,14 +55,7 @@ namespace NyttMOA
 
         public static User SearchForUsername(string username)
         {
-            foreach (User i in UserList)
-            {
-                if (i.UserName == username)
-                {
-                    return i;
-                }
-            }
-            return null;
+            return UserList.FirstOrDefault(i => i.UserName == username);
         }
 
         public static bool CheckPassword(User user, string password)

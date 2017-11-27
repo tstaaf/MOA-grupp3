@@ -12,59 +12,36 @@ namespace NyttMOA
         {
             Register.LoadFromXml();
             inloggning();
-            Console.ReadLine();
+
         }
 
-        public static User user;
+        public static User user { get; set; }
 
-        
 
         public static void inloggning()
         {
-            Console.Write("Användarnamn: ");
-            user = Register.SearchForUsername(Console.ReadLine());
-
-            Console.Write("Lösenord: ");
-
-            if (Register.CheckPassword(user, Console.ReadLine()))
+            while (true)
             {
-                Console.Clear();
-                user.showMenu();
-            }
 
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("Fel användarnamn eller lösenord.");
-                inloggning();
-            }
-        }
+                Console.Write("Användarnamn: ");
+                user = Register.SearchForUsername(Console.ReadLine());
 
-        public static void loggOutorgoBack()
-        {
-            Console.WriteLine("Press 'Q' to switch user \nPress 'K' to go back");
-            var input = Console.ReadKey();
+                Console.Write("Lösenord: ");
 
-            switch (input.Key) //Switch on Key enum
-            {
-                case ConsoleKey.Q:
-                    {
-                        Console.Clear();
-                        inloggning();
-                        break;
-                    }
-                case ConsoleKey.K:
-                    {
-                        Console.Clear();
-                        user.showMenu();
-                        break;
-                    }
-                default:
-                    {
-                        Console.WriteLine("Sorry did not understand that");
-                        
-                        break;
-                    }
+                if (Register.CheckPassword(user, Console.ReadLine()))
+                {
+                    Console.Clear();
+                    user.showMenu();
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Fel användarnamn eller lösenord.");
+                    continue;
+                }
+                break;
+
+
             }
         }
     }

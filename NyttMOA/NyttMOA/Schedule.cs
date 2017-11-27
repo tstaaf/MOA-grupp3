@@ -9,7 +9,7 @@ namespace NyttMOA
     public class ScheduleManager
     {
         public Schedule mainSchedule = new Schedule();
-        public IEnumerable<Lesson> Lessons { get { return mainSchedule.Lessons; } }
+        public IEnumerable<Lesson> Lessons => mainSchedule.Lessons;
 
         public Schedule GetSchedule(Student student)
         {
@@ -54,25 +54,16 @@ namespace NyttMOA
 
         public bool AddLesson(Lesson lesson)
         {
-            if (LessonCanBeScheduled(lesson))
-            {
-                mainSchedule.AddLesson(lesson);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (!LessonCanBeScheduled(lesson)) return false;
+            mainSchedule.AddLesson(lesson);
+            return true;
         }
 
         public bool AddLesson(IEnumerable<Lesson> lessons)
         {
-            foreach (Lesson i in lessons)
+            if (lessons.Any(i => !LessonCanBeScheduled(i)))
             {
-                if (!LessonCanBeScheduled(i))
-                {
-                    return false;
-                }
+                return false;
             }
             foreach (Lesson i in lessons)
             {
@@ -93,8 +84,8 @@ namespace NyttMOA
                 if ((lesson.Classroom == i.Classroom ||
                     lesson.Course.Teacher == i.Course.Teacher ||
                     lesson.Course == i.Course) &&
-                    !((lesson.EndTime <= i.StartTime ||
-                    lesson.StartTime >= i.EndTime)))
+                    !(lesson.EndTime <= i.StartTime ||
+                      lesson.StartTime >= i.EndTime))
                 {
                     return false;
                 }
@@ -103,11 +94,7 @@ namespace NyttMOA
             {
                 return false;
             }
-            if (lesson.Course.Students.Count() > lesson.Classroom.Seats)
-            {
-                return false;
-            }
-            return true;
+            return lesson.Course.Students.Count() <= lesson.Classroom.Seats;
         }
 
         public override string ToString()
@@ -152,7 +139,7 @@ namespace NyttMOA
             string output = "";
             foreach (Lesson i in lessons)
             {
-                output += i.ToString() + Environment.NewLine;
+                output += i + Environment.NewLine;
             }
             output += "----------";
             return output;
@@ -178,8 +165,8 @@ namespace NyttMOA
         {
             return
                 "----------" + Environment.NewLine +
-                StartTime.ToString() + Environment.NewLine +
-                EndTime.ToString() + Environment.NewLine +
+                StartTime + Environment.NewLine +
+                EndTime + Environment.NewLine +
                 Course.Name + Environment.NewLine +
                 Classroom.Name + Environment.NewLine +
                 Course.Teacher.Name;

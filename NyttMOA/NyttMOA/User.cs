@@ -50,6 +50,7 @@ namespace NyttMOA
 
             while (menuChoice)
             {
+                Console.Clear();
                 Console.WriteLine("[1] Add student");
                 Console.WriteLine("[2] Display students");
                 Console.WriteLine("[3] Add teacher");
@@ -65,6 +66,7 @@ namespace NyttMOA
                 switch (choice.Key)
                 {
                     case ConsoleKey.D1:
+                        Console.Clear();
                         Console.WriteLine(" Enter name:  ");
                         var studentName = Console.ReadLine();
                         Console.WriteLine("Enter Username:  ");
@@ -73,11 +75,12 @@ namespace NyttMOA
                         var studentPassword = Console.ReadLine();
                         Register.AddUser(new Student(studentName, studentUserName, studentPassword));
                         Console.WriteLine("Student added!");
-                        Register.SaveToXml();
+                        Register.SaveUserListToXml();
 
                         break;
 
                     case ConsoleKey.D2:
+                        Console.Clear();
                         foreach (var student in Register.UserList.OfType<Student>())
                         {
                             Console.WriteLine("Name: {0} Username: {1} Password: {2}", student.Name, student.UserName, student.Password);
@@ -86,6 +89,7 @@ namespace NyttMOA
                         break;
 
                     case ConsoleKey.D3:
+                        Console.Clear();
                         Console.WriteLine(" Enter name:  ");
                         var teacherName = Console.ReadLine();
                         Console.WriteLine("Enter Username:  ");
@@ -94,11 +98,12 @@ namespace NyttMOA
                         var teacherPassword = Console.ReadLine();
                         Register.AddUser(new Teacher(teacherName, teacherUserName, teacherPassword));
                         Console.WriteLine("Teacher added!");
-                        Register.SaveToXml();
+                        Register.SaveUserListToXml();
 
                         break;
 
                     case ConsoleKey.D4:
+                        Console.Clear();
                         foreach (var teacher in Register.UserList.OfType<Teacher>())
                         {
                             Console.WriteLine("Name: {0} Username: {1} Password: {2}", teacher.Name, teacher.UserName, teacher.Password);
@@ -107,6 +112,7 @@ namespace NyttMOA
                         break;
 
                     case ConsoleKey.D5:
+                        Console.Clear();
                         Console.WriteLine("Enter name of the course: ");
                         var courseName = Console.ReadLine();
                         Console.WriteLine("Enter Startdate of the course: ");
@@ -131,6 +137,7 @@ namespace NyttMOA
                         break;
 
                     case ConsoleKey.D6:
+                        Console.Clear();
                         foreach (var course in Register.CourseList)
                         {
                             Console.WriteLine("Course: {0} Startdate: {1} Enddate: {2} Max students: {3} Teacher: {4}", course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher.Name);
@@ -147,10 +154,12 @@ namespace NyttMOA
                         break;
 
                     case ConsoleKey.D9:
+                        Console.Clear();
                         Program.inloggning();
                         break;
 
                     default:
+                        Console.Clear();
                         Console.WriteLine("Invalid selection, Try again");
                         break;
                 }
@@ -178,6 +187,7 @@ namespace NyttMOA
 
             while (menuChoice)
             {
+                Console.Clear();
                 Console.WriteLine("Logged in as " + UserName);
                 Console.WriteLine("[1] Schedule");
                 Console.WriteLine("[2] Grades");
@@ -228,6 +238,7 @@ namespace NyttMOA
 
             while (menuChoice)
             {
+                Console.Clear();
                 Console.WriteLine("[1] Add / Remove students to course");
                 Console.WriteLine("[2] Grades");
                 Console.WriteLine("[3] Classrooms / Courses");

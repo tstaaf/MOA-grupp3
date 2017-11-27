@@ -25,4 +25,29 @@
     <UserName />
     <Password />
   </User>
+  <User xsi:type="Student">
+    <Name>erik</Name>
+    <UserName>erik</UserName>
+    <Password>erik</Password>
+  </User>
+  <User xsi:type="Student">
+    <Name>Heidi</Name>
+    <UserName>lisa</UserName>
+    <Password>567</Password>
+  </User>
+  <User xsi:type="Student">
+    <Name>Carl</Name>
+    <UserName>carl</UserName>
+    <Password>1234</Password>
+  </User>
+  <User xsi:type="Student">
+    <Name>admin</Name>
+    <UserName>admin</UserName>
+    <Password>admin</Password>
+  </User>
+  <User xsi:type="Teacher">
+    <Name>admin</Name>
+    <UserName>admin</UserName>
+    <Password>admin</Password>
+  </User>
 </ArrayOfUser>
