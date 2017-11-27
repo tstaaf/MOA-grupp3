@@ -13,6 +13,8 @@ namespace NyttMOA
         public DateTime EndDate { get; set; }
         public int MaxStudents { get; set; }
         public string Teacher { get; set; }
+        List<Student> students = new List<Student>();
+        public IEnumerable<Student> Students => students;
 
         public Course(string name, DateTime startdate, DateTime enddate, int maxstudents, string teacher)
         {
@@ -23,17 +25,14 @@ namespace NyttMOA
             Teacher = teacher;
         }
 
-            List<Student> students = new List<Student>();
-            public IEnumerable<Student> Students => students;
+        public void AddStudent(Student student)
+        {
+            students.Add(student);
+        }
 
-            public void AddStudent(Student student)
-            {
-                students.Add(student);
-            }
-
-            public void RemoveStudent(Student student)
-            {
-                students.Remove(student);
-            }
+        public void RemoveStudent(Student student)
+        {
+            students.Remove(student);
+        }
     }
 }
