@@ -31,11 +31,9 @@ namespace NyttMOA
                 students = new List<Student>(_students);
             }
 
-
             public void AddStudent(Student student)
             {
                 students.Add(student);
-
             }
 
             public void RemoveStudent(Student student)

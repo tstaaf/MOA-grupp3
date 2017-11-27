@@ -8,8 +8,6 @@ namespace NyttMOA
 {
     public class ScheduleManager
     {
-
-
         public Schedule mainSchedule = new Schedule();
         public IEnumerable<Lesson> Lessons { get { return mainSchedule.Lessons; } }
 
@@ -102,6 +100,10 @@ namespace NyttMOA
                 }
             }
             if (lesson.StartTime > lesson.Course.EndDate || lesson.EndTime < lesson.Course.StartDate)
+            {
+                return false;
+            }
+            if (lesson.Course.Students.Count > lesson.Classroom.Seats)
             {
                 return false;
             }

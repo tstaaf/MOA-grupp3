@@ -10,9 +10,9 @@ namespace NyttMOA
 {
     public class Register
     {
-        public static List<User> UserList = new List<User>();
+        public List<User> UserList = new List<User>();
 
-        public static void AddUser(User user)
+        public void AddUser(User user)
         {
             UserList.Add(user);
         }
@@ -39,5 +39,10 @@ namespace NyttMOA
             filestream.Close();
         }
         */
+
+        public void LoadFromXml()
+        {
+
+        }
     }
 }
