@@ -10,6 +10,7 @@ namespace NyttMOA
     {
         static void Main()
         {
+            Register.LoadFromXml();
             inloggning();
             Console.ReadLine();
         }

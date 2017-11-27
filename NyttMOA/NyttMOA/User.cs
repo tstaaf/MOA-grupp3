@@ -8,7 +8,9 @@ using System.Xml.Serialization;
 
 namespace NyttMOA
 {
-    
+    [XmlInclude(typeof(Admin))]
+    [XmlInclude(typeof(Teacher))]
+    [XmlInclude(typeof(Student))]
     public abstract class User
     {
         public string Name { get; set; }
@@ -29,7 +31,7 @@ namespace NyttMOA
             
         }
     }
-
+    
     public class Admin : User
     {
         public Admin(string name, string username, string password) : base(name, username, password)
@@ -92,6 +94,7 @@ namespace NyttMOA
                         var teacherPassword = Console.ReadLine();
                         Register.AddUser(new Teacher(teacherName, teacherUserName, teacherPassword));
                         Console.WriteLine("Teacher added!");
+                        Register.SaveToXml();
 
                         break;
 
@@ -116,13 +119,14 @@ namespace NyttMOA
                         int n;
                         foreach (var teacher in Register.UserList.OfType<Teacher>())
                         {
-                            n = Register.UserList.IndexOf(teacher);
+                            n = Register.UserList.OfType<Teacher>().ToList().IndexOf(teacher);
                             Console.WriteLine("[{0}] : {1}", n, teacher.Name);
                         }
 
                         n = int.Parse(Console.ReadKey().KeyChar.ToString());
                         var courseTeacher = Register.UserList.OfType<Teacher>().ToArray()[n];
                         Register.AddCourse(new Course(courseName, startDate, endDate, maxStudents, courseTeacher));
+                        
 
                         break;
 
@@ -211,6 +215,11 @@ namespace NyttMOA
         public Teacher(string name, string username, string password) : base(name, username, password)
         {
 
+        }
+
+        public Teacher()
+        {
+            
         }
 
         public override void showMenu()

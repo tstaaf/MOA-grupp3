@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace NyttMOA
 {
-
+    
     public static class Register
     {
         static Register()
@@ -40,9 +40,16 @@ namespace NyttMOA
         public static void SaveToXml()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<User>));
-            TextWriter filestream = new StreamWriter(@"C:\Users\timmy\Desktop\gitHub\MOA-grupp3\NyttMOA\NyttMOA\datalist.xml");
+            TextWriter filestream = new StreamWriter(@"C:\Users\timmy\Desktop\gitHub\MOA-grupp3\NyttMOA\NyttMOA\XML Data\datalist.xml");
             serializer.Serialize(filestream, UserList);
             filestream.Close();
+        }
+
+        public static void LoadFromXml()
+        {
+            XmlSerializer deSerializer = new XmlSerializer(typeof(List<User>));
+            using (var stream = System.IO.File.OpenRead(@"C:\Users\timmy\Desktop\gitHub\MOA-grupp3\NyttMOA\NyttMOA\XML Data\datalist.xml"))
+                UserList = (List<User>) deSerializer.Deserialize(stream);
         }
         
 
