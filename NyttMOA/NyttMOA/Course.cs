@@ -21,15 +21,8 @@ namespace NyttMOA
             MaxStudents = maxstudents;
         }
 
-        public class StudentList
-        {
-            List<Student> students;
+            List<Student> students = new List<Student>();
             public IEnumerable<Student> Students => students;
-
-            public StudentList(IEnumerable<Student> _students)
-            {
-                students = new List<Student>(_students);
-            }
 
 
             public void AddStudent(Student student)
@@ -42,7 +35,7 @@ namespace NyttMOA
             {
                 students.Remove(student);
             }
-        }
+        
 
 
     }
