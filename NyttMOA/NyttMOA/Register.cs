@@ -8,25 +8,25 @@ using System.Xml.Serialization;
 
 namespace NyttMOA
 {
-    public class Register
+    public static class Register
     {
-        public List<User> UserList = new List<User>();
+        public static List<User> UserList = new List<User>();
 
-        public void AddUser(User user)
+        public static void AddUser(User user)
         {
             UserList.Add(user);
         }
 
-        public List<Classroom> ClassroomList = new List<Classroom>();
+        public static List<Classroom> ClassroomList = new List<Classroom>();
 
-        public void AddClassroom(Classroom classroom)
+        public static void AddClassroom(Classroom classroom)
         {
             ClassroomList.Add(classroom);
         }
 
-        public List<Course> CourseList = new List<Course>();
+        public static List<Course> CourseList = new List<Course>();
 
-        public void AddCourse(Course course)
+        public static void AddCourse(Course course)
         {
             CourseList.Add(course);
         }
