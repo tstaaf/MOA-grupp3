@@ -39,12 +39,5 @@ namespace NyttMOA
             filestream.Close();
         }
         */
-
-        /*
-        public void LoadFromXml()
-        {
-
-        }
-        */
     }
 }

@@ -103,7 +103,7 @@ namespace NyttMOA
             {
                 return false;
             }
-            if (lesson.Course.Students.Count > lesson.Classroom.Seats)
+            if (lesson.Course.Students.Count() > lesson.Classroom.Seats)
             {
                 return false;
             }
