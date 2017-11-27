@@ -35,8 +35,5 @@ namespace NyttMOA
             {
                 students.Remove(student);
             }
-        
-
-
     }
 }
