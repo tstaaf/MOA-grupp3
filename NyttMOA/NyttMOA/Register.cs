@@ -119,13 +119,7 @@ namespace NyttMOA
 
             foreach (Lesson i in schedulesTemp.Lessons)
             {
-                foreach (Course a in courseList)
-                {
-                    if (i.Course.Name == a.Name)
-                    {
-                        i.Course = a;
-                    }
-                }
+
             }
         }
 

@@ -61,9 +61,8 @@ namespace NyttMOA
                 Console.WriteLine("[1] Manage students");
                 Console.WriteLine("[2] Manage teachers");
                 Console.WriteLine("[3] Manage Courses");
-                Console.WriteLine("[4] Add classroom");
-                Console.WriteLine("[5] Display classrooms");
-                Console.WriteLine("[6] Schedule");
+                Console.WriteLine("[4] Manage classrooms");
+                Console.WriteLine("[5] Schedule");
                 Console.WriteLine("[0] Log Out");
 
                 var choice = Console.ReadKey();
@@ -284,32 +283,56 @@ namespace NyttMOA
                             }
                         }
                         break;
-
+                        
 
 
                     case ConsoleKey.D4:
-                        Console.WriteLine("Enter name of classroom: ");
-                        var a = Console.ReadLine();
-                        Console.WriteLine("How many seats are there in the classroom?");
-                        var b = int.Parse(Console.ReadLine());
-                        Register.AddClassroom(new Classroom(a, b));
-                        Register.SaveClassroomListToXml();
-                        Console.WriteLine("Classroom added!");
-                        Console.ReadLine();
+                        var classrooms = true;
+
+                        while (classrooms)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("[1] Display classroom");
+                            Console.WriteLine("[2] Add classrooms");
+                            Console.WriteLine("[3] Go back");
+
+                            switch (Console.ReadKey().Key)
+                            {
+                                case ConsoleKey.D1:
+                                    Console.Clear();
+                                    foreach (var classroom in Register.ClassroomList)
+                                    {
+                                        Console.WriteLine("Classroom: {0} Seats: {1}", classroom.Name, classroom.Seats);
+                                    }
+                                    Console.ReadLine();
+                                    break;
+                                case ConsoleKey.D2:
+
+                                    Console.Clear();
+                                    Console.WriteLine("Enter name of classroom: ");
+                                    var a = Console.ReadLine();
+                                    Console.WriteLine("How many seats are there in the classroom?");
+                                    var b = int.Parse(Console.ReadLine());
+                                    Register.AddClassroom(new Classroom(a, b));
+                                    Register.SaveClassroomListToXml();
+                                    Console.WriteLine("Classroom added!");
+                                    Console.ReadLine();
+                                    break;
+                                case ConsoleKey.D3:
+                                    Console.Clear();
+                                    showMenu();
+                                    break;
+                                default:
+                                    Console.WriteLine("Invalid choice!");
+                                    break;
+
+                            }
+                        }
                         break;
 
                     case ConsoleKey.D5:
-                        Console.Clear();
-                        foreach (var classroom in Register.ClassroomList)
-                        {
-                            Console.WriteLine("Classroom: {0} Seats: {1}", classroom.Name, classroom.Seats);
-                        }
-                        Console.ReadLine();
                         break;
 
-                    case ConsoleKey.D6:
-
-                        break;
 
                     case ConsoleKey.D0:
                         Console.Clear();
