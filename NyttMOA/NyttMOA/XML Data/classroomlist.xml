@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfClassroom xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Classroom>
+    <Name>Heast</Name>
+    <Seats>21</Seats>
+  </Classroom>
+  <Classroom>
+    <Name>Historia</Name>
+    <Seats>21</Seats>
+  </Classroom>
+  <Classroom>
+    <Name>Flesk</Name>
+    <Seats>10</Seats>
+  </Classroom>
+</ArrayOfClassroom>
