@@ -117,9 +117,16 @@ namespace NyttMOA
             using (var stream = new StreamReader(savePath + @"\schedules.xml"))
                 schedulesTemp = (ScheduleManager)deSerializer.Deserialize(stream);
 
-            foreach (Lesson i in schedulesTemp.Lessons)
+            foreach (Lesson a in schedulesTemp.Lessons)
             {
+                foreach (Lesson b in schedules.Lessons)
+                {
+                    if (a.Course.Name == b.Course.Name &&
+                        a.Classroom.Name == b.Classroom.Name)
+                    {
 
+                    }
+                }
             }
         }
 
