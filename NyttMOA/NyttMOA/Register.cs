@@ -30,7 +30,7 @@ namespace NyttMOA
             return false;
         }
 
-        public static void RemoveStudent(User user)
+        public static void RemoveUser(User user)
         {
             userList.Remove(user);
         }
