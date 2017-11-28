@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -52,9 +53,9 @@ namespace NyttMOA
             {
                 Console.Clear();
                 Console.WriteLine("[1] Add student");
-                Console.WriteLine("[2] Display students");
+                Console.WriteLine("[2] Display / remove students");
                 Console.WriteLine("[3] Add teacher");
-                Console.WriteLine("[4] Display teachers");
+                Console.WriteLine("[4] Display / remove teachers");
                 Console.WriteLine("[5] Add course");
                 Console.WriteLine("[6] Add classroom / View booked classrooms");
                 Console.WriteLine("[7] View Grades");
@@ -81,12 +82,32 @@ namespace NyttMOA
 
                     case ConsoleKey.D2:
                         Console.Clear();
-                        foreach (var student in Register.UserList.OfType<Student>())
+                        var studentRemove = true;
+                        while (studentRemove)
                         {
-                            Console.WriteLine("Name: {0} Username: {1} Password: {2}", student.Name, student.UserName, student.Password);
+                            int studentIndex;
+                            foreach (var student in Register.UserList.OfType<Student>())
+                            {
+                                studentIndex = Register.UserList.OfType<Student>().ToList().IndexOf(student);
+                                Console.WriteLine("[{0}] Name: {1} Username: {2} Password: {3}", studentIndex,
+                                    student.Name, student.UserName, student.Password);
+                            }
+                            Console.WriteLine("Press 1 to remove students or press q o go back");
+                            if (Console.ReadKey().Key == ConsoleKey.D1)
+                            {
+                                Console.WriteLine("Remove student by number: ");
+                                studentIndex = int.Parse(Console.ReadLine());
+                                Register.UserList.Remove(Register.UserList.OfType<Student>().ToList()[studentIndex]);
+                                Register.SaveUserListToXml();
+                            }
+
+                            if (Console.ReadKey().Key == ConsoleKey.Q)
+                            {
+                                showMenu();
+                            }
 
                         }
-                        Console.ReadLine();
+
                         break;
 
                     case ConsoleKey.D3:
