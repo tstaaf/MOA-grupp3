@@ -23,10 +23,10 @@ namespace NyttMOA
             while (true)
             {
 
-                Console.Write("Användarnamn: ");
+                Console.Write("Username: ");
                 user = Register.SearchForUsername(Console.ReadLine());
 
-                Console.Write("Lösenord: ");
+                Console.Write("Password: ");
 
                 if (Register.CheckPassword(user, Console.ReadLine()))
                 {
@@ -36,7 +36,7 @@ namespace NyttMOA
                 else
                 {
                     Console.Clear();
-                    Console.WriteLine("Fel användarnamn eller lösenord.");
+                    Console.WriteLine("Wrong username or password.");
                     continue;
                 }
                 break;
