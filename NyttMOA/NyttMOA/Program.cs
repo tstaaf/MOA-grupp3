@@ -8,21 +8,18 @@ namespace NyttMOA
 {
     class Program
     {
+        public static User user { get; set; }
+
         static void Main()
         {
             Register.LoadUserListFromXml();
             inloggning();
-
         }
-
-        public static User user { get; set; }
-
 
         public static void inloggning()
         {
             while (true)
             {
-
                 Console.Write("Användarnamn: ");
                 user = Register.SearchForUsername(Console.ReadLine());
 
@@ -40,8 +37,6 @@ namespace NyttMOA
                     continue;
                 }
                 break;
-
-
             }
         }
     }

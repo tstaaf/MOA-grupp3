@@ -30,6 +30,11 @@ namespace NyttMOA
         {
             
         }
+
+        public string ShowLogInMessage()
+        {
+            return "Logged in as " + Name;
+        }
     }
     
     public class Admin : User
@@ -51,6 +56,7 @@ namespace NyttMOA
             while (menuChoice)
             {
                 Console.Clear();
+                Console.WriteLine(ShowLogInMessage());
                 Console.WriteLine("[1] Add student");
                 Console.WriteLine("[2] Display students");
                 Console.WriteLine("[3] Add teacher");
@@ -191,7 +197,7 @@ namespace NyttMOA
             while (menuChoice)
             {
                 Console.Clear();
-                Console.WriteLine("Logged in as " + UserName);
+                Console.WriteLine(ShowLogInMessage());
                 Console.WriteLine("[1] Schedule");
                 Console.WriteLine("[2] Grades");
                 Console.WriteLine("[3] Exit");
@@ -242,6 +248,7 @@ namespace NyttMOA
             while (menuChoice)
             {
                 Console.Clear();
+                Console.WriteLine(ShowLogInMessage());
                 Console.WriteLine("[1] Add / Remove students to course");
                 Console.WriteLine("[2] Grades");
                 Console.WriteLine("[3] Classrooms / Courses");

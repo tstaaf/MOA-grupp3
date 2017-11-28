@@ -8,50 +8,72 @@ using System.Xml.Serialization;
 
 namespace NyttMOA
 {
-    
     public static class Register
     {
+        const string filePath = @"C:\Users\Anton\Desktop\userlist.xml";
+
         static Register()
         {
             AddUser(new Admin("Admin", "admin", "admin"));
         }
 
-        public static List<User> UserList = new List<User>();
+        static List<User> userList = new List<User>();
+        public static IEnumerable<User> UserList => userList;
 
-        public static void AddUser(User user)
+        static List<Classroom> classroomList = new List<Classroom>();
+        public static IEnumerable<Classroom> ClassroomList => classroomList;
+
+        static List<Course> courseList = new List<Course>();
+        public static IEnumerable<Course> CourseList => courseList;
+
+
+        public static bool AddUser(User user)
         {
-            UserList.Add(user);
+            if (!userList.Any(a => a.UserName == user.UserName))
+            {
+                userList.Add(user);
+                return true;
+            }
+            return false;
         }
 
-        public static List<Classroom> ClassroomList = new List<Classroom>();
-
-        public static void AddClassroom(Classroom classroom)
+        public static bool AddClassroom(Classroom classroom)
         {
-            ClassroomList.Add(classroom);
+            if (!classroomList.Any(a => a.Name == classroom.Name))
+            {
+                classroomList.Add(classroom);
+                return true;
+            }
+            return false;
         }
 
-        public static List<Course> CourseList = new List<Course>();
-
-        public static void AddCourse(Course course)
+        public static bool AddCourse(Course course)
         {
-            CourseList.Add(course);
+            if (!courseList.Any(a => a.Name == course.Name))
+            {
+                courseList.Add(course);
+                return true;
+            }
+            return false;
         }
+
 
         public static void SaveUserListToXml()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<User>));
-            TextWriter filestream = new StreamWriter(@"C:\Users\timmy\Desktop\gitHub\MOA-grupp3\NyttMOA\NyttMOA\XML Data\userlist.xml");
+            TextWriter filestream = new StreamWriter(filePath);
             serializer.Serialize(filestream, UserList);
             filestream.Close();
         }
 
         public static void LoadUserListFromXml()
         {
+            if (!File.Exists(filePath))
+                return;
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<User>));
-            using (var stream = System.IO.File.OpenRead(@"C:\Users\timmy\Desktop\gitHub\MOA-grupp3\NyttMOA\NyttMOA\XML Data\userlist.xml"))
-                UserList = (List<User>) deSerializer.Deserialize(stream);
+            using (var stream = System.IO.File.OpenRead(filePath))
+                userList = (List<User>) deSerializer.Deserialize(stream);
         }
-        
 
         public static User SearchForUsername(string username)
         {
