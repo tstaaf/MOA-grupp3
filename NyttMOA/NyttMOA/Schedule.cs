@@ -157,8 +157,7 @@ namespace NyttMOA
             {
                 output += i + Environment.NewLine;
             }
-            output += "----------";
-            return output;
+            return output + ";----------";
         }
     }
 
