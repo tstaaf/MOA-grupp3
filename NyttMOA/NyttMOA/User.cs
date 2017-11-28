@@ -292,8 +292,8 @@ namespace NyttMOA
                         while (classrooms)
                         {
                             Console.Clear();
-                            Console.WriteLine("[1] Display classroom");
-                            Console.WriteLine("[2] Add classrooms");
+                            Console.WriteLine("[1] Display classrooms");
+                            Console.WriteLine("[2] Add classroom");
                             Console.WriteLine("[3] Go back");
 
                             switch (Console.ReadKey().Key)
