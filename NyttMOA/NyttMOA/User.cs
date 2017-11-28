@@ -63,10 +63,10 @@ namespace NyttMOA
                 Console.WriteLine("[4] Display teachers");
                 Console.WriteLine("[5] Add course");
                 Console.WriteLine("[6] Display courses");
-                Console.WriteLine("[7] Add classroom / View booked classrooms");
-                Console.WriteLine("[8] View Grades");
+                Console.WriteLine("[7] Add classroom");
+                Console.WriteLine("[8] Display classrooms");
                 Console.WriteLine("[9] Schedule");
-                Console.WriteLine("[0] Exit");
+                Console.WriteLine("[0] Log Out");
 
                 var choice = Console.ReadKey();
 
@@ -161,10 +161,18 @@ namespace NyttMOA
                         Console.WriteLine("How many seats are there in the classroom?");
                         var b = int.Parse(Console.ReadLine());
                         Register.AddClassroom(new Classroom(a, b));
+                        Register.SaveClassroomListToXml();
+                        Console.WriteLine("Classroom added!");
+                        Console.ReadLine();
                         break;
 
                     case ConsoleKey.D8:
-
+                        Console.Clear();
+                        foreach (var classroom in Register.ClassroomList)
+                        {
+                            Console.WriteLine("Classroom: {0} Seats: {1}", classroom.Name, classroom.Seats);
+                        }
+                        Console.ReadLine();
                         break;
 
                     case ConsoleKey.D0:
@@ -205,7 +213,7 @@ namespace NyttMOA
                 Console.WriteLine(ShowLogInMessage());
                 Console.WriteLine("[1] Schedule");
                 Console.WriteLine("[2] Grades");
-                Console.WriteLine("[3] Exit");
+                Console.WriteLine("[3] Log Out");
 
                 var choice = Console.ReadKey();
 
@@ -223,6 +231,7 @@ namespace NyttMOA
 
                     case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
+                        Console.Clear();
                         Program.inloggning();
                         break;
 
@@ -257,7 +266,7 @@ namespace NyttMOA
                 Console.WriteLine("[1] Add / Remove students to course");
                 Console.WriteLine("[2] Grades");
                 Console.WriteLine("[3] Classrooms / Courses");
-                Console.WriteLine("[4] Exit");
+                Console.WriteLine("[4] Log Out");
 
                 var choice = Console.ReadKey();
 
@@ -280,6 +289,7 @@ namespace NyttMOA
 
                     case ConsoleKey.D4:
                     case ConsoleKey.NumPad4:
+                        Console.Clear();
                         Program.inloggning();
                         break;
 

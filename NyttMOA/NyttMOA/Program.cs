@@ -13,6 +13,7 @@ namespace NyttMOA
         static void Main()
         {
             Register.LoadUserListFromXml();
+            Register.LoadClassroomListFromXml();
             inloggning();
         }
 

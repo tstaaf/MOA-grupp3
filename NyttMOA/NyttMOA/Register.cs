@@ -51,10 +51,27 @@ namespace NyttMOA
             var file = Directory.GetCurrentDirectory();
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<User>));
             using (var stream = new StreamReader(file + @"\XML Data\userlist.xml"))
-                UserList = (List<User>)deSerializer.Deserialize(stream);
+            UserList = (List<User>)deSerializer.Deserialize(stream);
 
         }
-        
+        public static void SaveClassroomListToXml()
+        {
+            var file = Directory.GetCurrentDirectory();
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Classroom>));
+            TextWriter filestream = new StreamWriter(file + @"\XML Data\classroomlist.xml");
+            serializer.Serialize(filestream, ClassroomList);
+            filestream.Close();
+        }
+
+        public static void LoadClassroomListFromXml()
+        {
+            var file = Directory.GetCurrentDirectory();
+            XmlSerializer deSerializer = new XmlSerializer(typeof(List<Classroom>));
+            using (var stream = new StreamReader(file + @"\XML Data\classroomlist.xml"))
+            ClassroomList = (List<Classroom>)deSerializer.Deserialize(stream);
+
+        }
+
 
         public static User SearchForUsername(string username)
         {
