@@ -84,7 +84,6 @@ namespace NyttMOA
         
         public static void SaveScheduleToXml()
         {
-            var file = Directory.GetCurrentDirectory();
             XmlSerializer serializer = new XmlSerializer(typeof(List<User>));
             TextWriter filestream = new StreamWriter(savePath + @"\schedules.xml");
             serializer.Serialize(filestream, schedules);
@@ -94,22 +93,15 @@ namespace NyttMOA
         public static void LoadScheduleFromXml()
         {
             ScheduleManager schedulesTemp;
-            var file = Directory.GetCurrentDirectory();
-            if (!File.Exists(file + @"\XML Data\schedules.xml"))
+            if (!File.Exists(savePath + @"\schedules.xml"))
                 return;
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<User>));
-            using (var stream = new StreamReader(file + @"\XML Data\schedules.xml"))
+            using (var stream = new StreamReader(savePath + @"\schedules.xml"))
                 schedulesTemp = (ScheduleManager)deSerializer.Deserialize(stream);
 
             foreach (Lesson i in schedulesTemp.Lessons)
             {
-                foreach (Course a in courseList)
-                {
-                    if (i.Course.Name == a.Name)
-                    {
-                        i.Course = a;
-                    }
-                }
+
             }
         }
 
