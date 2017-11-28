@@ -55,6 +55,7 @@ namespace NyttMOA
         public bool AddLesson(Lesson lesson)
         {
             if (!LessonCanBeScheduled(lesson)) return false;
+            //lesson.ID = GenerateNewLessonID();
             mainSchedule.AddLesson(lesson);
             return true;
         }
@@ -75,6 +76,21 @@ namespace NyttMOA
         public void RemoveLesson(Lesson lesson)
         {
             mainSchedule.RemoveLesson(lesson);
+        }
+
+        public int GenerateNewLessonID()
+        {
+            int id = 0;
+            while (true)
+            {
+                /*
+                if (Lessons.All(a => a.ID != id))
+                {
+                    return id;
+                }
+                id++;
+                */
+            }
         }
 
         bool LessonCanBeScheduled(Lesson lesson)
@@ -141,8 +157,7 @@ namespace NyttMOA
             {
                 output += i + Environment.NewLine;
             }
-            output += "----------";
-            return output;
+            return output + ";----------";
         }
     }
 
