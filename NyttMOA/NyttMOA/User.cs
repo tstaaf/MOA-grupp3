@@ -59,8 +59,7 @@ namespace NyttMOA
                 Console.Clear();
                 Console.WriteLine(ShowLogInMessage());
                 Console.WriteLine("[1] Manage students");
-                Console.WriteLine("[2] Add teacher");
-                Console.WriteLine("[3] Display / remove teachers");
+                Console.WriteLine("[2] Manage teachers");
                 Console.WriteLine("[4] Add course");
                 Console.WriteLine("[5] Display courses");
                 Console.WriteLine("[6] Add classroom");
@@ -148,21 +147,7 @@ namespace NyttMOA
                         }
                         break;
 
-                    case ConsoleKey.D3:
-                        Console.Clear();
-                        Console.WriteLine(" Enter name:  ");
-                        var teacherName = Console.ReadLine();
-                        Console.WriteLine("Enter Username:  ");
-                        var teacherUserName = Console.ReadLine();
-                        Console.WriteLine("Enter Password:  ");
-                        var teacherPassword = Console.ReadLine();
-                        Register.AddUser(new Teacher(teacherName, teacherUserName, teacherPassword));
-                        Console.WriteLine("Teacher added!");
-                        Register.SaveUserListToXml();
-
-                        break;
-
-                    case ConsoleKey.D4:
+                    case ConsoleKey.D2:
 
                         var teacherRemove = true;
                         while (teacherRemove)
@@ -170,8 +155,9 @@ namespace NyttMOA
                         {
                             Console.Clear();
                             Console.WriteLine("[1] Display teachers");
-                            Console.WriteLine("[2] Remove teachers");
-                            Console.WriteLine("[3] Go back");
+                            Console.WriteLine("[2] Add Teacher");
+                            Console.WriteLine("[3] Remove teachers");
+                            Console.WriteLine("[4] Go back");
 
 
                             switch (Console.ReadKey().Key)
@@ -190,6 +176,20 @@ namespace NyttMOA
 
                                 case ConsoleKey.D2:
                                     Console.Clear();
+                                    Console.WriteLine(" Enter name:  ");
+                                    var teacherName = Console.ReadLine();
+                                    Console.WriteLine("Enter Username:  ");
+                                    var teacherUserName = Console.ReadLine();
+                                    Console.WriteLine("Enter Password:  ");
+                                    var teacherPassword = Console.ReadLine();
+                                    Register.AddUser(new Teacher(teacherName, teacherUserName, teacherPassword));
+                                    Console.WriteLine("Teacher added!");
+                                    Register.SaveUserListToXml();
+
+                                    break;
+
+                                case ConsoleKey.D3:
+                                    Console.Clear();
                                     int teacherIndex;
 
                                     foreach (var teacher in Register.UserList.OfType<Teacher>())
@@ -205,7 +205,7 @@ namespace NyttMOA
                                     Register.SaveUserListToXml();
                                     break;
 
-                                case ConsoleKey.D3:
+                                case ConsoleKey.D4:
                                     Console.Clear();
                                     showMenu();
                                     break;
@@ -221,7 +221,7 @@ namespace NyttMOA
                         }
                         break;
 
-                    case ConsoleKey.D5:
+                    case ConsoleKey.D4:
                         Console.Clear();
                         Console.WriteLine("Enter name of the course: ");
                         var courseName = Console.ReadLine();
@@ -246,7 +246,7 @@ namespace NyttMOA
 
                         break;
 
-                    case ConsoleKey.D6:
+                    case ConsoleKey.D5:
                         Console.Clear();
                         foreach (var course in Register.CourseList)
                         {
@@ -256,7 +256,7 @@ namespace NyttMOA
 
                         break;
 
-                    case ConsoleKey.D7:
+                    case ConsoleKey.D6:
                         Console.WriteLine("Enter name of classroom: ");
                         var a = Console.ReadLine();
                         Console.WriteLine("How many seats are there in the classroom?");
@@ -267,7 +267,7 @@ namespace NyttMOA
                         Console.ReadLine();
                         break;
 
-                    case ConsoleKey.D8:
+                    case ConsoleKey.D7:
                         Console.Clear();
                         foreach (var classroom in Register.ClassroomList)
                         {
