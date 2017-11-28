@@ -55,7 +55,7 @@ namespace NyttMOA
         public bool AddLesson(Lesson lesson)
         {
             if (!LessonCanBeScheduled(lesson)) return false;
-            lesson.ID = GenerateNewLessonID();
+            //lesson.ID = GenerateNewLessonID();
             mainSchedule.AddLesson(lesson);
             return true;
         }
@@ -83,11 +83,13 @@ namespace NyttMOA
             int id = 0;
             while (true)
             {
+                /*
                 if (Lessons.All(a => a.ID != id))
                 {
                     return id;
                 }
                 id++;
+                */
             }
         }
 
