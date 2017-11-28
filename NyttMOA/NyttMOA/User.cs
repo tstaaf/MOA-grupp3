@@ -56,10 +56,11 @@ namespace NyttMOA
                 Console.WriteLine("[3] Add teacher");
                 Console.WriteLine("[4] Display teachers");
                 Console.WriteLine("[5] Add course");
-                Console.WriteLine("[6] Add classroom / View booked classrooms");
-                Console.WriteLine("[7] View Grades");
-                Console.WriteLine("[8] Schedule");
-                Console.WriteLine("[9] Exit");
+                Console.WriteLine("[6] Display courses");
+                Console.WriteLine("[7] Add classroom / View booked classrooms");
+                Console.WriteLine("[8] View Grades");
+                Console.WriteLine("[9] Schedule");
+                Console.WriteLine("[0] Exit");
 
                 var choice = Console.ReadKey();
 
@@ -149,14 +150,18 @@ namespace NyttMOA
                         break;
 
                     case ConsoleKey.D7:
-
+                        Console.WriteLine("Enter name of classroom: ");
+                        var a = Console.ReadLine();
+                        Console.WriteLine("How many seats are there in the classroom?");
+                        var b = int.Parse(Console.ReadLine());
+                        Register.AddClassroom(new Classroom(a, b));
                         break;
 
                     case ConsoleKey.D8:
 
                         break;
 
-                    case ConsoleKey.D9:
+                    case ConsoleKey.D0:
                         Console.Clear();
                         Program.inloggning();
                         break;
