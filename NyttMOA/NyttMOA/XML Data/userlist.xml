@@ -50,4 +50,19 @@
     <UserName>admin</UserName>
     <Password>admin</Password>
   </User>
+  <User xsi:type="Student">
+    <Name />
+    <UserName />
+    <Password />
+  </User>
+  <User xsi:type="Teacher">
+    <Name />
+    <UserName />
+    <Password />
+  </User>
+  <User xsi:type="Teacher">
+    <Name />
+    <UserName />
+    <Password />
+  </User>
 </ArrayOfUser>

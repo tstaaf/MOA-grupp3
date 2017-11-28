@@ -86,6 +86,7 @@ namespace NyttMOA
                             Console.WriteLine("Name: {0} Username: {1} Password: {2}", student.Name, student.UserName, student.Password);
 
                         }
+                        Console.ReadLine();
                         break;
 
                     case ConsoleKey.D3:
@@ -108,6 +109,7 @@ namespace NyttMOA
                         {
                             Console.WriteLine("Name: {0} Username: {1} Password: {2}", teacher.Name, teacher.UserName, teacher.Password);
                         }
+                        Console.ReadLine();
 
                         break;
 
@@ -142,6 +144,7 @@ namespace NyttMOA
                         {
                             Console.WriteLine("Course: {0} Startdate: {1} Enddate: {2} Max students: {3} Teacher: {4}", course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher.Name);
                         }
+                        Console.ReadLine();
 
                         break;
 

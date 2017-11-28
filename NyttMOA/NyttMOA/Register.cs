@@ -40,7 +40,7 @@ namespace NyttMOA
         public static void SaveUserListToXml()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<User>));
-            TextWriter filestream = new StreamWriter(@"C:\Users\timmy\Desktop\gitHub\MOA-grupp3\NyttMOA\NyttMOA\XML Data\datalist.xml");
+            TextWriter filestream = new StreamWriter(@"C:\Users\timmy\Desktop\gitHub\MOA-grupp3\NyttMOA\NyttMOA\XML Data\userlist.xml");
             serializer.Serialize(filestream, UserList);
             filestream.Close();
         }
@@ -48,7 +48,7 @@ namespace NyttMOA
         public static void LoadUserListFromXml()
         {
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<User>));
-            using (var stream = System.IO.File.OpenRead(@"C:\Users\timmy\Desktop\gitHub\MOA-grupp3\NyttMOA\NyttMOA\XML Data\datalist.xml"))
+            using (var stream = System.IO.File.OpenRead(@"C:\Users\timmy\Desktop\gitHub\MOA-grupp3\NyttMOA\NyttMOA\XML Data\userlist.xml"))
                 UserList = (List<User>) deSerializer.Deserialize(stream);
         }
         
