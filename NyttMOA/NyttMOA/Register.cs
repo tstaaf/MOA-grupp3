@@ -125,6 +125,8 @@ namespace NyttMOA
         public static void LoadClassroomListFromXml()
         {
             var file = Directory.GetCurrentDirectory();
+            if (!File.Exists(file + @"\XML Data\classroom.xml"))
+                return;
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<Classroom>));
             using (var stream = new StreamReader(file + @"\XML Data\classroomlist.xml"))
             classroomList = (List<Classroom>)deSerializer.Deserialize(stream);
