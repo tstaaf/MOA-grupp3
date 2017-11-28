@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace NyttMOA
 {
     class Program
     {
-        static void Main()
-        {
-            Register.LoadUserListFromXml();
-            inloggning();
-
-        }
-
         public static User user { get; set; }
 
+        static void Main()
+        {
+            Directory.CreateDirectory(Register.savePath);
+            Register.LoadUserListFromXml();
+            Register.LoadClassroomListFromXml();
+            inloggning();
+        }
 
         public static void inloggning()
         {
             while (true)
             {
-
                 Console.Write("Användarnamn: ");
                 user = Register.SearchForUsername(Console.ReadLine());
 
@@ -40,8 +40,6 @@ namespace NyttMOA
                     continue;
                 }
                 break;
-
-
             }
         }
     }

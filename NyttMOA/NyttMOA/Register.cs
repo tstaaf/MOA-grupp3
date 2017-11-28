@@ -8,50 +8,123 @@ using System.Xml.Serialization;
 
 namespace NyttMOA
 {
-    
     public static class Register
     {
+        public static string savePath = Directory.GetCurrentDirectory() + @"\XML Data";
+
         static Register()
         {
             AddUser(new Admin("Admin", "admin", "admin"));
         }
 
-        public static List<User> UserList = new List<User>();
+        static List<User> userList = new List<User>();
+        public static IEnumerable<User> UserList => userList;
 
-        public static void AddUser(User user)
+        public static bool AddUser(User user)
         {
-            UserList.Add(user);
+            if (!userList.Any(a => a.Name == user.Name || a.UserName == user.UserName))
+            {
+                userList.Add(user);
+                return true;
+            }
+            return false;
         }
 
-        public static List<Classroom> ClassroomList = new List<Classroom>();
+        static List<Classroom> classroomList = new List<Classroom>();
+        public static IEnumerable<Classroom> ClassroomList => classroomList;
 
-        public static void AddClassroom(Classroom classroom)
+        public static bool AddClassroom(Classroom classroom)
         {
-            ClassroomList.Add(classroom);
+            if (!classroomList.Any(a => a.Name == classroom.Name))
+            {
+                classroomList.Add(classroom);
+                return true;
+            }
+            return false;
         }
 
-        public static List<Course> CourseList = new List<Course>();
+        static List<Course> courseList = new List<Course>();
+        public static IEnumerable<Course> CourseList => courseList;
 
-        public static void AddCourse(Course course)
+        public static ScheduleManager schedules = new ScheduleManager();
+
+        public static bool AddCourse(Course course)
         {
-            CourseList.Add(course);
+            if (!courseList.Any(a => a.Name == course.Name))
+            {
+                courseList.Add(course);
+                return true;
+            }
+            return false;
         }
 
         public static void SaveUserListToXml()
         {
+            var file = Directory.GetCurrentDirectory();
             XmlSerializer serializer = new XmlSerializer(typeof(List<User>));
-            TextWriter filestream = new StreamWriter(@"C:\Users\timmy\Desktop\gitHub\MOA-grupp3\NyttMOA\NyttMOA\XML Data\userlist.xml");
+            TextWriter filestream = new StreamWriter(file + @"\XML Data\userlist.xml");
             serializer.Serialize(filestream, UserList);
             filestream.Close();
         }
 
         public static void LoadUserListFromXml()
         {
+            var file = Directory.GetCurrentDirectory();
+            if (!File.Exists(file + @"\XML Data\userlist.xml"))
+                return;
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<User>));
-            using (var stream = System.IO.File.OpenRead(@"C:\Users\timmy\Desktop\gitHub\MOA-grupp3\NyttMOA\NyttMOA\XML Data\userlist.xml"))
-                UserList = (List<User>) deSerializer.Deserialize(stream);
+            using (var stream = new StreamReader(file + @"\XML Data\userlist.xml"))
+<<<<<<< HEAD
+                userList = (List<User>)deSerializer.Deserialize(stream);
         }
         
+        public static void SaveScheduleToXml()
+        {
+            var file = Directory.GetCurrentDirectory();
+            XmlSerializer serializer = new XmlSerializer(typeof(List<User>));
+            TextWriter filestream = new StreamWriter(savePath + @"\schedules.xml");
+            serializer.Serialize(filestream, schedules);
+            filestream.Close();
+        }
+
+        public static void LoadScheduleFromXml()
+        {
+            ScheduleManager schedulesTemp;
+            var file = Directory.GetCurrentDirectory();
+            if (!File.Exists(file + @"\XML Data\schedules.xml"))
+                return;
+            XmlSerializer deSerializer = new XmlSerializer(typeof(List<User>));
+            using (var stream = new StreamReader(file + @"\XML Data\schedules.xml"))
+                schedulesTemp = (ScheduleManager)deSerializer.Deserialize(stream);
+
+            foreach (Lesson i in schedulesTemp.Lessons)
+            {
+
+            }
+        }
+=======
+            UserList = (List<User>)deSerializer.Deserialize(stream);
+
+        }
+        public static void SaveClassroomListToXml()
+        {
+            var file = Directory.GetCurrentDirectory();
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Classroom>));
+            TextWriter filestream = new StreamWriter(file + @"\XML Data\classroomlist.xml");
+            serializer.Serialize(filestream, ClassroomList);
+            filestream.Close();
+        }
+
+        public static void LoadClassroomListFromXml()
+        {
+            var file = Directory.GetCurrentDirectory();
+            XmlSerializer deSerializer = new XmlSerializer(typeof(List<Classroom>));
+            using (var stream = new StreamReader(file + @"\XML Data\classroomlist.xml"))
+            ClassroomList = (List<Classroom>)deSerializer.Deserialize(stream);
+
+        }
+
+>>>>>>> 0ec4428e9ab8af9a4af356c49dee4ca5d882b8c0
 
         public static User SearchForUsername(string username)
         {

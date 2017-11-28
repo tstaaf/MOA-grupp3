@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace NyttMOA
 {
+    [XmlInclude(typeof(Classroom))]
     public class Classroom
     {
         public string Name { get; set; }

@@ -148,6 +148,7 @@ namespace NyttMOA
 
     public class Lesson
     {
+        public int ID { get; set; }
         public Classroom Classroom { get; set; }
         public Course Course { get; set; }
         public DateTime StartTime { get; set; }

@@ -57,8 +57,6 @@
     <None Include="App.config" />
     <None Include="app.manifest" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="XML Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
