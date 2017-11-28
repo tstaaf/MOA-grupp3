@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace NyttMOA
 {
@@ -12,6 +13,7 @@ namespace NyttMOA
 
         static void Main()
         {
+            Directory.CreateDirectory(Register.savePath);
             Register.LoadUserListFromXml();
             inloggning();
         }
