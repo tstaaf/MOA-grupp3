@@ -74,7 +74,6 @@ namespace NyttMOA
                 return;
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<User>));
             using (var stream = new StreamReader(file + @"\XML Data\userlist.xml"))
-<<<<<<< HEAD
                 userList = (List<User>)deSerializer.Deserialize(stream);
         }
         
@@ -99,13 +98,16 @@ namespace NyttMOA
 
             foreach (Lesson i in schedulesTemp.Lessons)
             {
+                foreach (Course a in userList.OfType<Course>())
+                {
+                    if (i.Course == a)
+                    {
 
+                    }
+                }
             }
         }
-=======
-            UserList = (List<User>)deSerializer.Deserialize(stream);
 
-        }
         public static void SaveClassroomListToXml()
         {
             var file = Directory.GetCurrentDirectory();
@@ -120,11 +122,9 @@ namespace NyttMOA
             var file = Directory.GetCurrentDirectory();
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<Classroom>));
             using (var stream = new StreamReader(file + @"\XML Data\classroomlist.xml"))
-            ClassroomList = (List<Classroom>)deSerializer.Deserialize(stream);
+            classroomList = (List<Classroom>)deSerializer.Deserialize(stream);
 
         }
-
->>>>>>> 0ec4428e9ab8af9a4af356c49dee4ca5d882b8c0
 
         public static User SearchForUsername(string username)
         {
