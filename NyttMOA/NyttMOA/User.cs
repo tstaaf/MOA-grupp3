@@ -140,6 +140,7 @@ namespace NyttMOA
                                 default:
                                     Console.Clear();
                                     Console.WriteLine("Invalid selection, Try again");
+                                    Console.ReadKey();
                                     break;
                             }
 
@@ -214,6 +215,7 @@ namespace NyttMOA
                                 default:
                                     Console.Clear();
                                     Console.WriteLine("Invalid selection, Try again");
+                                    Console.ReadKey();
                                     break;
                             }
 
@@ -228,6 +230,7 @@ namespace NyttMOA
                             Console.Clear();
                             Console.WriteLine("[1] Display courses");
                             Console.WriteLine("[2] Add Course");
+                            Console.WriteLine("[3] Go back");
 
                             switch (Console.ReadKey().Key)
                             {
@@ -267,6 +270,17 @@ namespace NyttMOA
                                     Register.SaveCourseToXml();
 
                                     break;
+
+                                case ConsoleKey.D3:
+                                    Console.Clear();
+                                    showMenu();
+                                    break;
+
+                                    default:
+                                    Console.Clear();
+                                    Console.WriteLine("Wrong input, try again");
+                                        Console.ReadKey();
+                                        break;
                             }
                         }
                         break;
@@ -305,6 +319,7 @@ namespace NyttMOA
                     default:
                         Console.Clear();
                         Console.WriteLine("Invalid selection, Try again");
+                        Console.ReadKey();
                         break;
                 }
             }
