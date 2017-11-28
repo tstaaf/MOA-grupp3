@@ -58,61 +58,94 @@ namespace NyttMOA
             {
                 Console.Clear();
                 Console.WriteLine(ShowLogInMessage());
-                Console.WriteLine("[1] Add student");
-                Console.WriteLine("[2] Display / remove students");
-                Console.WriteLine("[3] Add teacher");
-                Console.WriteLine("[4] Display / remove teachers");
-                Console.WriteLine("[5] Add course");
-                Console.WriteLine("[6] Display courses");
-                Console.WriteLine("[7] Add classroom");
-                Console.WriteLine("[8] Display classrooms");
-                Console.WriteLine("[9] Schedule");
+                Console.WriteLine("[1] Manage students");
+                Console.WriteLine("[2] Add teacher");
+                Console.WriteLine("[3] Display / remove teachers");
+                Console.WriteLine("[4] Add course");
+                Console.WriteLine("[5] Display courses");
+                Console.WriteLine("[6] Add classroom");
+                Console.WriteLine("[7] Display classrooms");
+                Console.WriteLine("[8] Schedule");
                 Console.WriteLine("[0] Log Out");
 
                 var choice = Console.ReadKey();
 
                 switch (choice.Key)
                 {
+
+
                     case ConsoleKey.D1:
-                        Console.Clear();
-                        Console.WriteLine(" Enter name:  ");
-                        var studentName = Console.ReadLine();
-                        Console.WriteLine("Enter Username:  ");
-                        var studentUserName = Console.ReadLine();
-                        Console.WriteLine("Enter Password:  ");
-                        var studentPassword = Console.ReadLine();
-                        Register.AddUser(new Student(studentName, studentUserName, studentPassword));
-                        Console.WriteLine("Student added!");
-                        Register.SaveUserListToXml();
-
-                        break;
-
-                    case ConsoleKey.D2:
-                        Console.Clear();
+                      
                         var studentRemove = true;
                         while (studentRemove)
+
                         {
-                            int studentIndex;
-                            foreach (var student in Register.UserList.OfType<Student>())
+                            Console.Clear();
+                            Console.WriteLine("[1] Display students");
+                            Console.WriteLine("[2] Add student");
+                            Console.WriteLine("[3] Remove student");
+                            Console.WriteLine("[4] Go back");
+                            
+
+                            switch (Console.ReadKey().Key)
                             {
-                                studentIndex = Register.UserList.OfType<Student>().ToList().IndexOf(student);
-                                Console.WriteLine("[{0}] Name: {1} Username: {2} Password: {3}", studentIndex,
-                                    student.Name, student.UserName, student.Password);
-                            }
-                            Console.WriteLine("Press 1 to remove students or press q o go back");
-                            if (Console.ReadKey().Key == ConsoleKey.D1)
-                            {
-                                Console.WriteLine("Remove student by number: ");
-                                studentIndex = int.Parse(Console.ReadLine());
-                                Register.RemoveUser(Register.UserList.OfType<Student>().ToList()[studentIndex]);
-                                Register.SaveUserListToXml();
-                            } else if (Console.ReadKey().Key == ConsoleKey.Q)
-                            {
-                                showMenu();
+
+                                case ConsoleKey.D1:
+                                    Console.Clear();
+                                    foreach (var student in Register.UserList.OfType<Student>())
+                                    {
+                                        Console.WriteLine("Name: {0} Username: {1} Password: {2}",
+                                            student.Name, student.UserName, student.Password);
+                                    }
+                                    Console.WriteLine("Press any key to go back");
+                                    Console.ReadKey();
+                                    break;
+
+                                case ConsoleKey.D2:
+                                    Console.Clear();
+                                    Console.WriteLine(" Enter name:  ");
+                                    var studentName = Console.ReadLine();
+                                    Console.WriteLine("Enter Username:  ");
+                                    var studentUserName = Console.ReadLine();
+                                    Console.WriteLine("Enter Password:  ");
+                                    var studentPassword = Console.ReadLine();
+                                    Register.AddUser(new Student(studentName, studentUserName, studentPassword));
+                                    Console.WriteLine("Student added!");
+                                    Register.SaveUserListToXml();
+
+                                    break;
+
+                                case ConsoleKey.D3:
+                                    Console.Clear();
+                                    int studentIndex;
+
+                                    foreach (var student in Register.UserList.OfType<Student>())
+                                    {
+                                        studentIndex = Register.UserList.OfType<Student>().ToList().IndexOf(student);
+                                        Console.WriteLine("[{0}] Name: {1} Username: {2} Password: {3}", studentIndex,
+                                            student.Name, student.UserName, student.Password);
+                                    }
+
+                                    Console.WriteLine("Remove student by number: ");
+                                    studentIndex = int.Parse(Console.ReadLine());
+                                    Register.RemoveUser(Register.UserList.OfType<Student>().ToList()[studentIndex]);
+                                    Register.SaveUserListToXml();
+                                    break;
+
+                                case ConsoleKey.D4:
+                                    Console.Clear();
+                                    showMenu();
+                                    break;
+
+
+
+                                default:
+                                    Console.Clear();
+                                    Console.WriteLine("Invalid selection, Try again");
+                                    break;
                             }
 
                         }
-
                         break;
 
                     case ConsoleKey.D3:
@@ -130,13 +163,62 @@ namespace NyttMOA
                         break;
 
                     case ConsoleKey.D4:
-                        Console.Clear();
-                        foreach (var teacher in Register.UserList.OfType<Teacher>())
-                        {
-                            Console.WriteLine("Name: {0} Username: {1} Password: {2}", teacher.Name, teacher.UserName, teacher.Password);
-                        }
-                        Console.ReadLine();
 
+                        var teacherRemove = true;
+                        while (teacherRemove)
+
+                        {
+                            Console.Clear();
+                            Console.WriteLine("[1] Display teachers");
+                            Console.WriteLine("[2] Remove teachers");
+                            Console.WriteLine("[3] Go back");
+
+
+                            switch (Console.ReadKey().Key)
+                            {
+
+                                case ConsoleKey.D1:
+                                    Console.Clear();
+                                    foreach (var teacher in Register.UserList.OfType<Teacher>())
+                                    {
+                                        Console.WriteLine("Name: {0} Username: {1} Password: {2}",
+                                            teacher.Name, teacher.UserName, teacher.Password);
+                                    }
+                                    Console.WriteLine("Press any key to go back");
+                                    Console.ReadKey();
+                                    break;
+
+                                case ConsoleKey.D2:
+                                    Console.Clear();
+                                    int teacherIndex;
+
+                                    foreach (var teacher in Register.UserList.OfType<Teacher>())
+                                    {
+                                        teacherIndex = Register.UserList.OfType<Teacher>().ToList().IndexOf(teacher);
+                                        Console.WriteLine("[{0}] Name: {1} Username: {2} Password: {3}", teacherIndex,
+                                            teacher.Name, teacher.UserName, teacher.Password);
+                                    }
+
+                                    Console.WriteLine("Remove teacher by number: ");
+                                    teacherIndex = int.Parse(Console.ReadLine());
+                                    Register.RemoveUser(Register.UserList.OfType<Teacher>().ToList()[teacherIndex]);
+                                    Register.SaveUserListToXml();
+                                    break;
+
+                                case ConsoleKey.D3:
+                                    Console.Clear();
+                                    showMenu();
+                                    break;
+
+
+
+                                default:
+                                    Console.Clear();
+                                    Console.WriteLine("Invalid selection, Try again");
+                                    break;
+                            }
+
+                        }
                         break;
 
                     case ConsoleKey.D5:
@@ -197,6 +279,10 @@ namespace NyttMOA
                     case ConsoleKey.D0:
                         Console.Clear();
                         Program.inloggning();
+                        break;
+
+                    case ConsoleKey.D9:
+
                         break;
 
                     default:
