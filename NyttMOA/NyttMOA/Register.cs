@@ -65,26 +65,24 @@ namespace NyttMOA
 
         public static void SaveUserListToXml()
         {
-            var file = Directory.GetCurrentDirectory();
             XmlSerializer serializer = new XmlSerializer(typeof(List<User>));
-            TextWriter filestream = new StreamWriter(file + @"\XML Data\userlist.xml");
+            TextWriter filestream = new StreamWriter(savePath + @"\userlist.xml");
             serializer.Serialize(filestream, UserList);
             filestream.Close();
         }
 
         public static void LoadUserListFromXml()
         {
-            var file = Directory.GetCurrentDirectory();
-            if (!File.Exists(file + @"\XML Data\userlist.xml"))
+
+            if (!File.Exists(savePath + @"\userlist.xml"))
                 return;
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<User>));
-            using (var stream = new StreamReader(file + @"\XML Data\userlist.xml"))
+            using (var stream = new StreamReader(savePath + @"\userlist.xml"))
                 userList = (List<User>)deSerializer.Deserialize(stream);
         }
         
         public static void SaveScheduleToXml()
         {
-            var file = Directory.GetCurrentDirectory();
             XmlSerializer serializer = new XmlSerializer(typeof(List<User>));
             TextWriter filestream = new StreamWriter(savePath + @"\schedules.xml");
             serializer.Serialize(filestream, schedules);
@@ -115,20 +113,18 @@ namespace NyttMOA
 
         public static void SaveClassroomListToXml()
         {
-            var file = Directory.GetCurrentDirectory();
             XmlSerializer serializer = new XmlSerializer(typeof(List<Classroom>));
-            TextWriter filestream = new StreamWriter(file + @"\XML Data\classroomlist.xml");
+            TextWriter filestream = new StreamWriter(savePath + @"\classroomlist.xml");
             serializer.Serialize(filestream, ClassroomList);
             filestream.Close();
         }
 
         public static void LoadClassroomListFromXml()
         {
-            var file = Directory.GetCurrentDirectory();
-            if (!File.Exists(file + @"\XML Data\classroom.xml"))
+            if (!File.Exists(savePath + @"\classroom.xml"))
                 return;
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<Classroom>));
-            using (var stream = new StreamReader(file + @"\XML Data\classroomlist.xml"))
+            using (var stream = new StreamReader(savePath + @"\classroomlist.xml"))
             classroomList = (List<Classroom>)deSerializer.Deserialize(stream);
 
         }
