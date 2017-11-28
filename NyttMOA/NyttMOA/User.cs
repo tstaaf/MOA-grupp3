@@ -104,11 +104,9 @@ namespace NyttMOA
                             {
                                 Console.WriteLine("Remove student by number: ");
                                 studentIndex = int.Parse(Console.ReadLine());
-                                Register.UserList.Remove(Register.UserList.OfType<Student>().ToList()[studentIndex]);
+                                Register.RemoveUser(Register.UserList.OfType<Student>().ToList()[studentIndex]);
                                 Register.SaveUserListToXml();
-                            }
-
-                            if (Console.ReadKey().Key == ConsoleKey.Q)
+                            } else if (Console.ReadKey().Key == ConsoleKey.Q)
                             {
                                 showMenu();
                             }

@@ -30,12 +30,17 @@ namespace NyttMOA
             return false;
         }
 
+        public static void RemoveStudent(User user)
+        {
+            userList.Remove(user);
+        }
+
         static List<Classroom> classroomList = new List<Classroom>();
         public static IEnumerable<Classroom> ClassroomList => classroomList;
 
         public static bool AddClassroom(Classroom classroom)
         {
-            if (!classroomList.Any(a => a.Name == classroom.Name))
+            if (classroomList.All(a => a.Name != classroom.Name))
             {
                 classroomList.Add(classroom);
                 return true;
@@ -50,7 +55,7 @@ namespace NyttMOA
 
         public static bool AddCourse(Course course)
         {
-            if (!courseList.Any(a => a.Name == course.Name))
+            if (courseList.All(a => a.Name != course.Name))
             {
                 courseList.Add(course);
                 return true;
