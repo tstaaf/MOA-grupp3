@@ -15,6 +15,7 @@ namespace NyttMOA
         {
             Directory.CreateDirectory(Register.savePath);
             Register.LoadUserListFromXml();
+            Register.LoadClassroomListFromXml();
             inloggning();
         }
 
