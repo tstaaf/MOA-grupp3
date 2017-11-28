@@ -60,11 +60,10 @@ namespace NyttMOA
                 Console.WriteLine(ShowLogInMessage());
                 Console.WriteLine("[1] Manage students");
                 Console.WriteLine("[2] Manage teachers");
-                Console.WriteLine("[4] Add course");
-                Console.WriteLine("[5] Display courses");
-                Console.WriteLine("[6] Add classroom");
-                Console.WriteLine("[7] Display classrooms");
-                Console.WriteLine("[8] Schedule");
+                Console.WriteLine("[3] Manage Courses");
+                Console.WriteLine("[4] Add classroom");
+                Console.WriteLine("[5] Display classrooms");
+                Console.WriteLine("[6] Schedule");
                 Console.WriteLine("[0] Log Out");
 
                 var choice = Console.ReadKey();
@@ -221,42 +220,60 @@ namespace NyttMOA
                         }
                         break;
 
+                    case ConsoleKey.D3:
+                        var courses = true;
+
+                        while (courses)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("[1] Display courses");
+                            Console.WriteLine("[2] Add Course");
+
+                            switch (Console.ReadKey().Key)
+                            {
+
+                                case ConsoleKey.D1:
+                                    Console.Clear();
+                                    foreach (var course in Register.CourseList)
+                                    {
+                                        Console.WriteLine("Course: {0} Startdate: {1} Enddate: {2} Max students: {3} Teacher: {4}", course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher.Name);
+                                    }
+                                    Console.WriteLine("Press any key to go back");
+                                    Console.ReadKey();
+
+                                    break;
+
+                                case ConsoleKey.D2:
+                                    Console.Clear();
+                                    Console.WriteLine("Enter name of the course: ");
+                                    var courseName = Console.ReadLine();
+                                    Console.WriteLine("Enter Startdate of the course: ");
+                                    var startDate = Convert.ToDateTime(Console.ReadLine());
+                                    Console.WriteLine("Enter end date of the course: ");
+                                    var endDate = Convert.ToDateTime(Console.ReadLine());
+                                    Console.WriteLine("Enter max amount of students: ");
+                                    var maxStudents = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine("Pick teacher for the class: ");
+                                    int n;
+                                    foreach (var teacher in Register.UserList.OfType<Teacher>())
+                                    {
+                                        n = Register.UserList.OfType<Teacher>().ToList().IndexOf(teacher);
+                                        Console.WriteLine("[{0}] : {1}", n, teacher.Name);
+                                    }
+
+                                    n = int.Parse(Console.ReadKey().KeyChar.ToString());
+                                    var courseTeacher = Register.UserList.OfType<Teacher>().ToArray()[n];
+                                    Register.AddCourse(new Course(courseName, startDate, endDate, maxStudents, courseTeacher));
+                                    Register.SaveCourseToXml();
+
+                                    break;
+                            }
+                        }
+                        break;
+
+
+
                     case ConsoleKey.D4:
-                        Console.Clear();
-                        Console.WriteLine("Enter name of the course: ");
-                        var courseName = Console.ReadLine();
-                        Console.WriteLine("Enter Startdate of the course: ");
-                        var startDate = Convert.ToDateTime(Console.ReadLine());
-                        Console.WriteLine("Enter end date of the course: ");
-                        var endDate = Convert.ToDateTime(Console.ReadLine());
-                        Console.WriteLine("Enter max amount of students: ");
-                        var maxStudents = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Pick teacher for the class: ");
-                        int n;
-                        foreach (var teacher in Register.UserList.OfType<Teacher>())
-                        {
-                            n = Register.UserList.OfType<Teacher>().ToList().IndexOf(teacher);
-                            Console.WriteLine("[{0}] : {1}", n, teacher.Name);
-                        }
-
-                        n = int.Parse(Console.ReadKey().KeyChar.ToString());
-                        var courseTeacher = Register.UserList.OfType<Teacher>().ToArray()[n];
-                        Register.AddCourse(new Course(courseName, startDate, endDate, maxStudents, courseTeacher));
-                        
-
-                        break;
-
-                    case ConsoleKey.D5:
-                        Console.Clear();
-                        foreach (var course in Register.CourseList)
-                        {
-                            Console.WriteLine("Course: {0} Startdate: {1} Enddate: {2} Max students: {3} Teacher: {4}", course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher.Name);
-                        }
-                        Console.ReadLine();
-
-                        break;
-
-                    case ConsoleKey.D6:
                         Console.WriteLine("Enter name of classroom: ");
                         var a = Console.ReadLine();
                         Console.WriteLine("How many seats are there in the classroom?");
@@ -267,7 +284,7 @@ namespace NyttMOA
                         Console.ReadLine();
                         break;
 
-                    case ConsoleKey.D7:
+                    case ConsoleKey.D5:
                         Console.Clear();
                         foreach (var classroom in Register.ClassroomList)
                         {
@@ -276,13 +293,13 @@ namespace NyttMOA
                         Console.ReadLine();
                         break;
 
+                    case ConsoleKey.D6:
+
+                        break;
+
                     case ConsoleKey.D0:
                         Console.Clear();
                         Program.inloggning();
-                        break;
-
-                    case ConsoleKey.D9:
-
                         break;
 
                     default:

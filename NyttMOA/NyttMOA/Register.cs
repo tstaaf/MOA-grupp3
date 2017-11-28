@@ -81,7 +81,26 @@ namespace NyttMOA
             using (var stream = new StreamReader(file + @"\XML Data\userlist.xml"))
                 userList = (List<User>)deSerializer.Deserialize(stream);
         }
-        
+
+        public static void SaveCourseToXml()
+        {
+            var file = Directory.GetCurrentDirectory();
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Course>));
+            TextWriter filestream = new StreamWriter(savePath + @"\course.xml");
+            serializer.Serialize(filestream, courseList);
+            filestream.Close();
+        }
+
+        public static void LoadcourseFromXml()
+        {
+            var file = Directory.GetCurrentDirectory();
+            if (!File.Exists(file + @"\XML Data\course.xml"))
+                return;
+            XmlSerializer deSerializer = new XmlSerializer(typeof(List<Course>));
+            using (var stream = new StreamReader(file + @"\XML Data\course.xml"))
+                courseList = (List<Course>)deSerializer.Deserialize(stream);
+        }
+
         public static void SaveScheduleToXml()
         {
             var file = Directory.GetCurrentDirectory();

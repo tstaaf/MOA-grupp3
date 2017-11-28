@@ -25,6 +25,11 @@ namespace NyttMOA
             Teacher = teacher;
         }
 
+        public Course()
+        {
+            
+        }
+
         public void AddStudent(Student student)
         {
             students.Add(student);
