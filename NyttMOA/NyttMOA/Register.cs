@@ -133,7 +133,7 @@ namespace NyttMOA
 
         public static void LoadClassroomListFromXml()
         {
-            if (!File.Exists(savePath + @"\classroom.xml"))
+            if (!File.Exists(savePath + @"\classroomlist.xml"))
                 return;
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<Classroom>));
             using (var stream = new StreamReader(savePath + @"\classroomlist.xml"))
