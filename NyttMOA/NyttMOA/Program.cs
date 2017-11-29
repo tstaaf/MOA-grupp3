@@ -24,12 +24,12 @@ namespace NyttMOA
         {
             while (true)
             {
-<<<<<<< HEAD
+
 
                 Console.Write("Username: ");
-=======
+
                 Console.Write("Användarnamn: ");
->>>>>>> 5ef4be088655c4319de85ec8a50bf0d332d32681
+
                 user = Register.SearchForUsername(Console.ReadLine());
 
                 Console.Write("Password: ");
