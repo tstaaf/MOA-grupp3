@@ -13,18 +13,12 @@ namespace NyttMOA
 
         static void Main()
         {
-            //Directory.CreateDirectory(Register.savePath);
-            //Register.LoadUserListFromXml();
-            //Register.LoadClassroomListFromXml();
-            //Register.LoadCourseListFromXml();
-            //Register.LoadScheduleFromXml();
-            //inloggning();
-
-            while (true)
-            {
-                Console.WriteLine("Message: " + MenuManager.CheckTextInput("Name: "));
-                Console.ReadKey();
-            }
+            Directory.CreateDirectory(Register.savePath);
+            Register.LoadUserListFromXml();
+            Register.LoadClassroomListFromXml();
+            Register.LoadCourseListFromXml();
+            Register.LoadScheduleFromXml();
+            inloggning();
         }
 
         public static void inloggning()
@@ -32,6 +26,7 @@ namespace NyttMOA
             while (true)
             {
                 Console.Write("Username: ");
+
                 user = Register.SearchForUsername(Console.ReadLine());
 
                 Console.Write("Password: ");
