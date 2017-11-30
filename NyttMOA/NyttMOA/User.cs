@@ -266,7 +266,7 @@ namespace NyttMOA
                                     n = int.Parse(Console.ReadKey().KeyChar.ToString());
                                     var courseTeacher = Register.UserList.OfType<Teacher>().ToArray()[n];
                                     Register.AddCourse(new Course(courseName, startDate, endDate, maxStudents, courseTeacher));
-                                    Register.SaveCourseToXml();
+                                    Register.SaveCourseListToXml();
 
                                     break;
 

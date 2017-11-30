@@ -39,5 +39,10 @@ namespace NyttMOA
         {
             students.Remove(student);
         }
+
+        public void ReplaceStudents(IEnumerable<Student> newStudents)
+        {
+            students = new List<Student>(newStudents);
+        }
     }
 }

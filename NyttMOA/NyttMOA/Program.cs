@@ -13,23 +13,25 @@ namespace NyttMOA
 
         static void Main()
         {
-            Directory.CreateDirectory(Register.savePath);
-            Register.LoadUserListFromXml();
-            Register.LoadClassroomListFromXml();
-            Register.LoadcourseFromXml();
-            inloggning();
+            //Directory.CreateDirectory(Register.savePath);
+            //Register.LoadUserListFromXml();
+            //Register.LoadClassroomListFromXml();
+            //Register.LoadCourseListFromXml();
+            //Register.LoadScheduleFromXml();
+            //inloggning();
+
+            while (true)
+            {
+                Console.WriteLine("Message: " + MenuManager.CheckTextInput("Name: "));
+                Console.ReadKey();
+            }
         }
 
         public static void inloggning()
         {
             while (true)
             {
-<<<<<<< HEAD
-
                 Console.Write("Username: ");
-=======
-                Console.Write("Användarnamn: ");
->>>>>>> 5ef4be088655c4319de85ec8a50bf0d332d32681
                 user = Register.SearchForUsername(Console.ReadLine());
 
                 Console.Write("Password: ");
