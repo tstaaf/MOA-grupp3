@@ -18,7 +18,12 @@ namespace NyttMOA
         }
 
         static List<User> userList = new List<User>();
+        static List<Course> courseList = new List<Course>();
+        static List<Classroom> classroomList = new List<Classroom>();
+
         public static IEnumerable<User> UserList => userList;
+        public static IEnumerable<Course> CourseList => courseList;
+        public static IEnumerable<Classroom> ClassroomList => classroomList;
 
         public static bool AddUser(User user)
         {
@@ -30,13 +35,15 @@ namespace NyttMOA
             return false;
         }
 
-        public static void RemoveUser(User user)
+        public static bool AddCourse(Course course)
         {
-            userList.Remove(user);
+            if (courseList.All(a => a.Name != course.Name))
+            {
+                courseList.Add(course);
+                return true;
+            }
+            return false;
         }
-
-        static List<Classroom> classroomList = new List<Classroom>();
-        public static IEnumerable<Classroom> ClassroomList => classroomList;
 
         public static bool AddClassroom(Classroom classroom)
         {
@@ -48,20 +55,25 @@ namespace NyttMOA
             return false;
         }
 
-        static List<Course> courseList = new List<Course>();
-        public static IEnumerable<Course> CourseList => courseList;
+
+        public static void RemoveUser(User user)
+        {
+            userList.Remove(user);
+        }
+
+        public static void RemoveCourse(Course course)
+        {
+            courseList.Remove(course);
+        }
+
+        public static void RemoveClassroom(Classroom classroom)
+        {
+            classroomList.Remove(classroom);
+        }
+
+
 
         public static ScheduleManager schedule = new ScheduleManager();
-
-        public static bool AddCourse(Course course)
-        {
-            if (courseList.All(a => a.Name != course.Name))
-            {
-                courseList.Add(course);
-                return true;
-            }
-            return false;
-        }
 
         public static void SaveUserListToXml()
         {

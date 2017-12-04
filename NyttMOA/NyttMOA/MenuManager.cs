@@ -25,10 +25,29 @@ namespace NyttMOA
                 Console.WriteLine(msg);
                 input = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(input))
-                {
                     return input;
+            }
+        }
+
+        public static int CheckIntInput(int min, int max)
+        {
+            while (true)
+            {
+                if (int.TryParse(Console.ReadLine(), out int input))
+                {
+                    if (input >= min && input <= max)
+                    {
+                        return input;
+                    }
+                    Console.WriteLine("Invalid input!");
                 }
             }
+        }
+
+        public static void Pause()
+        {
+            Console.WriteLine("Press any key to go back");
+            Console.ReadKey();
         }
 
         void AdminManageStudents()
@@ -41,21 +60,18 @@ namespace NyttMOA
                     Console.WriteLine("Name: {0} Username: {1} Password: {2}",
                         student.Name, student.UserName, student.Password);
                 }
-                Console.WriteLine("Press any key to go back");
-                Console.ReadKey();
+                Pause();
             }
 
             void AddStudent()
             {
                 Console.Clear();
-                Console.WriteLine(" Enter name:  ");
-                var studentName = Console.ReadLine();
-                Console.WriteLine("Enter Username:  ");
-                var studentUserName = Console.ReadLine();
-                Console.WriteLine("Enter Password:  ");
-                var studentPassword = Console.ReadLine();
-                Register.AddUser(new Student(studentName, studentUserName, studentPassword));
+                Register.AddUser(new Student(
+                    CheckTextInput("Enter name:"),
+                    CheckTextInput("Enter username:"),
+                    CheckTextInput("Enter password:")));
                 Console.WriteLine("Student added!");
+                Pause();
                 Register.SaveUserListToXml();
             }
 
@@ -63,17 +79,20 @@ namespace NyttMOA
             {
                 Console.Clear();
                 int studentIndex;
+                IEnumerable<Student> sample = Register.UserList.OfType<Student>();
 
-                foreach (var student in Register.UserList.OfType<Student>())
+                foreach (var student in sample)
                 {
-                    studentIndex = Register.UserList.OfType<Student>().ToList().IndexOf(student);
+                    studentIndex = sample.ToList().IndexOf(student);
                     Console.WriteLine("[{0}] Name: {1} Username: {2} Password: {3}", studentIndex,
                         student.Name, student.UserName, student.Password);
                 }
 
                 Console.WriteLine("Remove student by number: ");
-                studentIndex = int.Parse(Console.ReadLine());
-                Register.RemoveUser(Register.UserList.OfType<Student>().ToList()[studentIndex]);
+                Register.RemoveUser(sample.ToList()[
+                    CheckIntInput(0, sample.Count() - 1)]);
+                Console.WriteLine("Student removed!");
+                Pause();
                 Register.SaveUserListToXml();
             }
 
@@ -100,12 +119,11 @@ namespace NyttMOA
                         break;
 
                     case ConsoleKey.D4:
-                        user.showMenu();
-                        break;
+                        return;
 
                     default:
                         Console.Clear();
-                        Console.WriteLine("Invalid selection, Try again");
+                        Console.WriteLine("Invalid selection, try again");
                         Console.ReadKey();
                         break;
                 }
@@ -122,21 +140,18 @@ namespace NyttMOA
                     Console.WriteLine("Name: {0} Username: {1} Password: {2}",
                         teacher.Name, teacher.UserName, teacher.Password);
                 }
-                Console.WriteLine("Press any key to go back");
-                Console.ReadKey();
+                Pause();
             }
 
             void AddTeacher()
             {
                 Console.Clear();
-                Console.WriteLine(" Enter name:  ");
-                var teacherName = Console.ReadLine();
-                Console.WriteLine("Enter Username:  ");
-                var teacherUserName = Console.ReadLine();
-                Console.WriteLine("Enter Password:  ");
-                var teacherPassword = Console.ReadLine();
-                Register.AddUser(new Teacher(teacherName, teacherUserName, teacherPassword));
+                Register.AddUser(new Teacher(
+                    CheckTextInput("Enter name:"),
+                    CheckTextInput("Enter username:"),
+                    CheckTextInput("Enter password:")));
                 Console.WriteLine("Teacher added!");
+                Pause();
                 Register.SaveUserListToXml();
             }
 
@@ -144,17 +159,20 @@ namespace NyttMOA
             {
                 Console.Clear();
                 int teacherIndex;
+                IEnumerable<Teacher> sample = Register.UserList.OfType<Teacher>();
 
-                foreach (var teacher in Register.UserList.OfType<Teacher>())
+                foreach (var teacher in sample)
                 {
-                    teacherIndex = Register.UserList.OfType<Teacher>().ToList().IndexOf(teacher);
-                    Console.WriteLine("[{0}] Name: {1} Username: {2} Password: {3}", teacherIndex,
-                        teacher.Name, teacher.UserName, teacher.Password);
+                    teacherIndex = sample.ToList().IndexOf(teacher);
+                    Console.WriteLine("[{0}] Name: {1} Username: {2} Password: {3}",
+                        teacherIndex, teacher.Name, teacher.UserName, teacher.Password);
                 }
 
                 Console.WriteLine("Remove teacher by number: ");
-                teacherIndex = int.Parse(Console.ReadLine());
-                Register.RemoveUser(Register.UserList.OfType<Teacher>().ToList()[teacherIndex]);
+                Register.RemoveUser(sample.ToList()[
+                    CheckIntInput(0, sample.Count() - 1)]);
+                Console.WriteLine("Teacher removed!");
+                Pause();
                 Register.SaveUserListToXml();
             }
 
@@ -182,13 +200,11 @@ namespace NyttMOA
                         break;
 
                     case ConsoleKey.D4:
-                        Console.Clear();
-                        user.showMenu();
-                        break;
+                        return;
 
                     default:
                         Console.Clear();
-                        Console.WriteLine("Invalid selection, Try again");
+                        Console.WriteLine("Invalid selection, try again");
                         Console.ReadKey();
                         break;
                 }
@@ -202,34 +218,52 @@ namespace NyttMOA
                 Console.Clear();
                 foreach (var course in Register.CourseList)
                 {
-                    Console.WriteLine("Course: {0} Startdate: {1} Enddate: {2} Max students: {3} Teacher: {4}", course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher.Name);
+                    Console.WriteLine("Course: {0} Startdate: {1} Enddate: {2} Max students: {3} Teacher: {4}",
+                        course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher.Name);
                 }
-                Console.WriteLine("Press any key to go back");
-                Console.ReadKey();
+                Pause();
             }
 
             void AddCourse()
             {
                 Console.Clear();
-                Console.WriteLine("Enter name of the course: ");
-                var courseName = Console.ReadLine();
-                Console.WriteLine("Enter Startdate of the course: ");
-                var startDate = Convert.ToDateTime(Console.ReadLine());
-                Console.WriteLine("Enter end date of the course: ");
-                var endDate = Convert.ToDateTime(Console.ReadLine());
-                Console.WriteLine("Enter max amount of students: ");
-                var maxStudents = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Pick teacher for the class: ");
+                var courseName = CheckTextInput("Enter name:");
+                var startDate = Convert.ToDateTime(CheckTextInput("Enter start date:"));
+                var endDate = Convert.ToDateTime(CheckTextInput("Enter end date:"));
+                var maxStudents = Convert.ToInt32(CheckTextInput("Enter max amount of students:"));
+
+                Console.WriteLine("Assign teacher: ");
+                IEnumerable<Teacher> sample = Register.UserList.OfType<Teacher>();
                 int n;
-                foreach (var teacher in Register.UserList.OfType<Teacher>())
+                foreach (var teacher in sample)
                 {
-                    n = Register.UserList.OfType<Teacher>().ToList().IndexOf(teacher);
+                    n = sample.ToList().IndexOf(teacher);
                     Console.WriteLine("[{0}] : {1}", n, teacher.Name);
                 }
-
-                n = int.Parse(Console.ReadKey().KeyChar.ToString());
-                var courseTeacher = Register.UserList.OfType<Teacher>().ToArray()[n];
+                var courseTeacher = Register.UserList.OfType<Teacher>().ToArray()[
+                    CheckIntInput(0, sample.Count() - 1)];
                 Register.AddCourse(new Course(courseName, startDate, endDate, maxStudents, courseTeacher));
+                Register.SaveCourseListToXml();
+            }
+
+            void RemoveCourse()
+            {
+                Console.Clear();
+                int courseIndex;
+                IEnumerable<Course> sample = Register.CourseList;
+
+                foreach (var course in sample)
+                {
+                    courseIndex = sample.ToList().IndexOf(course);
+                    Console.WriteLine("Course: {0} Startdate: {1} Enddate: {2} Max students: {3} Teacher: {4}",
+                        course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher.Name);
+                }
+
+                Console.WriteLine("Remove course by number: ");
+                Register.RemoveCourse(sample.ToList()[
+                    CheckIntInput(0, sample.Count() - 1)]);
+                Console.WriteLine("Course removed!");
+                Pause();
                 Register.SaveCourseListToXml();
             }
 
@@ -237,8 +271,9 @@ namespace NyttMOA
             {
                 Console.Clear();
                 Console.WriteLine("[1] Display courses");
-                Console.WriteLine("[2] Add Course");
-                Console.WriteLine("[3] Go back");
+                Console.WriteLine("[2] Add course");
+                Console.WriteLine("[3] Remove course");
+                Console.WriteLine("[4] Go back");
 
                 switch (Console.ReadKey().Key)
                 {
@@ -251,13 +286,17 @@ namespace NyttMOA
                         break;
 
                     case ConsoleKey.D3:
+                        RemoveCourse();
+                        break;
+
+                    case ConsoleKey.D4:
                         Console.Clear();
                         user.showMenu();
                         break;
 
                     default:
                         Console.Clear();
-                        Console.WriteLine("Wrong input, try again");
+                        Console.WriteLine("Invalid selection, try again!");
                         Console.ReadKey();
                         break;
                 }
@@ -273,20 +312,38 @@ namespace NyttMOA
                 {
                     Console.WriteLine("Classroom: {0} Seats: {1}", classroom.Name, classroom.Seats);
                 }
-                Console.ReadLine();
+                Pause();
             }
 
             void AddClassroom()
             {
                 Console.Clear();
-                Console.WriteLine("Enter name of classroom: ");
-                var a = Console.ReadLine();
-                Console.WriteLine("How many seats are there in the classroom?");
-                var b = int.Parse(Console.ReadLine());
+                var a = CheckTextInput("Enter name of classroom:");
+                var b = int.Parse(CheckTextInput("How many seats are there in the classroom?"));
                 Register.AddClassroom(new Classroom(a, b));
                 Register.SaveClassroomListToXml();
                 Console.WriteLine("Classroom added!");
                 Console.ReadLine();
+            }
+
+            void RemoveClassroom()
+            {
+                Console.Clear();
+                int classroomIndex;
+                IEnumerable<Classroom> sample = Register.ClassroomList;
+
+                foreach (var classroom in sample)
+                {
+                    classroomIndex = sample.ToList().IndexOf(classroom);
+                    Console.WriteLine("Classroom: {0} Seats: {1}", classroom.Name, classroom.Seats);
+                }
+
+                Console.WriteLine("Remove classroom by number: ");
+                Register.RemoveClassroom(sample.ToList()[
+                    CheckIntInput(0, sample.Count() - 1)]);
+                Console.WriteLine("Classroom removed!");
+                Pause();
+                Register.SaveClassroomListToXml();
             }
 
             while (true)
@@ -294,22 +351,30 @@ namespace NyttMOA
                 Console.Clear();
                 Console.WriteLine("[1] Display classrooms");
                 Console.WriteLine("[2] Add classroom");
-                Console.WriteLine("[3] Go back");
+                Console.WriteLine("[3] Remove classroom");
+                Console.WriteLine("[4] Go back");
 
                 switch (Console.ReadKey().Key)
                 {
                     case ConsoleKey.D1:
                         DisplayClassrooms();
                         break;
+
                     case ConsoleKey.D2:
                         AddClassroom();
                         break;
+
                     case ConsoleKey.D3:
+                        RemoveClassroom();
+                        break;
+
+                    case ConsoleKey.D4:
                         Console.Clear();
                         user.showMenu();
                         break;
+
                     default:
-                        Console.WriteLine("Invalid choice!");
+                        Console.WriteLine("Invalid selection, try again!");
                         break;
 
                 }
