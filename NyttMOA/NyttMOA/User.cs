@@ -294,7 +294,8 @@ namespace NyttMOA
                             Console.Clear();
                             Console.WriteLine("[1] Display classrooms");
                             Console.WriteLine("[2] Add classroom");
-                            Console.WriteLine("[3] Go back");
+                            Console.WriteLine("[3] Remove classroom");
+                            Console.WriteLine("[4] Go back");
 
                             switch (Console.ReadKey().Key)
                             {
@@ -319,6 +320,22 @@ namespace NyttMOA
                                     Console.ReadLine();
                                     break;
                                 case ConsoleKey.D3:
+                                    Console.Clear();
+                                    int classroomIndex;
+
+                                    foreach (var classroom in Register.ClassroomList.OfType<Classroom>())
+                                    {
+                                        classroomIndex = Register.ClassroomList.OfType<Classroom>().ToList().IndexOf(classroom);
+                                        Console.WriteLine("[{0}] Name: {1} Seats: {2}",
+                                            classroomIndex, classroom.Name, classroom.Seats);
+                                    }
+
+                                    Console.WriteLine("Remove classroom by number: ");
+                                    classroomIndex = int.Parse(Console.ReadLine());
+                                    Register.RemoveClassroom(Register.ClassroomList.OfType<Classroom>().ToList()[classroomIndex]);
+                                    Register.SaveClassroomListToXml();
+                                    break;
+                                case ConsoleKey.D4:
                                     Console.Clear();
                                     showMenu();
                                     break;

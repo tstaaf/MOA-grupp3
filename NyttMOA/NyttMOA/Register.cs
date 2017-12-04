@@ -48,6 +48,11 @@ namespace NyttMOA
             return false;
         }
 
+        public static bool RemoveClassroom(Classroom classroom)
+        {
+            return classroomList.Remove(classroom);
+        }
+
         static List<Course> courseList = new List<Course>();
         public static IEnumerable<Course> CourseList => courseList;
 
