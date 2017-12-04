@@ -62,6 +62,13 @@ namespace NyttMOA
         {
             userList.Remove(user);
             SaveUserListToXml();
+            if (user is Teacher)
+            {
+                foreach (Course course in courseList.Where(a => a.Teacher == user))
+                {
+                    RemoveCourse(course);
+                }
+            }
         }
 
         public void RemoveClassroom(Classroom classroom)
@@ -221,6 +228,13 @@ namespace NyttMOA
                 return password == user.Password;
             }
             return false;
+        }
+
+        public List<string> notificationQueue = new List<string>();
+
+        void OnNotification(object sender, EventArgs e)
+        {
+            //Skicka stuff?
         }
     }
 }

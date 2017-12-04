@@ -263,9 +263,25 @@ namespace NyttMOA
             void AddCourse()
             {
                 Console.Clear();
+                if (Program.register.UserList.OfType<Teacher>().Count() == 0)
+                {
+                    Console.WriteLine("No teachers in the system!");
+                    Pause();
+                    return;
+                }
                 var courseName = CheckTextInput("Enter name:");
-                var startDate = Convert.ToDateTime(CheckTextInput("Enter start date:"));
-                var endDate = Convert.ToDateTime(CheckTextInput("Enter end date:"));
+                DateTime startDate;
+                DateTime endDate;
+                while (true)
+                {
+                    if (DateTime.TryParse(CheckTextInput("Enter start date:"), out startDate))
+                        break;
+                }
+                while (true)
+                {
+                    if (DateTime.TryParse(CheckTextInput("Enter end date:"), out endDate))
+                        break;
+                }
                 var hours = CheckIntInput("Enter total hours:");
                 var maxStudents = CheckIntInput("Enter max amount of students:");
 
@@ -305,7 +321,7 @@ namespace NyttMOA
                 foreach (var course in sample)
                 {
                     courseIndex = sample.ToList().IndexOf(course);
-                    Console.WriteLine("[{0]} Course: {1} Startdate: {2} Enddate: {3} Max students: {4} Teacher: {5}",
+                    Console.WriteLine("{[0]} Course: {1} Startdate: {2} Enddate: {3} Max students: {4} Teacher: {5}",
                         courseIndex, course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher.Name);
                 }
 
