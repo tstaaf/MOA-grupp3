@@ -7,17 +7,18 @@ using System.IO;
 
 namespace NyttMOA
 {
-    class Program
+    public class Program
     {
+        public static Register register { get; set; } = new Register();
         public static User user { get; set; }
 
         static void Main()
         {
-            Directory.CreateDirectory(Register.savePath);
-            Register.LoadUserListFromXml();
-            Register.LoadClassroomListFromXml();
-            Register.LoadCourseListFromXml();
-            Register.LoadScheduleFromXml();
+            Directory.CreateDirectory(register.savePath);
+            register.LoadUserListFromXml();
+            register.LoadClassroomListFromXml();
+            register.LoadCourseListFromXml();
+            register.LoadScheduleFromXml();
             inloggning();
         }
 
@@ -27,11 +28,11 @@ namespace NyttMOA
             {
                 Console.Write("Username: ");
 
-                user = Register.SearchForUsername(Console.ReadLine());
+                user = Program.register.SearchForUsername(Console.ReadLine());
 
                 Console.Write("Password: ");
 
-                if (Register.CheckPassword(user, Console.ReadLine()))
+                if (Program.register.CheckPassword(user, Console.ReadLine()))
                 {
                     Console.Clear();
                     user.showMenu();

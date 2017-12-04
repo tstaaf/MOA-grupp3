@@ -55,7 +55,7 @@ namespace NyttMOA
             void DisplayStudents()
             {
                 Console.Clear();
-                foreach (var student in Register.UserList.OfType<Student>())
+                foreach (var student in Program.register.UserList.OfType<Student>())
                 {
                     Console.WriteLine("Name: {0} Username: {1} Password: {2}",
                         student.Name, student.UserName, student.Password);
@@ -66,20 +66,20 @@ namespace NyttMOA
             void AddStudent()
             {
                 Console.Clear();
-                Register.AddUser(new Student(
+                Program.register.AddUser(new Student(
                     CheckTextInput("Enter name:"),
                     CheckTextInput("Enter username:"),
                     CheckTextInput("Enter password:")));
                 Console.WriteLine("Student added!");
                 Pause();
-                Register.SaveUserListToXml();
+                Program.register.SaveUserListToXml();
             }
 
             void RemoveStudent()
             {
                 Console.Clear();
                 int studentIndex;
-                IEnumerable<Student> sample = Register.UserList.OfType<Student>();
+                IEnumerable<Student> sample = Program.register.UserList.OfType<Student>();
 
                 foreach (var student in sample)
                 {
@@ -89,11 +89,11 @@ namespace NyttMOA
                 }
 
                 Console.WriteLine("Remove student by number: ");
-                Register.RemoveUser(sample.ToList()[
+                Program.register.RemoveUser(sample.ToList()[
                     CheckIntInput(0, sample.Count() - 1)]);
                 Console.WriteLine("Student removed!");
                 Pause();
-                Register.SaveUserListToXml();
+                Program.register.SaveUserListToXml();
             }
 
             while (true)
@@ -135,7 +135,7 @@ namespace NyttMOA
             void DisplayTeachers()
             {
                 Console.Clear();
-                foreach (var teacher in Register.UserList.OfType<Teacher>())
+                foreach (var teacher in Program.register.UserList.OfType<Teacher>())
                 {
                     Console.WriteLine("Name: {0} Username: {1} Password: {2}",
                         teacher.Name, teacher.UserName, teacher.Password);
@@ -146,20 +146,20 @@ namespace NyttMOA
             void AddTeacher()
             {
                 Console.Clear();
-                Register.AddUser(new Teacher(
+                Program.register.AddUser(new Teacher(
                     CheckTextInput("Enter name:"),
                     CheckTextInput("Enter username:"),
                     CheckTextInput("Enter password:")));
                 Console.WriteLine("Teacher added!");
                 Pause();
-                Register.SaveUserListToXml();
+                Program.register.SaveUserListToXml();
             }
 
             void RemoveTeacher()
             {
                 Console.Clear();
                 int teacherIndex;
-                IEnumerable<Teacher> sample = Register.UserList.OfType<Teacher>();
+                IEnumerable<Teacher> sample = Program.register.UserList.OfType<Teacher>();
 
                 foreach (var teacher in sample)
                 {
@@ -169,11 +169,11 @@ namespace NyttMOA
                 }
 
                 Console.WriteLine("Remove teacher by number: ");
-                Register.RemoveUser(sample.ToList()[
+                Program.register.RemoveUser(sample.ToList()[
                     CheckIntInput(0, sample.Count() - 1)]);
                 Console.WriteLine("Teacher removed!");
                 Pause();
-                Register.SaveUserListToXml();
+                Program.register.SaveUserListToXml();
             }
 
             while (true)
@@ -216,7 +216,7 @@ namespace NyttMOA
             void DisplayCourses()
             {
                 Console.Clear();
-                foreach (var course in Register.CourseList)
+                foreach (var course in Program.register.CourseList)
                 {
                     Console.WriteLine("Course: {0} Startdate: {1} Enddate: {2} Max students: {3} Teacher: {4}",
                         course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher.Name);
@@ -233,24 +233,24 @@ namespace NyttMOA
                 var maxStudents = Convert.ToInt32(CheckTextInput("Enter max amount of students:"));
 
                 Console.WriteLine("Assign teacher: ");
-                IEnumerable<Teacher> sample = Register.UserList.OfType<Teacher>();
+                IEnumerable<Teacher> sample = Program.register.UserList.OfType<Teacher>();
                 int n;
                 foreach (var teacher in sample)
                 {
                     n = sample.ToList().IndexOf(teacher);
                     Console.WriteLine("[{0}] : {1}", n, teacher.Name);
                 }
-                var courseTeacher = Register.UserList.OfType<Teacher>().ToArray()[
+                var courseTeacher = Program.register.UserList.OfType<Teacher>().ToArray()[
                     CheckIntInput(0, sample.Count() - 1)];
-                Register.AddCourse(new Course(courseName, startDate, endDate, maxStudents, courseTeacher));
-                Register.SaveCourseListToXml();
+                Program.register.AddCourse(new Course(courseName, startDate, endDate, maxStudents, courseTeacher));
+                Program.register.SaveCourseListToXml();
             }
 
             void RemoveCourse()
             {
                 Console.Clear();
                 int courseIndex;
-                IEnumerable<Course> sample = Register.CourseList;
+                IEnumerable<Course> sample = Program.register.CourseList;
 
                 foreach (var course in sample)
                 {
@@ -260,11 +260,11 @@ namespace NyttMOA
                 }
 
                 Console.WriteLine("Remove course by number: ");
-                Register.RemoveCourse(sample.ToList()[
+                Program.register.RemoveCourse(sample.ToList()[
                     CheckIntInput(0, sample.Count() - 1)]);
                 Console.WriteLine("Course removed!");
                 Pause();
-                Register.SaveCourseListToXml();
+                Program.register.SaveCourseListToXml();
             }
 
             while (true)
@@ -308,7 +308,7 @@ namespace NyttMOA
             void DisplayClassrooms()
             {
                 Console.Clear();
-                foreach (var classroom in Register.ClassroomList)
+                foreach (var classroom in Program.register.ClassroomList)
                 {
                     Console.WriteLine("Classroom: {0} Seats: {1}", classroom.Name, classroom.Seats);
                 }
@@ -320,8 +320,8 @@ namespace NyttMOA
                 Console.Clear();
                 var a = CheckTextInput("Enter name of classroom:");
                 var b = int.Parse(CheckTextInput("How many seats are there in the classroom?"));
-                Register.AddClassroom(new Classroom(a, b));
-                Register.SaveClassroomListToXml();
+                Program.register.AddClassroom(new Classroom(a, b));
+                Program.register.SaveClassroomListToXml();
                 Console.WriteLine("Classroom added!");
                 Console.ReadLine();
             }
@@ -330,7 +330,7 @@ namespace NyttMOA
             {
                 Console.Clear();
                 int classroomIndex;
-                IEnumerable<Classroom> sample = Register.ClassroomList;
+                IEnumerable<Classroom> sample = Program.register.ClassroomList;
 
                 foreach (var classroom in sample)
                 {
@@ -339,11 +339,11 @@ namespace NyttMOA
                 }
 
                 Console.WriteLine("Remove classroom by number: ");
-                Register.RemoveClassroom(sample.ToList()[
+                Program.register.RemoveClassroom(sample.ToList()[
                     CheckIntInput(0, sample.Count() - 1)]);
                 Console.WriteLine("Classroom removed!");
                 Pause();
-                Register.SaveClassroomListToXml();
+                Program.register.SaveClassroomListToXml();
             }
 
             while (true)

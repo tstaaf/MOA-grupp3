@@ -14,16 +14,23 @@ namespace NyttMOA.Tests
         [Test]
         public void AddClassroomAddsAClassRoom()
         {
-            Register.AddClassroom(new Classroom("Sal 1", 23));
-            Assert.AreEqual(1, Register.ClassroomList.Count());
+            var sut = new Register();
+
+            sut.AddClassroom(new Classroom("Sal 1", 23));
+            Assert.AreEqual(1, sut.ClassroomList.Count());
         }
 
         [Test]
-        public void RemoveClassRoomRemovesAClassroom(Classroom classroom)
+        public void RemoveClassRoomRemovesAClassroom()
         {
-            Register.AddClassroom(new Classroom("Test", 20));
-            Register.RemoveClassroom(classroom);
-            Assert.AreEqual(0, Register.ClassroomList);
+            var sut = new Register();
+
+            var classroom = new Classroom("Test", 20);
+
+            sut.AddClassroom(classroom);
+            Assert.AreEqual(1, sut.ClassroomList.Count());
+            sut.RemoveClassroom(classroom);
+            Assert.AreEqual(0, sut.ClassroomList.Count());
         }
         
     }

@@ -89,7 +89,7 @@ namespace NyttMOA
 
                                 case ConsoleKey.D1:
                                     Console.Clear();
-                                    foreach (var student in Register.UserList.OfType<Student>())
+                                    foreach (var student in Program.register.UserList.OfType<Student>())
                                     {
                                         Console.WriteLine("Name: {0} Username: {1} Password: {2}",
                                             student.Name, student.UserName, student.Password);
@@ -106,9 +106,9 @@ namespace NyttMOA
                                     var studentUserName = Console.ReadLine();
                                     Console.WriteLine("Enter Password:  ");
                                     var studentPassword = Console.ReadLine();
-                                    Register.AddUser(new Student(studentName, studentUserName, studentPassword));
+                                    Program.register.AddUser(new Student(studentName, studentUserName, studentPassword));
                                     Console.WriteLine("Student added!");
-                                    Register.SaveUserListToXml();
+                                    Program.register.SaveUserListToXml();
 
                                     break;
 
@@ -116,17 +116,17 @@ namespace NyttMOA
                                     Console.Clear();
                                     int studentIndex;
 
-                                    foreach (var student in Register.UserList.OfType<Student>())
+                                    foreach (var student in Program.register.UserList.OfType<Student>())
                                     {
-                                        studentIndex = Register.UserList.OfType<Student>().ToList().IndexOf(student);
+                                        studentIndex = Program.register.UserList.OfType<Student>().ToList().IndexOf(student);
                                         Console.WriteLine("[{0}] Name: {1} Username: {2} Password: {3}", studentIndex,
                                             student.Name, student.UserName, student.Password);
                                     }
 
                                     Console.WriteLine("Remove student by number: ");
                                     studentIndex = int.Parse(Console.ReadLine());
-                                    Register.RemoveUser(Register.UserList.OfType<Student>().ToList()[studentIndex]);
-                                    Register.SaveUserListToXml();
+                                    Program.register.RemoveUser(Program.register.UserList.OfType<Student>().ToList()[studentIndex]);
+                                    Program.register.SaveUserListToXml();
                                     break;
 
                                 case ConsoleKey.D4:
@@ -164,7 +164,7 @@ namespace NyttMOA
 
                                 case ConsoleKey.D1:
                                     Console.Clear();
-                                    foreach (var teacher in Register.UserList.OfType<Teacher>())
+                                    foreach (var teacher in Program.register.UserList.OfType<Teacher>())
                                     {
                                         Console.WriteLine("Name: {0} Username: {1} Password: {2}",
                                             teacher.Name, teacher.UserName, teacher.Password);
@@ -181,9 +181,9 @@ namespace NyttMOA
                                     var teacherUserName = Console.ReadLine();
                                     Console.WriteLine("Enter Password:  ");
                                     var teacherPassword = Console.ReadLine();
-                                    Register.AddUser(new Teacher(teacherName, teacherUserName, teacherPassword));
+                                    Program.register.AddUser(new Teacher(teacherName, teacherUserName, teacherPassword));
                                     Console.WriteLine("Teacher added!");
-                                    Register.SaveUserListToXml();
+                                    Program.register.SaveUserListToXml();
 
                                     break;
 
@@ -191,17 +191,17 @@ namespace NyttMOA
                                     Console.Clear();
                                     int teacherIndex;
 
-                                    foreach (var teacher in Register.UserList.OfType<Teacher>())
+                                    foreach (var teacher in Program.register.UserList.OfType<Teacher>())
                                     {
-                                        teacherIndex = Register.UserList.OfType<Teacher>().ToList().IndexOf(teacher);
+                                        teacherIndex = Program.register.UserList.OfType<Teacher>().ToList().IndexOf(teacher);
                                         Console.WriteLine("[{0}] Name: {1} Username: {2} Password: {3}", teacherIndex,
                                             teacher.Name, teacher.UserName, teacher.Password);
                                     }
 
                                     Console.WriteLine("Remove teacher by number: ");
                                     teacherIndex = int.Parse(Console.ReadLine());
-                                    Register.RemoveUser(Register.UserList.OfType<Teacher>().ToList()[teacherIndex]);
-                                    Register.SaveUserListToXml();
+                                    Program.register.RemoveUser(Program.register.UserList.OfType<Teacher>().ToList()[teacherIndex]);
+                                    Program.register.SaveUserListToXml();
                                     break;
 
                                 case ConsoleKey.D4:
@@ -236,7 +236,7 @@ namespace NyttMOA
 
                                 case ConsoleKey.D1:
                                     Console.Clear();
-                                    foreach (var course in Register.CourseList)
+                                    foreach (var course in Program.register.CourseList)
                                     {
                                         Console.WriteLine("Course: {0} Startdate: {1} Enddate: {2} Max students: {3} Teacher: {4}", course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher.Name);
                                     }
@@ -257,16 +257,16 @@ namespace NyttMOA
                                     var maxStudents = Convert.ToInt32(Console.ReadLine());
                                     Console.WriteLine("Pick teacher for the class: ");
                                     int n;
-                                    foreach (var teacher in Register.UserList.OfType<Teacher>())
+                                    foreach (var teacher in Program.register.UserList.OfType<Teacher>())
                                     {
-                                        n = Register.UserList.OfType<Teacher>().ToList().IndexOf(teacher);
+                                        n = Program.register.UserList.OfType<Teacher>().ToList().IndexOf(teacher);
                                         Console.WriteLine("[{0}] : {1}", n, teacher.Name);
                                     }
 
                                     n = int.Parse(Console.ReadKey().KeyChar.ToString());
-                                    var courseTeacher = Register.UserList.OfType<Teacher>().ToArray()[n];
-                                    Register.AddCourse(new Course(courseName, startDate, endDate, maxStudents, courseTeacher));
-                                    Register.SaveCourseListToXml();
+                                    var courseTeacher = Program.register.UserList.OfType<Teacher>().ToArray()[n];
+                                    Program.register.AddCourse(new Course(courseName, startDate, endDate, maxStudents, courseTeacher));
+                                    Program.register.SaveCourseListToXml();
 
                                     break;
 
@@ -301,7 +301,7 @@ namespace NyttMOA
                             {
                                 case ConsoleKey.D1:
                                     Console.Clear();
-                                    foreach (var classroom in Register.ClassroomList)
+                                    foreach (var classroom in Program.register.ClassroomList)
                                     {
                                         Console.WriteLine("Classroom: {0} Seats: {1}", classroom.Name, classroom.Seats);
                                     }
@@ -314,8 +314,8 @@ namespace NyttMOA
                                     var a = Console.ReadLine();
                                     Console.WriteLine("How many seats are there in the classroom?");
                                     var b = int.Parse(Console.ReadLine());
-                                    Register.AddClassroom(new Classroom(a, b));
-                                    Register.SaveClassroomListToXml();
+                                    Program.register.AddClassroom(new Classroom(a, b));
+                                    Program.register.SaveClassroomListToXml();
                                     Console.WriteLine("Classroom added!");
                                     Console.ReadLine();
                                     break;
@@ -323,17 +323,17 @@ namespace NyttMOA
                                     Console.Clear();
                                     int classroomIndex;
 
-                                    foreach (var classroom in Register.ClassroomList.OfType<Classroom>())
+                                    foreach (var classroom in Program.register.ClassroomList.OfType<Classroom>())
                                     {
-                                        classroomIndex = Register.ClassroomList.OfType<Classroom>().ToList().IndexOf(classroom);
+                                        classroomIndex = Program.register.ClassroomList.OfType<Classroom>().ToList().IndexOf(classroom);
                                         Console.WriteLine("[{0}] Name: {1} Seats: {2}",
                                             classroomIndex, classroom.Name, classroom.Seats);
                                     }
 
                                     Console.WriteLine("Remove classroom by number: ");
                                     classroomIndex = int.Parse(Console.ReadLine());
-                                    Register.RemoveClassroom(Register.ClassroomList.OfType<Classroom>().ToList()[classroomIndex]);
-                                    Register.SaveClassroomListToXml();
+                                    Program.register.RemoveClassroom(Program.register.ClassroomList.OfType<Classroom>().ToList()[classroomIndex]);
+                                    Program.register.SaveClassroomListToXml();
                                     break;
                                 case ConsoleKey.D4:
                                     Console.Clear();
