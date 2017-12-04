@@ -18,13 +18,13 @@ namespace NyttMOA.Tests
             Assert.AreEqual(1, Register.ClassroomList.Count());
         }
 
-        /*[Test]
+        [Test]
         public void RemoveClassRoomRemovesAClassroom(Classroom classroom)
         {
             Register.AddClassroom(new Classroom("Test", 20));
-            Register.RemoveClassroom();
+            Register.RemoveClassroom(classroom);
             Assert.AreEqual(0, Register.ClassroomList);
-        }*/
+        }
         
     }
 }
