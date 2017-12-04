@@ -138,18 +138,22 @@ namespace NyttMOA
                 switch (Console.ReadKey().Key)
                 {
                     case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
                         DisplayStudents();
                         break;
 
                     case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
                         AddStudent();
                         break;
 
                     case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
                         RemoveStudent();
                         break;
 
                     case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
                         return;
 
                     default:
@@ -224,18 +228,22 @@ namespace NyttMOA
                 {
 
                     case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
                         DisplayTeachers();
                         break;
 
                     case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
                         AddTeacher();
                         break;
 
                     case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
                         RemoveTeacher();
                         break;
 
                     case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
                         return;
 
                     default:
@@ -321,7 +329,7 @@ namespace NyttMOA
                 foreach (var course in sample)
                 {
                     courseIndex = sample.ToList().IndexOf(course);
-                    Console.WriteLine("{[0]} Course: {1} Startdate: {2} Enddate: {3} Max students: {4} Teacher: {5}",
+                    Console.WriteLine("[{0}] Course: {1} Startdate: {2} Enddate: {3} Max students: {4} Teacher: {5}",
                         courseIndex, course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher.Name);
                 }
 
@@ -343,18 +351,22 @@ namespace NyttMOA
                 switch (Console.ReadKey().Key)
                 {
                     case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
                         DisplayCourses();
                         break;
 
                     case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
                         AddCourse();
                         break;
 
                     case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
                         RemoveCourse();
                         break;
 
                     case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
                         Console.Clear();
                         return;
 
@@ -428,18 +440,22 @@ namespace NyttMOA
                 switch (Console.ReadKey().Key)
                 {
                     case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
                         DisplayClassrooms();
                         break;
 
                     case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
                         AddClassroom();
                         break;
 
                     case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
                         RemoveClassroom();
                         break;
 
                     case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
                         return;
 
                     default:

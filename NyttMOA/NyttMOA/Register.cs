@@ -14,7 +14,7 @@ namespace NyttMOA
 
         public Register()
         {
-            AddUser(new Admin("Admin", "admin", "admin"));
+            userList.Add(new Admin("Admin", "admin", "admin"));
         }
 
         List<User> userList = new List<User>();
@@ -68,6 +68,11 @@ namespace NyttMOA
                 {
                     RemoveCourse(course);
                 }
+                var sample = courseList.Where(a => a.Teacher == user).ToList();
+                for (int course = sample.Count() - 1; course >= 0; course--)
+                {
+                    RemoveCourse(sample[course]);
+                }
             }
         }
 
@@ -96,7 +101,6 @@ namespace NyttMOA
 
         public void LoadUserListFromXml()
         {
-
             if (!File.Exists(savePath + @"\userlist.xml"))
                 return;
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<User>));

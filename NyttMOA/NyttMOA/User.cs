@@ -76,27 +76,33 @@ namespace NyttMOA
                 switch (choice.Key)
                 {
                     case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
                         Menus.AdminManageStudents();
                         break;
 
                     case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
                         Menus.AdminManageTeachers();
                         break;
 
                     case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
                         Menus.AdminManageCourses();
                         break;
                         
                     case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
                         Menus.AdminManageClassrooms();
                         break;
 
                     case ConsoleKey.D5:
+                    case ConsoleKey.NumPad5:
                         Menus.AdminSchedule();
                         break;
 
 
                     case ConsoleKey.D0:
+                    case ConsoleKey.NumPad0:
                         Console.Clear();
                         Program.LogIn();
                         break;
