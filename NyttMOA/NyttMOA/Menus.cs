@@ -255,7 +255,7 @@ namespace NyttMOA
                 foreach (var course in Program.register.CourseList)
                 {
                     Console.WriteLine("Course: {0} Startdate: {1} Enddate: {2} Max students: {3} Teacher: {4}",
-                        course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher.Name);
+                        course.Name, course.StartDate, course.EndDate, course.Hours, course.MaxStudents, course.Teacher.Name);
                 }
                 Pause();
             }
@@ -266,7 +266,8 @@ namespace NyttMOA
                 var courseName = CheckTextInput("Enter name:");
                 var startDate = Convert.ToDateTime(CheckTextInput("Enter start date:"));
                 var endDate = Convert.ToDateTime(CheckTextInput("Enter end date:"));
-                var maxStudents = Convert.ToInt32(CheckTextInput("Enter max amount of students:"));
+                var hours = CheckIntInput("Enter total hours:");
+                var maxStudents = CheckIntInput("Enter max amount of students:");
 
                 Console.WriteLine("Assign teacher: ");
                 IEnumerable<Teacher> sample = Program.register.UserList.OfType<Teacher>();
@@ -282,6 +283,7 @@ namespace NyttMOA
                     courseName,
                     startDate,
                     endDate,
+                    hours,
                     maxStudents,
                     courseTeacher)))
                 {
