@@ -22,6 +22,19 @@ namespace NyttMOA
             }
         }
 
+        public static int CheckIntInput(string msg)
+        {
+            while (true)
+            {
+                Console.WriteLine(msg);
+                if (int.TryParse(Console.ReadLine(), out int input))
+                {
+                    return input;
+                }
+                Console.WriteLine("Invalid input!");
+            }
+        }
+
         public static int CheckIntInput(int min, int max)
         {
             while (true)
@@ -80,13 +93,18 @@ namespace NyttMOA
             void AddStudent()
             {
                 Console.Clear();
-                Program.register.AddUser(new Student(
+                if (Program.register.AddUser(new Student(
                     CheckTextInput("Enter name:"),
                     CheckTextInput("Enter username:"),
-                    CheckTextInput("Enter password:")));
-                Console.WriteLine("Student added!");
+                    CheckTextInput("Enter password:"))))
+                {
+                    Console.WriteLine("Student added!");
+                }
+                else
+                {
+                    Console.WriteLine("Name or username is not available!");
+                }
                 Pause();
-                Program.register.SaveUserListToXml();
             }
 
             void RemoveStudent()
@@ -98,8 +116,8 @@ namespace NyttMOA
                 foreach (var student in sample)
                 {
                     studentIndex = sample.ToList().IndexOf(student);
-                    Console.WriteLine("[{0}] Name: {1} Username: {2} Password: {3}", studentIndex,
-                        student.Name, student.UserName, student.Password);
+                    Console.WriteLine("[{0}] Name: {1} Username: {2} Password: {3}",
+                        studentIndex, student.Name, student.UserName, student.Password);
                 }
 
                 Console.WriteLine("Remove student by number: ");
@@ -107,7 +125,6 @@ namespace NyttMOA
                     CheckIntInput(0, sample.Count() - 1)]);
                 Console.WriteLine("Student removed!");
                 Pause();
-                Program.register.SaveUserListToXml();
             }
 
             while (true)
@@ -160,13 +177,19 @@ namespace NyttMOA
             void AddTeacher()
             {
                 Console.Clear();
-                Program.register.AddUser(new Teacher(
+                if (Program.register.AddUser(new Teacher(
                     CheckTextInput("Enter name:"),
                     CheckTextInput("Enter username:"),
-                    CheckTextInput("Enter password:")));
-                Console.WriteLine("Teacher added!");
+                    CheckTextInput("Enter password:"))))
+                {
+                    Console.WriteLine("Teacher added!");
+                }
+                else
+                {
+                    Console.WriteLine("Name or username is not available");
+                }
+                
                 Pause();
-                Program.register.SaveUserListToXml();
             }
 
             void RemoveTeacher()
@@ -187,7 +210,6 @@ namespace NyttMOA
                     CheckIntInput(0, sample.Count() - 1)]);
                 Console.WriteLine("Teacher removed!");
                 Pause();
-                Program.register.SaveUserListToXml();
             }
 
             while (true)
@@ -256,8 +278,20 @@ namespace NyttMOA
                 }
                 var courseTeacher = Program.register.UserList.OfType<Teacher>().ToArray()[
                     CheckIntInput(0, sample.Count() - 1)];
-                Program.register.AddCourse(new Course(courseName, startDate, endDate, maxStudents, courseTeacher));
-                Program.register.SaveCourseListToXml();
+                if (Program.register.AddCourse(new Course(
+                    courseName,
+                    startDate,
+                    endDate,
+                    maxStudents,
+                    courseTeacher)))
+                {
+                    Console.WriteLine("Course added!");
+                }
+                else
+                {
+                    Console.WriteLine("Name not available!");
+                }
+                Pause();
             }
 
             void RemoveCourse()
@@ -269,8 +303,8 @@ namespace NyttMOA
                 foreach (var course in sample)
                 {
                     courseIndex = sample.ToList().IndexOf(course);
-                    Console.WriteLine("Course: {0} Startdate: {1} Enddate: {2} Max students: {3} Teacher: {4}",
-                        course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher.Name);
+                    Console.WriteLine("[{0]} Course: {1} Startdate: {2} Enddate: {3} Max students: {4} Teacher: {5}",
+                        courseIndex, course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher.Name);
                 }
 
                 Console.WriteLine("Remove course by number: ");
@@ -278,7 +312,6 @@ namespace NyttMOA
                     CheckIntInput(0, sample.Count() - 1)]);
                 Console.WriteLine("Course removed!");
                 Pause();
-                Program.register.SaveCourseListToXml();
             }
 
             while (true)
@@ -331,11 +364,18 @@ namespace NyttMOA
             void AddClassroom()
             {
                 Console.Clear();
-                var a = CheckTextInput("Enter name of classroom:");
-                var b = int.Parse(CheckTextInput("How many seats are there in the classroom?"));
-                Program.register.AddClassroom(new Classroom(a, b));
-                Program.register.SaveClassroomListToXml();
-                Console.WriteLine("Classroom added!");
+                var classroomName = CheckTextInput("Enter name of classroom:");
+                var classroomSeats = CheckIntInput("How many seats are there in the classroom?");
+                if (Program.register.AddClassroom(new Classroom(
+                    classroomName,
+                    classroomSeats)))
+                {
+                    Console.WriteLine("Classroom added!");
+                }
+                else
+                {
+                    Console.WriteLine("Name not available!");
+                }
                 Pause();
             }
 
@@ -348,7 +388,8 @@ namespace NyttMOA
                 foreach (var classroom in sample)
                 {
                     classroomIndex = sample.ToList().IndexOf(classroom);
-                    Console.WriteLine("Classroom: {0} Seats: {1}", classroom.Name, classroom.Seats);
+                    Console.WriteLine("[{0}] Classroom: {1} Seats: {2}",
+                        classroomIndex, classroom.Name, classroom.Seats);
                 }
 
                 Console.WriteLine("Remove classroom by number: ");
@@ -356,7 +397,6 @@ namespace NyttMOA
                     CheckIntInput(0, sample.Count() - 1)]);
                 Console.WriteLine("Classroom removed!");
                 Pause();
-                Program.register.SaveClassroomListToXml();
             }
 
             while (true)

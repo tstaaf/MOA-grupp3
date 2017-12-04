@@ -18,6 +18,8 @@ namespace NyttMOA
         public string UserName { get; set; }
         public string Password { get; set; }
 
+        public delegate void NotificationEventHandler(object sender, EventArgs e);
+
         public User(string name, string username, string password)
         {
             Name = name;
@@ -25,21 +27,25 @@ namespace NyttMOA
             Password = password;
         }
 
-        public abstract void showMenu();
-
         public User()
         {
-            
+
         }
 
         public string ShowLogInMessage()
         {
             return "Logged in as " + Name;
         }
+
+        public abstract void showMenu();
+
+        public abstract void GetNotifications();
     }
     
     public class Admin : User
     {
+        event NotificationEventHandler AdminNotifications;
+
         public Admin(string name, string username, string password) : base(name, username, password)
         {
 
@@ -98,15 +104,22 @@ namespace NyttMOA
                     default:
                         Console.Clear();
                         Console.WriteLine("Invalid selection, try again");
-                        Console.ReadKey();
+                        Menus.Pause();
                         break;
                 }
             }
+        }
+
+        public override void GetNotifications()
+        {
+            AdminNotifications(this, null);
         }
     }
 
     public class Student : User
     {
+        event NotificationEventHandler StudentNotifications;
+
         public string Grade { get; set; }
 
         public Student(string name, string username, string password) : base(name, username, password)
@@ -152,15 +165,24 @@ namespace NyttMOA
                         break;
 
                     default:
-                        Console.WriteLine("Invalid selection, Try again");
+                        Console.Clear();
+                        Console.WriteLine("Invalid selection, try again");
+                        Menus.Pause();
                         break;
                 }
             }
+        }
+
+        public override void GetNotifications()
+        {
+            StudentNotifications(this, null);
         }
     }
 
     public class Teacher : User
     {
+        event NotificationEventHandler TeacherNotifications;
+
         public Teacher(string name, string username, string password) : base(name, username, password)
         {
 
@@ -210,10 +232,17 @@ namespace NyttMOA
                         break;
 
                     default:
-                        Console.WriteLine("Invalid selection, Try again");
+                        Console.Clear();
+                        Console.WriteLine("Invalid selection, try again");
+                        Menus.Pause();
                         break;
                 }
             }
+        }
+
+        public override void GetNotifications()
+        {
+            TeacherNotifications(this, null);
         }
     }
 }

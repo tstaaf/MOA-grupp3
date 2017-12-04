@@ -30,6 +30,7 @@ namespace NyttMOA
             if (!userList.Any(a => a.Name == user.Name || a.UserName == user.UserName))
             {
                 userList.Add(user);
+                SaveUserListToXml();
                 return true;
             }
             return false;
@@ -40,6 +41,7 @@ namespace NyttMOA
             if (courseList.All(a => a.Name != course.Name))
             {
                 courseList.Add(course);
+                SaveCourseListToXml();
                 return true;
             }
             return false;
@@ -50,6 +52,7 @@ namespace NyttMOA
             if (classroomList.All(a => a.Name != classroom.Name))
             {
                 classroomList.Add(classroom);
+                SaveClassroomListToXml();
                 return true;
             }
             return false;
@@ -58,16 +61,19 @@ namespace NyttMOA
         public void RemoveUser(User user)
         {
             userList.Remove(user);
+            SaveUserListToXml();
         }
 
-        public bool RemoveClassroom(Classroom classroom)
+        public void RemoveClassroom(Classroom classroom)
         {
-            return classroomList.Remove(classroom);
+            classroomList.Remove(classroom);
+            SaveClassroomListToXml();
         }
 
         public void RemoveCourse(Course course)
         {
             courseList.Remove(course);
+            SaveCourseListToXml();
         }
 
 
