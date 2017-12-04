@@ -6,15 +6,8 @@ using System.Threading.Tasks;
 
 namespace NyttMOA
 {
-    public class MenuManager
+    public static class Menus
     {
-        User user;
-
-        public MenuManager(User _user)
-        {
-            user = _user;
-        }
-
         public static string CheckTextInput(string msg)
         {
             string input;
@@ -50,7 +43,28 @@ namespace NyttMOA
             Console.ReadKey();
         }
 
-        void AdminManageStudents()
+
+        public static User LogIn()
+        {
+            while (true)
+            {
+                Console.Clear();
+                User user = Program.register.SearchForUsername(CheckTextInput("Username:"));
+
+                if (Program.register.CheckPassword(user, CheckTextInput("Password:")))
+                {
+                    return user;
+                }
+                else
+                {
+                    Console.WriteLine("Wrong username or password.");
+                    Pause();
+                }
+            }
+        }
+
+
+        public static void AdminManageStudents()
         {
             void DisplayStudents()
             {
@@ -124,13 +138,13 @@ namespace NyttMOA
                     default:
                         Console.Clear();
                         Console.WriteLine("Invalid selection, try again");
-                        Console.ReadKey();
+                        Pause();
                         break;
                 }
             }
         }
 
-        void AdminManageTeachers()
+        public static void AdminManageTeachers()
         {
             void DisplayTeachers()
             {
@@ -205,13 +219,13 @@ namespace NyttMOA
                     default:
                         Console.Clear();
                         Console.WriteLine("Invalid selection, try again");
-                        Console.ReadKey();
+                        Pause();
                         break;
                 }
             }
         }
 
-        void AdminManageCourses()
+        public static void AdminManageCourses()
         {
             void DisplayCourses()
             {
@@ -291,19 +305,18 @@ namespace NyttMOA
 
                     case ConsoleKey.D4:
                         Console.Clear();
-                        user.showMenu();
-                        break;
+                        return;
 
                     default:
                         Console.Clear();
                         Console.WriteLine("Invalid selection, try again!");
-                        Console.ReadKey();
+                        Pause();
                         break;
                 }
             }
         }
 
-        void AdminManageClassrooms()
+        public static void AdminManageClassrooms()
         {
             void DisplayClassrooms()
             {
@@ -323,7 +336,7 @@ namespace NyttMOA
                 Program.register.AddClassroom(new Classroom(a, b));
                 Program.register.SaveClassroomListToXml();
                 Console.WriteLine("Classroom added!");
-                Console.ReadLine();
+                Pause();
             }
 
             void RemoveClassroom()
@@ -369,9 +382,7 @@ namespace NyttMOA
                         break;
 
                     case ConsoleKey.D4:
-                        Console.Clear();
-                        user.showMenu();
-                        break;
+                        return;
 
                     default:
                         Console.WriteLine("Invalid selection, try again!");
@@ -381,14 +392,9 @@ namespace NyttMOA
             }
         }
 
-        void AdminSchedule()
+        public static void AdminSchedule() // Inte färdig
         {
-
-
-            while (true)
-            {
-
-            }
+            return;
         }
     }
 }

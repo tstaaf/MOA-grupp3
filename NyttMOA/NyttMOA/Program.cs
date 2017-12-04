@@ -19,32 +19,13 @@ namespace NyttMOA
             register.LoadClassroomListFromXml();
             register.LoadCourseListFromXml();
             register.LoadScheduleFromXml();
-            inloggning();
+            LogIn();
         }
 
-        public static void inloggning()
+        public static void LogIn()
         {
-            while (true)
-            {
-                Console.Write("Username: ");
-
-                user = Program.register.SearchForUsername(Console.ReadLine());
-
-                Console.Write("Password: ");
-
-                if (Program.register.CheckPassword(user, Console.ReadLine()))
-                {
-                    Console.Clear();
-                    user.showMenu();
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Wrong username or password.");
-                    continue;
-                }
-                break;
-            }
+            user = Menus.LogIn();
+            user.showMenu();
         }
     }
 }

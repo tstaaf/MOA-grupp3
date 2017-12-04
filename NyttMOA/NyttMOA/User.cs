@@ -60,7 +60,7 @@ namespace NyttMOA
                 Console.WriteLine(ShowLogInMessage());
                 Console.WriteLine("[1] Manage students");
                 Console.WriteLine("[2] Manage teachers");
-                Console.WriteLine("[3] Manage Courses");
+                Console.WriteLine("[3] Manage courses");
                 Console.WriteLine("[4] Manage classrooms");
                 Console.WriteLine("[5] Schedule");
                 Console.WriteLine("[0] Log Out");
@@ -69,296 +69,35 @@ namespace NyttMOA
 
                 switch (choice.Key)
                 {
-
-
                     case ConsoleKey.D1:
-                      
-                        var studentRemove = true;
-                        while (studentRemove)
-
-                        {
-                            Console.Clear();
-                            Console.WriteLine("[1] Display students");
-                            Console.WriteLine("[2] Add student");
-                            Console.WriteLine("[3] Remove student");
-                            Console.WriteLine("[4] Go back");
-                            
-
-                            switch (Console.ReadKey().Key)
-                            {
-
-                                case ConsoleKey.D1:
-                                    Console.Clear();
-                                    foreach (var student in Program.register.UserList.OfType<Student>())
-                                    {
-                                        Console.WriteLine("Name: {0} Username: {1} Password: {2}",
-                                            student.Name, student.UserName, student.Password);
-                                    }
-                                    Console.WriteLine("Press any key to go back");
-                                    Console.ReadKey();
-                                    break;
-
-                                case ConsoleKey.D2:
-                                    Console.Clear();
-                                    Console.WriteLine(" Enter name:  ");
-                                    var studentName = Console.ReadLine();
-                                    Console.WriteLine("Enter Username:  ");
-                                    var studentUserName = Console.ReadLine();
-                                    Console.WriteLine("Enter Password:  ");
-                                    var studentPassword = Console.ReadLine();
-                                    Program.register.AddUser(new Student(studentName, studentUserName, studentPassword));
-                                    Console.WriteLine("Student added!");
-                                    Program.register.SaveUserListToXml();
-
-                                    break;
-
-                                case ConsoleKey.D3:
-                                    Console.Clear();
-                                    int studentIndex;
-
-                                    foreach (var student in Program.register.UserList.OfType<Student>())
-                                    {
-                                        studentIndex = Program.register.UserList.OfType<Student>().ToList().IndexOf(student);
-                                        Console.WriteLine("[{0}] Name: {1} Username: {2} Password: {3}", studentIndex,
-                                            student.Name, student.UserName, student.Password);
-                                    }
-
-                                    Console.WriteLine("Remove student by number: ");
-                                    studentIndex = int.Parse(Console.ReadLine());
-                                    Program.register.RemoveUser(Program.register.UserList.OfType<Student>().ToList()[studentIndex]);
-                                    Program.register.SaveUserListToXml();
-                                    break;
-
-                                case ConsoleKey.D4:
-                                    Console.Clear();
-                                    showMenu();
-                                    break;
-
-
-
-                                default:
-                                    Console.Clear();
-                                    Console.WriteLine("Invalid selection, Try again");
-                                    Console.ReadKey();
-                                    break;
-                            }
-
-                        }
+                        Menus.AdminManageStudents();
                         break;
 
                     case ConsoleKey.D2:
-
-                        var teacherRemove = true;
-                        while (teacherRemove)
-
-                        {
-                            Console.Clear();
-                            Console.WriteLine("[1] Display teachers");
-                            Console.WriteLine("[2] Add Teacher");
-                            Console.WriteLine("[3] Remove teachers");
-                            Console.WriteLine("[4] Go back");
-
-
-                            switch (Console.ReadKey().Key)
-                            {
-
-                                case ConsoleKey.D1:
-                                    Console.Clear();
-                                    foreach (var teacher in Program.register.UserList.OfType<Teacher>())
-                                    {
-                                        Console.WriteLine("Name: {0} Username: {1} Password: {2}",
-                                            teacher.Name, teacher.UserName, teacher.Password);
-                                    }
-                                    Console.WriteLine("Press any key to go back");
-                                    Console.ReadKey();
-                                    break;
-
-                                case ConsoleKey.D2:
-                                    Console.Clear();
-                                    Console.WriteLine(" Enter name:  ");
-                                    var teacherName = Console.ReadLine();
-                                    Console.WriteLine("Enter Username:  ");
-                                    var teacherUserName = Console.ReadLine();
-                                    Console.WriteLine("Enter Password:  ");
-                                    var teacherPassword = Console.ReadLine();
-                                    Program.register.AddUser(new Teacher(teacherName, teacherUserName, teacherPassword));
-                                    Console.WriteLine("Teacher added!");
-                                    Program.register.SaveUserListToXml();
-
-                                    break;
-
-                                case ConsoleKey.D3:
-                                    Console.Clear();
-                                    int teacherIndex;
-
-                                    foreach (var teacher in Program.register.UserList.OfType<Teacher>())
-                                    {
-                                        teacherIndex = Program.register.UserList.OfType<Teacher>().ToList().IndexOf(teacher);
-                                        Console.WriteLine("[{0}] Name: {1} Username: {2} Password: {3}", teacherIndex,
-                                            teacher.Name, teacher.UserName, teacher.Password);
-                                    }
-
-                                    Console.WriteLine("Remove teacher by number: ");
-                                    teacherIndex = int.Parse(Console.ReadLine());
-                                    Program.register.RemoveUser(Program.register.UserList.OfType<Teacher>().ToList()[teacherIndex]);
-                                    Program.register.SaveUserListToXml();
-                                    break;
-
-                                case ConsoleKey.D4:
-                                    Console.Clear();
-                                    showMenu();
-                                    break;
-
-
-
-                                default:
-                                    Console.Clear();
-                                    Console.WriteLine("Invalid selection, Try again");
-                                    Console.ReadKey();
-                                    break;
-                            }
-
-                        }
+                        Menus.AdminManageTeachers();
                         break;
 
                     case ConsoleKey.D3:
-                        var courses = true;
-
-                        while (courses)
-                        {
-                            Console.Clear();
-                            Console.WriteLine("[1] Display courses");
-                            Console.WriteLine("[2] Add Course");
-                            Console.WriteLine("[3] Go back");
-
-                            switch (Console.ReadKey().Key)
-                            {
-
-                                case ConsoleKey.D1:
-                                    Console.Clear();
-                                    foreach (var course in Program.register.CourseList)
-                                    {
-                                        Console.WriteLine("Course: {0} Startdate: {1} Enddate: {2} Max students: {3} Teacher: {4}", course.Name, course.StartDate, course.EndDate, course.MaxStudents, course.Teacher.Name);
-                                    }
-                                    Console.WriteLine("Press any key to go back");
-                                    Console.ReadKey();
-
-                                    break;
-
-                                case ConsoleKey.D2:
-                                    Console.Clear();
-                                    Console.WriteLine("Enter name of the course: ");
-                                    var courseName = Console.ReadLine();
-                                    Console.WriteLine("Enter Startdate of the course: ");
-                                    var startDate = Convert.ToDateTime(Console.ReadLine());
-                                    Console.WriteLine("Enter end date of the course: ");
-                                    var endDate = Convert.ToDateTime(Console.ReadLine());
-                                    Console.WriteLine("Enter max amount of students: ");
-                                    var maxStudents = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine("Pick teacher for the class: ");
-                                    int n;
-                                    foreach (var teacher in Program.register.UserList.OfType<Teacher>())
-                                    {
-                                        n = Program.register.UserList.OfType<Teacher>().ToList().IndexOf(teacher);
-                                        Console.WriteLine("[{0}] : {1}", n, teacher.Name);
-                                    }
-
-                                    n = int.Parse(Console.ReadKey().KeyChar.ToString());
-                                    var courseTeacher = Program.register.UserList.OfType<Teacher>().ToArray()[n];
-                                    Program.register.AddCourse(new Course(courseName, startDate, endDate, maxStudents, courseTeacher));
-                                    Program.register.SaveCourseListToXml();
-
-                                    break;
-
-                                case ConsoleKey.D3:
-                                    Console.Clear();
-                                    showMenu();
-                                    break;
-
-                                    default:
-                                    Console.Clear();
-                                    Console.WriteLine("Wrong input, try again");
-                                        Console.ReadKey();
-                                        break;
-                            }
-                        }
+                        Menus.AdminManageCourses();
                         break;
                         
-
-
                     case ConsoleKey.D4:
-                        var classrooms = true;
-
-                        while (classrooms)
-                        {
-                            Console.Clear();
-                            Console.WriteLine("[1] Display classrooms");
-                            Console.WriteLine("[2] Add classroom");
-                            Console.WriteLine("[3] Remove classroom");
-                            Console.WriteLine("[4] Go back");
-
-                            switch (Console.ReadKey().Key)
-                            {
-                                case ConsoleKey.D1:
-                                    Console.Clear();
-                                    foreach (var classroom in Program.register.ClassroomList)
-                                    {
-                                        Console.WriteLine("Classroom: {0} Seats: {1}", classroom.Name, classroom.Seats);
-                                    }
-                                    Console.ReadLine();
-                                    break;
-                                case ConsoleKey.D2:
-
-                                    Console.Clear();
-                                    Console.WriteLine("Enter name of classroom: ");
-                                    var a = Console.ReadLine();
-                                    Console.WriteLine("How many seats are there in the classroom?");
-                                    var b = int.Parse(Console.ReadLine());
-                                    Program.register.AddClassroom(new Classroom(a, b));
-                                    Program.register.SaveClassroomListToXml();
-                                    Console.WriteLine("Classroom added!");
-                                    Console.ReadLine();
-                                    break;
-                                case ConsoleKey.D3:
-                                    Console.Clear();
-                                    int classroomIndex;
-
-                                    foreach (var classroom in Program.register.ClassroomList.OfType<Classroom>())
-                                    {
-                                        classroomIndex = Program.register.ClassroomList.OfType<Classroom>().ToList().IndexOf(classroom);
-                                        Console.WriteLine("[{0}] Name: {1} Seats: {2}",
-                                            classroomIndex, classroom.Name, classroom.Seats);
-                                    }
-
-                                    Console.WriteLine("Remove classroom by number: ");
-                                    classroomIndex = int.Parse(Console.ReadLine());
-                                    Program.register.RemoveClassroom(Program.register.ClassroomList.OfType<Classroom>().ToList()[classroomIndex]);
-                                    Program.register.SaveClassroomListToXml();
-                                    break;
-                                case ConsoleKey.D4:
-                                    Console.Clear();
-                                    showMenu();
-                                    break;
-                                default:
-                                    Console.WriteLine("Invalid choice!");
-                                    break;
-
-                            }
-                        }
+                        Menus.AdminManageClassrooms();
                         break;
 
                     case ConsoleKey.D5:
+                        Menus.AdminSchedule();
                         break;
 
 
                     case ConsoleKey.D0:
                         Console.Clear();
-                        Program.inloggning();
+                        Program.LogIn();
                         break;
 
                     default:
                         Console.Clear();
-                        Console.WriteLine("Invalid selection, Try again");
+                        Console.WriteLine("Invalid selection, try again");
                         Console.ReadKey();
                         break;
                 }
@@ -409,7 +148,7 @@ namespace NyttMOA
                     case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
                         Console.Clear();
-                        Program.inloggning();
+                        Program.LogIn();
                         break;
 
                     default:
@@ -467,7 +206,7 @@ namespace NyttMOA
                     case ConsoleKey.D4:
                     case ConsoleKey.NumPad4:
                         Console.Clear();
-                        Program.inloggning();
+                        Program.LogIn();
                         break;
 
                     default:
