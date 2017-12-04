@@ -55,22 +55,20 @@ namespace NyttMOA
             return false;
         }
 
-
         public static void RemoveUser(User user)
         {
             userList.Remove(user);
+        }
+
+        public static bool RemoveClassroom(Classroom classroom)
+        {
+            return classroomList.Remove(classroom);
         }
 
         public static void RemoveCourse(Course course)
         {
             courseList.Remove(course);
         }
-
-        public static void RemoveClassroom(Classroom classroom)
-        {
-            classroomList.Remove(classroom);
-        }
-
 
 
         public static ScheduleManager schedule = new ScheduleManager();
