@@ -13,7 +13,21 @@ namespace NyttMOA
 
         public Schedule GetSchedule(Student student)
         {
-            return new Schedule(mainSchedule.Lessons.Where(a => a.Course.Students.Contains(student)));
+            List<Lesson> lessons = new List<Lesson>();
+
+            foreach (Lesson lesson in mainSchedule.Lessons)
+            {
+                foreach (StudentData studentData in lesson.Course.Students)
+                {
+                    if (studentData.Student == student)
+                    {
+                        lessons.Add(lesson);
+                        break;
+                    }
+                }
+            }
+
+            return new Schedule(lessons);
         }
 
         public Schedule GetSchedule(Teacher teacher)
@@ -29,6 +43,11 @@ namespace NyttMOA
         public Schedule GetSchedule(Course course)
         {
             return new Schedule(mainSchedule.Lessons.Where(a => a.Course == course));
+        }
+
+        public Schedule GetSchedule(DateTime startDate, DateTime endDate)
+        {
+            return new Schedule(mainSchedule.Lessons.Where(a => a.StartTime >= startDate && a.EndTime <= endDate));
         }
 
         public Schedule GetSchedule(Student student, DateTime startDate, DateTime endDate)
@@ -54,8 +73,8 @@ namespace NyttMOA
 
         public bool AddLesson(Lesson lesson)
         {
-            if (!LessonCanBeScheduled(lesson)) return false;
-            //lesson.ID = GenerateNewLessonID();
+            if (!LessonCanBeScheduled(lesson))
+                return false;
             mainSchedule.AddLesson(lesson);
             return true;
         }
@@ -157,7 +176,7 @@ namespace NyttMOA
             {
                 output += i + Environment.NewLine;
             }
-            return output + ";----------";
+            return output + "----------";
         }
     }
 
@@ -174,6 +193,11 @@ namespace NyttMOA
             Course = course;
             StartTime = startTime;
             EndTime = endTime;
+        }
+
+        public Lesson()
+        {
+
         }
 
         public override string ToString()

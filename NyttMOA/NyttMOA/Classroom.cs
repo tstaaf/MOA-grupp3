@@ -23,5 +23,10 @@ namespace NyttMOA
         {
 
         }
+
+        public override string ToString()
+        {
+            return "Name: " + Name + " Number of seats: " + Seats;
+        }
     }
 }
