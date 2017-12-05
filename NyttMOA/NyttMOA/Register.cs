@@ -126,20 +126,18 @@ namespace NyttMOA
 
         public void SaveCourseListToXml()
         {
-            var file = Directory.GetCurrentDirectory();
             XmlSerializer serializer = new XmlSerializer(typeof(List<Course>));
-            TextWriter filestream = new StreamWriter(savePath + @"\course.xml");
+            TextWriter filestream = new StreamWriter(savePath + @"\courseList.xml");
             serializer.Serialize(filestream, courseList);
             filestream.Close();
         }
 
         public void LoadCourseListFromXml()
         {
-            var file = Directory.GetCurrentDirectory();
-            if (!File.Exists(file + @"\XML Data\course.xml"))
+            if (!File.Exists(savePath + @"\courseList.xml"))
                 return;
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<Course>));
-            using (var stream = new StreamReader(file + @"\XML Data\course.xml"))
+            using (var stream = new StreamReader(savePath + @"\courseList.xml"))
                 courseList = (List<Course>)deSerializer.Deserialize(stream);
 
             foreach (Course currentCourse in courseList)
@@ -154,7 +152,7 @@ namespace NyttMOA
                 }
 
                 List<StudentData> matchedStudents = new List<StudentData>();
-                foreach (StudentData currentStudent in currentCourse.Students)
+                foreach (StudentData currentStudent in currentCourse.StudentsSaveable)
                 {
                     foreach (Student loadedStudent in UserList.OfType<Student>())
                     {
@@ -184,7 +182,6 @@ namespace NyttMOA
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<Classroom>));
             using (var stream = new StreamReader(savePath + @"\classroomlist.xml"))
                 classroomList = (List<Classroom>)deSerializer.Deserialize(stream);
-
         }
 
         public void SaveScheduleToXml()

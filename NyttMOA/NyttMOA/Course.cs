@@ -18,6 +18,7 @@ namespace NyttMOA
 
         List<StudentData> students = new List<StudentData>();
         public IEnumerable<StudentData> Students => students;
+        public List<StudentData> StudentsSaveable => Students.ToList();
 
         public Course(string name, DateTime startdate, DateTime enddate, int hours, int maxstudents, Teacher teacher)
         {
@@ -37,11 +38,13 @@ namespace NyttMOA
         public void AddStudent(Student student)
         {
             students.Add(new StudentData(student));
+            Program.register.SaveCourseListToXml();
         }
 
         public void RemoveStudent(StudentData student)
         {
             students.Remove(student);
+            Program.register.SaveCourseListToXml();
         }
 
         public void ReplaceStudents(IEnumerable<StudentData> newStudents)

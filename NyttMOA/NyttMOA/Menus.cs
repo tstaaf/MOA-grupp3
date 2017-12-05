@@ -760,6 +760,20 @@ namespace NyttMOA
         }
 
 
+        public static void TeacherDisplayStudentsInCourse()
+        {
+            Console.Clear();
+            foreach (Course course in Program.register.CourseList.Where(a => a.Teacher == Program.user))
+            {
+                Console.WriteLine(course.Name);
+                foreach (StudentData studentData in course.Students)
+                {
+                    Console.WriteLine("  " + studentData.Student.Name);
+                }
+            }
+            Pause();
+        }
+
         public static void TeacherAddStudentToCourse()
         {
             Console.Clear();
@@ -959,7 +973,7 @@ namespace NyttMOA
 
                     case ConsoleKey.D2:
                     case ConsoleKey.NumPad2:
-
+                        ChangeGrades();
                         break;
 
                     case ConsoleKey.D3:

@@ -204,11 +204,12 @@ namespace NyttMOA
             {
                 Console.Clear();
                 Console.WriteLine(ShowLogInMessage());
-                Console.WriteLine("[1] Add student to course");
-                Console.WriteLine("[2] Remove student from course");
-                Console.WriteLine("[3] Grades");
-                Console.WriteLine("[4] Schedule");
-                Console.WriteLine("[5] Log Out");
+                Console.WriteLine("[1] Display students in course");
+                Console.WriteLine("[2] Add student to course");
+                Console.WriteLine("[3] Remove student from course");
+                Console.WriteLine("[4] Grades");
+                Console.WriteLine("[5] Schedule");
+                Console.WriteLine("[6] Log Out");
 
                 var choice = Console.ReadKey();
 
@@ -216,21 +217,31 @@ namespace NyttMOA
                 {
                     case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
-                        Menus.TeacherAddStudentToCourse();
+                        Menus.TeacherDisplayStudentsInCourse();
                         break;
 
                     case ConsoleKey.D2:
                     case ConsoleKey.NumPad2:
-                        Menus.TeacherRemoveStudentFromCourse();
+                        Menus.TeacherAddStudentToCourse();
                         break;
 
                     case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
-                        Menus.TeacherGrades();
+                        Menus.TeacherRemoveStudentFromCourse();
                         break;
 
                     case ConsoleKey.D4:
                     case ConsoleKey.NumPad4:
+                        Menus.TeacherGrades();
+                        break;
+
+                    case ConsoleKey.D5:
+                    case ConsoleKey.NumPad5:
+                        Menus.TeacherGrades();
+                        break;
+
+                    case ConsoleKey.D6:
+                    case ConsoleKey.NumPad6:
                         Console.Clear();
                         Program.LogIn();
                         break;
