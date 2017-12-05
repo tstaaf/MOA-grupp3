@@ -8,62 +8,90 @@ using System.Xml.Serialization;
 
 namespace NyttMOA
 {
-    public static class Register
+    public class Register
     {
-        public static string savePath = Directory.GetCurrentDirectory() + @"\XML Data";
+        public string savePath = Directory.GetCurrentDirectory() + @"\XML Data";
 
-        static Register()
+        public Register()
         {
-            AddUser(new Admin("Admin", "admin", "admin"));
+            userList.Add(new Admin("Admin", "admin", "admin"));
         }
 
-        static List<User> userList = new List<User>();
-        public static IEnumerable<User> UserList => userList;
+        List<User> userList = new List<User>();
+        List<Course> courseList = new List<Course>();
+        List<Classroom> classroomList = new List<Classroom>();
 
-        public static bool AddUser(User user)
+        public IEnumerable<User> UserList => userList;
+        public IEnumerable<Course> CourseList => courseList;
+        public IEnumerable<Classroom> ClassroomList => classroomList;
+
+        public bool AddUser(User user)
         {
             if (!userList.Any(a => a.Name == user.Name || a.UserName == user.UserName))
             {
                 userList.Add(user);
+                SaveUserListToXml();
                 return true;
             }
             return false;
         }
 
-        public static void RemoveUser(User user)
-        {
-            userList.Remove(user);
-        }
-
-        static List<Classroom> classroomList = new List<Classroom>();
-        public static IEnumerable<Classroom> ClassroomList => classroomList;
-
-        public static bool AddClassroom(Classroom classroom)
-        {
-            if (classroomList.All(a => a.Name != classroom.Name))
-            {
-                classroomList.Add(classroom);
-                return true;
-            }
-            return false;
-        }
-
-        static List<Course> courseList = new List<Course>();
-        public static IEnumerable<Course> CourseList => courseList;
-
-        public static ScheduleManager schedule = new ScheduleManager();
-
-        public static bool AddCourse(Course course)
+        public bool AddCourse(Course course)
         {
             if (courseList.All(a => a.Name != course.Name))
             {
                 courseList.Add(course);
+                SaveCourseListToXml();
                 return true;
             }
             return false;
         }
 
-        public static void SaveUserListToXml()
+        public bool AddClassroom(Classroom classroom)
+        {
+            if (classroomList.All(a => a.Name != classroom.Name))
+            {
+                classroomList.Add(classroom);
+                SaveClassroomListToXml();
+                return true;
+            }
+            return false;
+        }
+
+        public void RemoveUser(User user)
+        {
+            userList.Remove(user);
+            SaveUserListToXml();
+            if (user is Teacher)
+            {
+                foreach (Course course in courseList.Where(a => a.Teacher == user))
+                {
+                    RemoveCourse(course);
+                }
+                var sample = courseList.Where(a => a.Teacher == user).ToList();
+                for (int course = sample.Count() - 1; course >= 0; course--)
+                {
+                    RemoveCourse(sample[course]);
+                }
+            }
+        }
+
+        public void RemoveClassroom(Classroom classroom)
+        {
+            classroomList.Remove(classroom);
+            SaveClassroomListToXml();
+        }
+
+        public void RemoveCourse(Course course)
+        {
+            courseList.Remove(course);
+            SaveCourseListToXml();
+        }
+
+
+        public ScheduleManager schedule = new ScheduleManager();
+
+        public void SaveUserListToXml()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<User>));
             TextWriter filestream = new StreamWriter(savePath + @"\userlist.xml");
@@ -71,9 +99,8 @@ namespace NyttMOA
             filestream.Close();
         }
 
-        public static void LoadUserListFromXml()
+        public void LoadUserListFromXml()
         {
-
             if (!File.Exists(savePath + @"\userlist.xml"))
                 return;
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<User>));
@@ -81,7 +108,7 @@ namespace NyttMOA
                 userList = (List<User>)deSerializer.Deserialize(stream);
         }
 
-        public static void SaveCourseListToXml()
+        public void SaveCourseListToXml()
         {
             var file = Directory.GetCurrentDirectory();
             XmlSerializer serializer = new XmlSerializer(typeof(List<Course>));
@@ -90,7 +117,7 @@ namespace NyttMOA
             filestream.Close();
         }
 
-        public static void LoadCourseListFromXml()
+        public void LoadCourseListFromXml()
         {
             var file = Directory.GetCurrentDirectory();
             if (!File.Exists(file + @"\XML Data\course.xml"))
@@ -126,7 +153,7 @@ namespace NyttMOA
             }
         }
 
-        public static void SaveClassroomListToXml()
+        public void SaveClassroomListToXml()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<Classroom>));
             TextWriter filestream = new StreamWriter(savePath + @"\classroomlist.xml");
@@ -134,7 +161,7 @@ namespace NyttMOA
             filestream.Close();
         }
 
-        public static void LoadClassroomListFromXml()
+        public void LoadClassroomListFromXml()
         {
             if (!File.Exists(savePath + @"\classroomlist.xml"))
                 return;
@@ -144,7 +171,7 @@ namespace NyttMOA
 
         }
 
-        public static void SaveScheduleToXml()
+        public void SaveScheduleToXml()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<User>));
             TextWriter filestream = new StreamWriter(savePath + @"\schedules.xml");
@@ -152,7 +179,7 @@ namespace NyttMOA
             filestream.Close();
         }
 
-        public static void LoadScheduleFromXml()
+        public void LoadScheduleFromXml()
         {
             if (!File.Exists(savePath + @"\schedules.xml"))
                 return;
@@ -193,18 +220,25 @@ namespace NyttMOA
             }
         }
 
-        public static User SearchForUsername(string username)
+        public User SearchForUsername(string username)
         {
             return UserList.FirstOrDefault(i => i.UserName == username);
         }
 
-        public static bool CheckPassword(User user, string password)
+        public bool CheckPassword(User user, string password)
         {
             if (user != null)
             {
                 return password == user.Password;
             }
             return false;
+        }
+
+        public List<string> notificationQueue = new List<string>();
+
+        void OnNotification(object sender, EventArgs e)
+        {
+            //Skicka stuff?
         }
     }
 }

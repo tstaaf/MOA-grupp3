@@ -7,43 +7,25 @@ using System.IO;
 
 namespace NyttMOA
 {
-    class Program
+    public class Program
     {
+        public static Register register { get; set; } = new Register();
         public static User user { get; set; }
 
         static void Main()
         {
-            Directory.CreateDirectory(Register.savePath);
-            Register.LoadUserListFromXml();
-            Register.LoadClassroomListFromXml();
-            Register.LoadCourseListFromXml();
-            Register.LoadScheduleFromXml();
-            inloggning();
+            Directory.CreateDirectory(register.savePath);
+            register.LoadUserListFromXml();
+            register.LoadClassroomListFromXml();
+            register.LoadCourseListFromXml();
+            register.LoadScheduleFromXml();
+            LogIn();
         }
 
-        public static void inloggning()
+        public static void LogIn()
         {
-            while (true)
-            {
-                Console.Write("Username: ");
-
-                user = Register.SearchForUsername(Console.ReadLine());
-
-                Console.Write("Password: ");
-
-                if (Register.CheckPassword(user, Console.ReadLine()))
-                {
-                    Console.Clear();
-                    user.showMenu();
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Wrong username or password.");
-                    continue;
-                }
-                break;
-            }
+            user = Menus.LogIn();
+            user.showMenu();
         }
     }
 }
