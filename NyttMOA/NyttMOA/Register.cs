@@ -58,6 +58,16 @@ namespace NyttMOA
             return false;
         }
 
+        public bool AddLesson(Lesson lesson)
+        {
+            if (schedule.AddLesson(lesson))
+            {
+                SaveScheduleToXml();
+                return true;
+            }
+            return false;
+        }
+
         public void RemoveUser(User user)
         {
             userList.Remove(user);
@@ -88,6 +98,12 @@ namespace NyttMOA
             SaveCourseListToXml();
         }
 
+        public void RemoveLesson(Lesson lesson)
+        {
+            schedule.RemoveLesson(lesson);
+            SaveScheduleToXml();
+        }
+
 
         public ScheduleManager schedule = new ScheduleManager();
 
@@ -110,20 +126,18 @@ namespace NyttMOA
 
         public void SaveCourseListToXml()
         {
-            var file = Directory.GetCurrentDirectory();
             XmlSerializer serializer = new XmlSerializer(typeof(List<Course>));
-            TextWriter filestream = new StreamWriter(savePath + @"\course.xml");
+            TextWriter filestream = new StreamWriter(savePath + @"\courseList.xml");
             serializer.Serialize(filestream, courseList);
             filestream.Close();
         }
 
         public void LoadCourseListFromXml()
         {
-            var file = Directory.GetCurrentDirectory();
-            if (!File.Exists(file + @"\XML Data\course.xml"))
+            if (!File.Exists(savePath + @"\courseList.xml"))
                 return;
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<Course>));
-            using (var stream = new StreamReader(file + @"\XML Data\course.xml"))
+            using (var stream = new StreamReader(savePath + @"\courseList.xml"))
                 courseList = (List<Course>)deSerializer.Deserialize(stream);
 
             foreach (Course currentCourse in courseList)
@@ -137,19 +151,17 @@ namespace NyttMOA
                     }
                 }
 
-                List<Student> matchedStudents = new List<Student>();
-                foreach (Student currentStudent in currentCourse.Students)
+                foreach (StudentData currentStudentData in currentCourse.Students)
                 {
                     foreach (Student loadedStudent in UserList.OfType<Student>())
                     {
-                        if (currentStudent.UserName == loadedStudent.UserName)
+                        if (currentStudentData.Student.UserName == loadedStudent.UserName)
                         {
-                            matchedStudents.Add(currentStudent);
+                            currentStudentData.Student = loadedStudent;
                             break;
                         }
                     }
                 }
-                currentCourse.ReplaceStudents(matchedStudents);
             }
         }
 
@@ -168,14 +180,13 @@ namespace NyttMOA
             XmlSerializer deSerializer = new XmlSerializer(typeof(List<Classroom>));
             using (var stream = new StreamReader(savePath + @"\classroomlist.xml"))
                 classroomList = (List<Classroom>)deSerializer.Deserialize(stream);
-
         }
 
         public void SaveScheduleToXml()
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(List<User>));
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Lesson>));
             TextWriter filestream = new StreamWriter(savePath + @"\schedules.xml");
-            serializer.Serialize(filestream, schedule);
+            serializer.Serialize(filestream, schedule.mainSchedule.Lessons);
             filestream.Close();
         }
 
@@ -183,9 +194,9 @@ namespace NyttMOA
         {
             if (!File.Exists(savePath + @"\schedules.xml"))
                 return;
-            XmlSerializer deSerializer = new XmlSerializer(typeof(List<User>));
+            XmlSerializer deSerializer = new XmlSerializer(typeof(List<Lesson>));
             using (var stream = new StreamReader(savePath + @"\schedules.xml"))
-                schedule = (ScheduleManager)deSerializer.Deserialize(stream);
+                schedule.AddLesson((List<Lesson>)deSerializer.Deserialize(stream));
 
             foreach (Lesson currentLesson in schedule.Lessons)
             {
@@ -202,20 +213,6 @@ namespace NyttMOA
                     {
                         currentLesson.Course = currentCourse;
                     }
-
-                    List<Student> matchedStudents = new List<Student>();
-                    foreach (Student currentStudent in currentCourse.Students)
-                    {
-                        foreach (Student loadedStudent in UserList.OfType<Student>())
-                        {
-                            if (currentStudent.UserName == loadedStudent.UserName)
-                            {
-                                matchedStudents.Add(currentStudent);
-                                break;
-                            }
-                        }
-                    }
-                    currentCourse.ReplaceStudents(matchedStudents);
                 }
             }
         }
@@ -238,7 +235,7 @@ namespace NyttMOA
 
         void OnNotification(object sender, EventArgs e)
         {
-            //Skicka stuff?
+
         }
     }
 }

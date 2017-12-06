@@ -16,8 +16,7 @@ namespace NyttMOA
         public Teacher Teacher { get; set; }
 
 
-        List<Student> students = new List<Student>();
-        public IEnumerable<Student> Students => students;
+        public List<StudentData> Students { get; set; } = new List<StudentData>();
 
         public Course(string name, DateTime startdate, DateTime enddate, int hours, int maxstudents, Teacher teacher)
         {
@@ -34,19 +33,48 @@ namespace NyttMOA
             
         }
 
-        public void AddStudent(Student student)
+        public bool AddStudent(Student student)
         {
-            students.Add(student);
+            if (!Students.Any(a => a.Student == student))
+            {
+                Students.Add(new StudentData(student));
+                Program.register.SaveCourseListToXml();
+                return true;
+            }
+            return false;
+        }
+        
+        public void RemoveStudent(StudentData student)
+        {
+            Students.Remove(student);
+            Program.register.SaveCourseListToXml();
         }
 
-        public void RemoveStudent(Student student)
+        public void ReplaceStudents(IEnumerable<StudentData> newStudents)
         {
-            students.Remove(student);
+            Students = new List<StudentData>(newStudents);
         }
 
-        public void ReplaceStudents(IEnumerable<Student> newStudents)
+        public string GetGrade(Student student)
         {
-            students = new List<Student>(newStudents);
+            foreach (StudentData studentData in Students)
+            {
+                if (studentData.Student == student)
+                {
+                    return studentData.Grade;
+                }
+            }
+            return "Student not registered in this course";
+        }
+
+        public override string ToString()
+        {
+            return
+                "Name: " + Name +
+                " Start date: " + StartDate.ToShortDateString() +
+                " End date: " + EndDate.ToShortDateString() +
+                " Max students: " + MaxStudents.ToString() +
+                " Teacher: " + Teacher.Name;
         }
     }
 }

@@ -52,6 +52,7 @@
     <Compile Include="Classroom.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="Schedule.cs" />
+    <Compile Include="StudentData.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
