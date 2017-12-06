@@ -79,32 +79,34 @@ namespace NyttMOA.Tests
         [Test]
         public void CheckPasswordReturnsFalseIfPasswordIsNotCorrectAndTrueIfCorrect()
         {
-            Assert.True(Register.CheckPassword(new Student(
+            var sut = new Register();
+
+            Assert.True(sut.CheckPassword(new Student(
                 "Student1",
                 "Aiallaämnen",
                 "1256"),"1256"));
 
-            Assert.True(Register.CheckPassword(new Teacher(
+            Assert.True(sut.CheckPassword(new Teacher(
                 "Teacher1",
                 "GerallaF",
                 "1337"), "1337"));
 
-            Assert.True(Register.CheckPassword(new Admin(
+            Assert.True(sut.CheckPassword(new Admin(
                 "Admin1",
                 "Görvadhanvill",
                 "9999"), "9999"));
 
-            Assert.False(Register.CheckPassword(new Student(
+            Assert.False(sut.CheckPassword(new Student(
                 "Student2",
                 "Aiallaämnen2",
                 "1213"), "12543"));
 
-            Assert.False(Register.CheckPassword(new Teacher(
+            Assert.False(sut.CheckPassword(new Teacher(
                 "Teacher2",
                 "GerallaF2",
                 "123123"), "514"));
 
-            Assert.False(Register.CheckPassword(new Admin(
+            Assert.False(sut.CheckPassword(new Admin(
                 "Admin2",
                 "Görvadhanvill2",
                 "547"), "31241"));
@@ -119,8 +121,10 @@ namespace NyttMOA.Tests
         [Test]
         public void SearchForUsernameCheckIfEnteredUserNameExist()
         {
-            Assert.AreNotSame(Register.SearchForUsername("Hallo"),
-                Register.AddUser(new Student(
+            var sut = new Register();
+
+            Assert.AreNotSame(sut.SearchForUsername("Hallo"),
+                sut.AddUser(new Student(
                     "Student1",
                     "hallo1",
                     "12556")));
