@@ -18,7 +18,9 @@ namespace NyttMOA
         public string UserName { get; set; }
         public string Password { get; set; }
 
-        
+        public delegate void NotificationEventHandler(object sender, EventArgs e);
+        event NotificationEventHandler Notifications;
+        List<string> notifications;
 
         public User(string name, string username, string password)
         {
@@ -39,15 +41,23 @@ namespace NyttMOA
 
         public abstract void showMenu();
 
-        public abstract void GetNotifications();
+        internal void GetNotifications(User sender)
+        {
+            if (Notifications != null)
+            {
+                notifications = new List<string>();
+                Notifications(sender, null);
+            }
+        }
+
+        public void AddNotification(string msg)
+        {
+            notifications.Add(msg);
+        }
     }
     
     public class Admin : User
     {
-        public delegate void AdminNotificationEventHandler(object sender, EventArgs e);
-
-        event AdminNotificationEventHandler AdminNotifications;
-
         public Admin(string name, string username, string password) : base(name, username, password)
         {
 
@@ -117,19 +127,10 @@ namespace NyttMOA
                 }
             }
         }
-
-        public override void GetNotifications()
-        {
-            AdminNotifications(this, null);
-        }
     }
 
     public class Student : User
     {
-        public delegate void StudentNotificationEventHandler(object sender, EventArgs e);
-
-        event StudentNotificationEventHandler AdminNotifications;
-
         public Student(string name, string username, string password) : base(name, username, password)
         {
             
@@ -185,19 +186,10 @@ namespace NyttMOA
                 }
             }
         }
-
-        public override void GetNotifications()
-        {
-            StudentNotifications(this, null);
-        }
     }
 
     public class Teacher : User
     {
-        public delegate void TeacherNotificationEventHandler(object sender, EventArgs e);
-
-        event TeacherNotificationEventHandler AdminNotifications;
-
         public Teacher(string name, string username, string password) : base(name, username, password)
         {
 
@@ -265,11 +257,6 @@ namespace NyttMOA
                         break;
                 }
             }
-        }
-
-        public override void GetNotifications()
-        {
-            TeacherNotifications(this, null);
         }
     }
 }
