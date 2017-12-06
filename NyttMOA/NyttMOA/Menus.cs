@@ -65,6 +65,7 @@ namespace NyttMOA
 
         public static void Pause()
         {
+            Console.WriteLine("");
             Console.WriteLine("Press any key to go back");
             Console.ReadKey();
         }
@@ -360,13 +361,28 @@ namespace NyttMOA
                 Pause();
             }
 
+            void DisplayStudentsInCourses()
+            {
+                Console.Clear();
+                foreach (Course course in Program.register.CourseList)
+                {
+                    Console.WriteLine(course.Name);
+                    foreach (StudentData studentData in course.Students)
+                    {
+                        Console.WriteLine("  " + studentData.Student.Name);
+                    }
+                }
+                Pause();
+            }
+
             while (true)
             {
                 Console.Clear();
                 Console.WriteLine("[1] Display courses");
                 Console.WriteLine("[2] Add course");
                 Console.WriteLine("[3] Remove course");
-                Console.WriteLine("[4] Go back");
+                Console.WriteLine("[4] Display students in course");
+                Console.WriteLine("[5] Go back");
 
                 switch (Console.ReadKey().Key)
                 {
@@ -387,7 +403,11 @@ namespace NyttMOA
 
                     case ConsoleKey.D4:
                     case ConsoleKey.NumPad4:
-                        Console.Clear();
+                        DisplayStudentsInCourses();
+                        return;
+
+                    case ConsoleKey.D5:
+                    case ConsoleKey.NumPad5:
                         return;
 
                     default:
@@ -745,6 +765,7 @@ namespace NyttMOA
 
         public static void StudentCourses()
         {
+            Console.Clear();
             foreach (Course course in Program.register.CourseList)
             {
                 foreach (StudentData studentData in course.Students)
@@ -759,8 +780,43 @@ namespace NyttMOA
             Pause();
         }
 
+        public static void StudentClassmates()
+        {
+            Console.Clear();
+            List<Course> courses = new List<Course>();
+            foreach (Course course in Program.register.CourseList)
+            {
+                foreach (StudentData studentData in course.Students)
+                {
+                    if (studentData.Student == Program.user)
+                    {
+                        courses.Add(course);
+                    }
+                }
+            }
 
-        public static void TeacherDisplayStudentsInCourse()
+            foreach (Course course in courses)
+            {
+                bool alone = true;
+                Console.WriteLine(course.Name);
+                foreach (StudentData studentData in course.Students)
+                {
+                    if (studentData.Student != Program.user)
+                    {
+                        Console.WriteLine("  " + studentData.Student.Name);
+                        alone = false;
+                    }
+                }
+                if (alone)
+                {
+                    Console.WriteLine("  You're on your own, kiddo");
+                }
+            }
+            Pause();
+        }
+
+
+        public static void TeacherDisplayStudentsInCourses()
         {
             Console.Clear();
             foreach (Course course in Program.register.CourseList.Where(a => a.Teacher == Program.user))
@@ -800,9 +856,15 @@ namespace NyttMOA
             var selectedStudent = students.ToArray()[
                 CheckIntInput(0, students.Count() - 1)];
 
-            selectedCourse.AddStudent(selectedStudent);
-
-            Console.WriteLine("Student added!");
+            if (selectedCourse.AddStudent(selectedStudent))
+            {
+                Console.WriteLine("Student added!");
+            }
+            else
+            {
+                Console.WriteLine("Student already participating in course!");
+            }
+            
             Pause();
         }
 
@@ -836,6 +898,190 @@ namespace NyttMOA
 
             Console.WriteLine("Student removed!");
             Pause();
+        }
+
+        public static void TeacherSchedule()
+        {
+            void DisplaySchedule()
+            {
+                void FullSchedule()
+                {
+                    Console.Clear();
+                    Console.WriteLine(Program.register.schedule.GetSchedule((Teacher)Program.user).ToString());
+                    Pause();
+                }
+
+                void TodaysSchedule()
+                {
+                    Console.Clear();
+                    Console.WriteLine(Program.register.schedule.GetSchedule((Teacher)Program.user, DateTime.Today, DateTime.Today.AddHours(24)));
+                    Pause();
+                }
+
+                void CustomPeriod()
+                {
+                    Console.Clear();
+                    Console.WriteLine(Program.register.schedule.GetSchedule(
+                        (Teacher)Program.user,
+                        CheckDateTimeInput("Enter start date (YYYY-MM-DD):"),
+                        CheckDateTimeInput("Enter end date (YYYY-MM-DD):")));
+                    Pause();
+                }
+
+                while (true)
+                {
+                    Console.Clear();
+                    Console.WriteLine("[1] Full schedule");
+                    Console.WriteLine("[2] Today's schedule");
+                    Console.WriteLine("[3] Custom period");
+                    Console.WriteLine("[4] Go back");
+
+                    switch (Console.ReadKey().Key)
+                    {
+                        case ConsoleKey.D1:
+                        case ConsoleKey.NumPad1:
+                            FullSchedule();
+                            break;
+
+                        case ConsoleKey.D2:
+                        case ConsoleKey.NumPad2:
+                            TodaysSchedule();
+                            break;
+
+                        case ConsoleKey.D3:
+                        case ConsoleKey.NumPad3:
+                            CustomPeriod();
+                            break;
+
+                        case ConsoleKey.D4:
+                        case ConsoleKey.NumPad4:
+                            return;
+
+                        default:
+                            Console.Clear();
+                            Console.WriteLine("Invalid selection, try again");
+                            Pause();
+                            break;
+                    }
+                }
+            }
+
+            void AddLesson()
+            {
+                Console.Clear();
+                if (Program.register.CourseList.Count() == 0)
+                {
+                    Console.WriteLine("No courses!");
+                    Pause();
+                    return;
+                }
+                if (Program.register.ClassroomList.Count() == 0)
+                {
+                    Console.WriteLine("No classrooms!");
+                    Pause();
+                    return;
+                }
+
+                Console.Clear();
+                Console.WriteLine("Assign classroom: ");
+                IEnumerable<Classroom> classrooms = Program.register.ClassroomList;
+                foreach (var classroom in classrooms)
+                {
+                    Console.WriteLine("[{0}] : {1}",
+                        classrooms.ToList().IndexOf(classroom), classroom.Name);
+                }
+                var lessonClassroom = classrooms.ToList()[CheckIntInput(0, classrooms.Count() - 1)];
+
+                Console.Clear();
+                Console.WriteLine("Assign course: ");
+                IEnumerable<Course> courses = Program.register.CourseList.Where(a => a.Teacher == Program.user);
+                foreach (var course in courses)
+                {
+                    Console.WriteLine("[{0}] : {1}",
+                        courses.ToList().IndexOf(course), course.Name);
+                }
+                var lessonCourse = courses.ToList()[CheckIntInput(0, courses.Count() - 1)];
+
+                var startTime = CheckDateTimeInput("Enter start date and time (YYYY-MM-DD HH:MM):");
+                var endTime = CheckDateTimeInput("Enter end date and time (YYYY-MM-DD HH:MM):");
+
+                if (Program.register.AddLesson(new Lesson(
+                    lessonClassroom,
+                    lessonCourse,
+                    startTime,
+                    endTime)))
+                {
+                    Console.WriteLine("Lesson added!");
+                }
+                else
+                {
+                    Console.WriteLine("Lesson can not be added! (You or classroom unavailable, or lesson is outside of course start and end times)");
+                }
+                Pause();
+            }
+
+            void RemoveLesson()
+            {
+                Console.Clear();
+                if (Program.register.schedule.Lessons.Count() == 0)
+                {
+                    Console.WriteLine("No lessons to remove!");
+                    Pause();
+                    return;
+                }
+                int lessonIndex;
+                IEnumerable<Lesson> sample = Program.register.schedule.Lessons;
+
+                foreach (var lesson in sample)
+                {
+                    lessonIndex = sample.ToList().IndexOf(lesson);
+                    Console.WriteLine(lessonIndex);
+                    Console.WriteLine(lesson.ToString());
+                }
+
+                Console.WriteLine("Remove lesson by number: ");
+                Program.register.RemoveLesson(sample.ToList()[
+                    CheckIntInput(0, sample.Count() - 1)]);
+                Console.WriteLine("Lesson removed!");
+                Pause();
+            }
+
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("[1] Display schedule");
+                Console.WriteLine("[2] Add lesson");
+                Console.WriteLine("[3] Remove lesson");
+                Console.WriteLine("[4] Go back");
+
+                switch (Console.ReadKey().Key)
+                {
+                    case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
+                        DisplaySchedule();
+                        break;
+
+                    case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
+                        AddLesson();
+                        break;
+
+                    case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
+                        RemoveLesson();
+                        break;
+
+                    case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
+                        return;
+
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Invalid selection, try again");
+                        Pause();
+                        break;
+                }
+            }
         }
 
         public static void TeacherGrades()

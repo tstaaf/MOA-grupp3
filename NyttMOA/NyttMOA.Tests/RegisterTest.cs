@@ -61,6 +61,7 @@ namespace NyttMOA.Tests
                 "Svengelska",
                 new DateTime(2015,07,06),
                 new DateTime(2015,07,09),
+                200,
                 30,
                 new Teacher("Teacher1", "LärarN", "Passwordtest1")));
 
@@ -68,6 +69,7 @@ namespace NyttMOA.Tests
                 "Enklastekursen",
                 new DateTime(2017,12,10),
                 new DateTime(2017,12,15),
+                220,
                 34,
                 new Teacher("Teacher2", "Kaninteundervisa", "Passwordtest2")));
 

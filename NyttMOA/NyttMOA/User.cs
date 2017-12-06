@@ -18,7 +18,7 @@ namespace NyttMOA
         public string UserName { get; set; }
         public string Password { get; set; }
 
-        public delegate void NotificationEventHandler(object sender, EventArgs e);
+        
 
         public User(string name, string username, string password)
         {
@@ -44,7 +44,9 @@ namespace NyttMOA
     
     public class Admin : User
     {
-        event NotificationEventHandler AdminNotifications;
+        public delegate void AdminNotificationEventHandler(object sender, EventArgs e);
+
+        event AdminNotificationEventHandler AdminNotifications;
 
         public Admin(string name, string username, string password) : base(name, username, password)
         {
@@ -124,7 +126,9 @@ namespace NyttMOA
 
     public class Student : User
     {
-        event NotificationEventHandler StudentNotifications;
+        public delegate void StudentNotificationEventHandler(object sender, EventArgs e);
+
+        event StudentNotificationEventHandler AdminNotifications;
 
         public Student(string name, string username, string password) : base(name, username, password)
         {
@@ -146,7 +150,8 @@ namespace NyttMOA
                 Console.WriteLine(ShowLogInMessage());
                 Console.WriteLine("[1] Schedule");
                 Console.WriteLine("[2] Courses");
-                Console.WriteLine("[3] Log Out");
+                Console.WriteLine("[3] Classmates");
+                Console.WriteLine("[4] Log Out");
 
                 var choice = Console.ReadKey();
 
@@ -164,6 +169,11 @@ namespace NyttMOA
 
                     case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
+                        Menus.StudentClassmates();
+                        break;
+
+                    case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
                         Program.LogIn();
                         break;
 
@@ -184,7 +194,9 @@ namespace NyttMOA
 
     public class Teacher : User
     {
-        event NotificationEventHandler TeacherNotifications;
+        public delegate void TeacherNotificationEventHandler(object sender, EventArgs e);
+
+        event TeacherNotificationEventHandler AdminNotifications;
 
         public Teacher(string name, string username, string password) : base(name, username, password)
         {
@@ -204,7 +216,7 @@ namespace NyttMOA
             {
                 Console.Clear();
                 Console.WriteLine(ShowLogInMessage());
-                Console.WriteLine("[1] Display students in course");
+                Console.WriteLine("[1] Display students in courses");
                 Console.WriteLine("[2] Add student to course");
                 Console.WriteLine("[3] Remove student from course");
                 Console.WriteLine("[4] Grades");
@@ -217,7 +229,7 @@ namespace NyttMOA
                 {
                     case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
-                        Menus.TeacherDisplayStudentsInCourse();
+                        Menus.TeacherDisplayStudentsInCourses();
                         break;
 
                     case ConsoleKey.D2:
@@ -237,7 +249,7 @@ namespace NyttMOA
 
                     case ConsoleKey.D5:
                     case ConsoleKey.NumPad5:
-                        Menus.TeacherGrades();
+                        Menus.TeacherSchedule();
                         break;
 
                     case ConsoleKey.D6:

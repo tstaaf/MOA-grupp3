@@ -151,19 +151,17 @@ namespace NyttMOA
                     }
                 }
 
-                List<StudentData> matchedStudents = new List<StudentData>();
-                foreach (StudentData currentStudent in currentCourse.StudentsSaveable)
+                foreach (StudentData currentStudentData in currentCourse.Students)
                 {
                     foreach (Student loadedStudent in UserList.OfType<Student>())
                     {
-                        if (currentStudent.Student.UserName == loadedStudent.UserName)
+                        if (currentStudentData.Student.UserName == loadedStudent.UserName)
                         {
-                            matchedStudents.Add(currentStudent);
+                            currentStudentData.Student = loadedStudent;
                             break;
                         }
                     }
                 }
-                currentCourse.ReplaceStudents(matchedStudents);
             }
         }
 
@@ -188,7 +186,7 @@ namespace NyttMOA
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<Lesson>));
             TextWriter filestream = new StreamWriter(savePath + @"\schedules.xml");
-            serializer.Serialize(filestream, schedule.Lessons);
+            serializer.Serialize(filestream, schedule.mainSchedule.Lessons);
             filestream.Close();
         }
 
@@ -215,20 +213,6 @@ namespace NyttMOA
                     {
                         currentLesson.Course = currentCourse;
                     }
-
-                    List<StudentData> matchedStudents = new List<StudentData>();
-                    foreach (StudentData currentStudent in currentCourse.Students)
-                    {
-                        foreach (Student loadedStudent in UserList.OfType<Student>())
-                        {
-                            if (currentStudent.Student.UserName == loadedStudent.UserName)
-                            {
-                                matchedStudents.Add(currentStudent);
-                                break;
-                            }
-                        }
-                    }
-                    currentCourse.ReplaceStudents(matchedStudents);
                 }
             }
         }

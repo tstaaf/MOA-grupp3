@@ -16,9 +16,7 @@ namespace NyttMOA
         public Teacher Teacher { get; set; }
 
 
-        List<StudentData> students = new List<StudentData>();
-        public IEnumerable<StudentData> Students => students;
-        public List<StudentData> StudentsSaveable => Students.ToList();
+        public List<StudentData> Students { get; set; } = new List<StudentData>();
 
         public Course(string name, DateTime startdate, DateTime enddate, int hours, int maxstudents, Teacher teacher)
         {
@@ -35,26 +33,31 @@ namespace NyttMOA
             
         }
 
-        public void AddStudent(Student student)
+        public bool AddStudent(Student student)
         {
-            students.Add(new StudentData(student));
-            Program.register.SaveCourseListToXml();
+            if (!Students.Any(a => a.Student == student))
+            {
+                Students.Add(new StudentData(student));
+                Program.register.SaveCourseListToXml();
+                return true;
+            }
+            return false;
         }
-
+        
         public void RemoveStudent(StudentData student)
         {
-            students.Remove(student);
+            Students.Remove(student);
             Program.register.SaveCourseListToXml();
         }
 
         public void ReplaceStudents(IEnumerable<StudentData> newStudents)
         {
-            students = new List<StudentData>(newStudents);
+            Students = new List<StudentData>(newStudents);
         }
 
         public string GetGrade(Student student)
         {
-            foreach (StudentData studentData in students)
+            foreach (StudentData studentData in Students)
             {
                 if (studentData.Student == student)
                 {

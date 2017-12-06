@@ -97,21 +97,6 @@ namespace NyttMOA
             mainSchedule.RemoveLesson(lesson);
         }
 
-        public int GenerateNewLessonID()
-        {
-            int id = 0;
-            while (true)
-            {
-                /*
-                if (Lessons.All(a => a.ID != id))
-                {
-                    return id;
-                }
-                id++;
-                */
-            }
-        }
-
         bool LessonCanBeScheduled(Lesson lesson)
         {
             foreach (Lesson i in mainSchedule.Lessons)
@@ -140,39 +125,38 @@ namespace NyttMOA
 
     public class Schedule
     {
-        List<Lesson> lessons;
-        public IEnumerable<Lesson> Lessons { get { return lessons; } }
+        public List<Lesson> Lessons { get; set; } = new List<Lesson>();
+
+        public Schedule(IEnumerable<Lesson> lessons)
+        {
+            Lessons = new List<Lesson>(lessons);
+        }
 
         public Schedule()
         {
-            lessons = new List<Lesson>();
-        }
 
-        public Schedule(IEnumerable<Lesson> _lessons)
-        {
-            lessons = new List<Lesson>(_lessons);
         }
 
         void SortLessonsByStartTime()
         {
-            lessons.OrderBy(x => x.StartTime);
+            Lessons.OrderBy(x => x.StartTime);
         }
 
         public void AddLesson(Lesson lesson)
         {
-            lessons.Add(lesson);
+            Lessons.Add(lesson);
             SortLessonsByStartTime();
         }
 
         public void RemoveLesson(Lesson lesson)
         {
-            lessons.Remove(lesson);
+            Lessons.Remove(lesson);
         }
 
         public override string ToString()
         {
             string output = "";
-            foreach (Lesson i in lessons)
+            foreach (Lesson i in Lessons)
             {
                 output += i + Environment.NewLine;
             }
