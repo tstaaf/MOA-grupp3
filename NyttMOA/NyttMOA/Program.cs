@@ -21,7 +21,7 @@ namespace NyttMOA
         public delegate void TeacherNotificationEventHandler();
         public static event TeacherNotificationEventHandler TeacherNotifications;
 
-        static List<string> notifications;
+        static List<string> notifications = new List<string>();
 
         static void Main()
         {
