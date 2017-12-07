@@ -12,13 +12,13 @@ namespace NyttMOA
         public static Register register { get; set; } = new Register();
         public static User user { get; set; }
 
-        public delegate void AdminNotificationEventHandler(object sender, EventArgs e);
+        public delegate void AdminNotificationEventHandler();
         public static event AdminNotificationEventHandler AdminNotifications;
 
-        public delegate void StudentNotificationEventHandler(object sender, EventArgs e);
+        public delegate void StudentNotificationEventHandler();
         public static event StudentNotificationEventHandler StudentNotifications;
 
-        public delegate void TeacherNotificationEventHandler(object sender, EventArgs e);
+        public delegate void TeacherNotificationEventHandler();
         public static event TeacherNotificationEventHandler TeacherNotifications;
 
         static List<string> notifications;
@@ -66,6 +66,11 @@ namespace NyttMOA
                 }
             }
             return notifications;
+        }
+
+        public static void AddNotification(string msg)
+        {
+            notifications.Add(msg);
         }
     }
 }

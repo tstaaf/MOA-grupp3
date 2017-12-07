@@ -928,9 +928,15 @@ namespace NyttMOA
             var selectedStudent = students.ToArray()[
                 CheckIntInput(0, students.Count() - 1)];
 
-            selectedCourse.RemoveStudent(selectedStudent);
-
-            Console.WriteLine("Student removed!");
+            if (selectedStudent.Grade == "-")
+            {
+                selectedCourse.RemoveStudent(selectedStudent);
+                Console.WriteLine("Student removed!");
+            }
+            else
+            {
+                Console.WriteLine("Student is not ungraded, contact a system Admin to remove graded students");
+            }
             Pause();
         }
 
