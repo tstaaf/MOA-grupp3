@@ -30,6 +30,10 @@ namespace NyttMOA
             register.LoadClassroomListFromXml();
             register.LoadCourseListFromXml();
             register.LoadScheduleFromXml();
+            if (register.UserList.OfType<Admin>().Count() == 0)
+            {
+                register.AddUser(new Admin("Admin", "admin", "admin"));
+            }
             LogIn();
         }
 
@@ -45,7 +49,7 @@ namespace NyttMOA
             {
                 if (AdminNotifications != null)
                 {
-                    notifications = new List<string>();
+                    notifications.Clear();
                     AdminNotifications();
                 }
             }
@@ -53,7 +57,7 @@ namespace NyttMOA
             {
                 if (StudentNotifications != null)
                 {
-                    notifications = new List<string>();
+                    notifications.Clear();
                     StudentNotifications();
                 }
             }
@@ -61,7 +65,7 @@ namespace NyttMOA
             {
                 if (TeacherNotifications != null)
                 {
-                    notifications = new List<string>();
+                    notifications.Clear();
                     TeacherNotifications();
                 }
             }

@@ -35,6 +35,12 @@ namespace NyttMOA
             Program.TeacherNotifications += OnTeacherNotifications;
         }
 
+        public void Disconnect()
+        {
+            Program.AdminNotifications -= OnAdminNotifications;
+            Program.TeacherNotifications -= OnTeacherNotifications;
+        }
+
         public bool AddStudent(Student student)
         {
             if (!Students.Any(a => a.Student == student) && Students.Count() < MaxStudents)

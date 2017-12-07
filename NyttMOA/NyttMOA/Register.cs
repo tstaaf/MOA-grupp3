@@ -14,7 +14,6 @@ namespace NyttMOA
 
         public Register()
         {
-            userList.Add(new Admin("Admin", "admin", "admin"));
             savePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             Directory.CreateDirectory(savePath + @"\MOAGrupp3\XML Data");
             savePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\MOAGrupp3\XML Data";
@@ -77,10 +76,6 @@ namespace NyttMOA
             SaveUserListToXml();
             if (user is Teacher)
             {
-                foreach (Course course in courseList.Where(a => a.Teacher == user))
-                {
-                    RemoveCourse(course);
-                }
                 var sample = courseList.Where(a => a.Teacher == user).ToList();
                 for (int course = sample.Count() - 1; course >= 0; course--)
                 {
@@ -93,10 +88,17 @@ namespace NyttMOA
         {
             classroomList.Remove(classroom);
             SaveClassroomListToXml();
+
+            var sample = schedule.Lessons.Where(a => a.Classroom == classroom).ToList();
+            for (int lesson = sample.Count() - 1; lesson >= 0; lesson--)
+            {
+                schedule.RemoveLesson(sample[lesson]);
+            }
         }
 
         public void RemoveCourse(Course course)
         {
+            course.Disconnect();
             courseList.Remove(course);
             SaveCourseListToXml();
         }
@@ -233,13 +235,6 @@ namespace NyttMOA
                 return password == user.Password;
             }
             return false;
-        }
-
-        public List<string> notificationQueue = new List<string>();
-
-        void OnNotification(object sender, EventArgs e)
-        {
-
         }
     }
 }
