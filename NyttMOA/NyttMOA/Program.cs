@@ -12,6 +12,17 @@ namespace NyttMOA
         public static Register register { get; set; } = new Register();
         public static User user { get; set; }
 
+        public delegate void AdminNotificationEventHandler(object sender, EventArgs e);
+        public static event AdminNotificationEventHandler AdminNotifications;
+
+        public delegate void StudentNotificationEventHandler(object sender, EventArgs e);
+        public static event StudentNotificationEventHandler StudentNotifications;
+
+        public delegate void TeacherNotificationEventHandler(object sender, EventArgs e);
+        public static event TeacherNotificationEventHandler TeacherNotifications;
+
+        static List<string> notifications;
+
         static void Main()
         {
             Directory.CreateDirectory(register.savePath);
@@ -26,6 +37,35 @@ namespace NyttMOA
         {
             user = Menus.LogIn();
             user.showMenu();
+        }
+
+        public static IEnumerable<string> GetNotifications()
+        {
+            if (user is Admin)
+            {
+                if (AdminNotifications != null)
+                {
+                    notifications = new List<string>();
+                    AdminNotifications(user, null);
+                }
+            }
+            else if (user is Student)
+            {
+                if (StudentNotifications != null)
+                {
+                    notifications = new List<string>();
+                    StudentNotifications(user, null);
+                }
+            }
+            else if (user is Teacher)
+            {
+                if (TeacherNotifications != null)
+                {
+                    notifications = new List<string>();
+                    TeacherNotifications(user, null);
+                }
+            }
+            return notifications;
         }
     }
 }
