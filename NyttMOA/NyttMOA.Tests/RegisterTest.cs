@@ -239,5 +239,26 @@ namespace NyttMOA.Tests
 
             Assert.IsNotNull(schedlule.mainSchedule);
         }
+
+        [Test]
+        public void AddLessonAddsALessonToTheLessonList()
+        {
+            var sut = new Register();
+            var schedlue = new Schedule();
+
+            sut.AddLesson(new Lesson(
+                new Classroom("Biggestclassroomever", 400),
+                new Course("Swedish", new DateTime(2009,11,11), new DateTime(2010,08,20), 4, 400, new Teacher("Name", "Username", "Passord")),
+                new DateTime(2010,07,08),
+                new DateTime(2010,07,09)));
+
+            Assert.AreEqual(1, schedlue.Lessons.Count);
+        }
+
+        [Test]
+        public void RemoveUserRemovesAUserFromUserList()
+        {
+            var sut = new Register();
+        }
     }
 }
