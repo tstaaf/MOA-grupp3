@@ -97,6 +97,7 @@ namespace NyttMOA
             {
                 Console.WriteLine(i);
             }
+            Pause();
         }
 
 
@@ -842,7 +843,7 @@ namespace NyttMOA
         public static void TeacherAddStudentToCourse()
         {
             Console.Clear();
-            if (Program.register.UserList.OfType<Course>().Count() == 0)
+            if (Program.register.CourseList.Count() == 0)
             {
                 Console.WriteLine("No courses in the system!");
                 Pause();
@@ -928,9 +929,15 @@ namespace NyttMOA
             var selectedStudent = students.ToArray()[
                 CheckIntInput(0, students.Count() - 1)];
 
-            selectedCourse.RemoveStudent(selectedStudent);
-
-            Console.WriteLine("Student removed!");
+            if (selectedStudent.Grade == "-")
+            {
+                selectedCourse.RemoveStudent(selectedStudent);
+                Console.WriteLine("Student removed!");
+            }
+            else
+            {
+                Console.WriteLine("Student is not ungraded, contact a system Admin to remove graded students");
+            }
             Pause();
         }
 

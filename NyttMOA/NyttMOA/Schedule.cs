@@ -11,6 +11,12 @@ namespace NyttMOA
         public Schedule mainSchedule = new Schedule();
         public IEnumerable<Lesson> Lessons => mainSchedule.Lessons;
 
+        public ScheduleManager()
+        {
+            Program.TeacherNotifications += OnTeacherNotifications;
+            Program.StudentNotifications += OnStudentNotifications;
+        }
+
         public Schedule GetSchedule(Student student)
         {
             List<Lesson> lessons = new List<Lesson>();
@@ -121,6 +127,32 @@ namespace NyttMOA
         {
             return mainSchedule.ToString();
         }
+
+        void OnTeacherNotifications()
+        {
+            //Next lesson
+            foreach (Lesson lesson in GetSchedule((Teacher)Program.user).Lessons)
+            {
+                if (lesson.StartTime >= DateTime.Now && lesson.StartTime <= DateTime.Today.AddDays(1))
+                {
+                    Program.AddNotification("Next lesson: " + lesson.Course.Name + " " + lesson.StartTime.ToString());
+                    break;
+                }
+            }
+        }
+
+        void OnStudentNotifications()
+        {
+            //Next lesson
+            foreach (Lesson lesson in GetSchedule((Student)Program.user).Lessons)
+            {
+                if (lesson.StartTime >= DateTime.Now && lesson.StartTime <= DateTime.Today.AddDays(1))
+                {
+                    Program.AddNotification("Next lesson: " + lesson.Course.Name + " " + lesson.StartTime.ToString());
+                    break;
+                }
+            }
+        }
     }
 
     public class Schedule
@@ -130,6 +162,7 @@ namespace NyttMOA
         public Schedule(IEnumerable<Lesson> lessons)
         {
             Lessons = new List<Lesson>(lessons);
+            SortLessonsByStartTime();
         }
 
         public Schedule()

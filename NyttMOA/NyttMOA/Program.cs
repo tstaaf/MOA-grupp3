@@ -12,16 +12,16 @@ namespace NyttMOA
         public static Register register { get; set; } = new Register();
         public static User user { get; set; }
 
-        public delegate void AdminNotificationEventHandler(object sender, EventArgs e);
+        public delegate void AdminNotificationEventHandler();
         public static event AdminNotificationEventHandler AdminNotifications;
 
-        public delegate void StudentNotificationEventHandler(object sender, EventArgs e);
+        public delegate void StudentNotificationEventHandler();
         public static event StudentNotificationEventHandler StudentNotifications;
 
-        public delegate void TeacherNotificationEventHandler(object sender, EventArgs e);
+        public delegate void TeacherNotificationEventHandler();
         public static event TeacherNotificationEventHandler TeacherNotifications;
 
-        static List<string> notifications;
+        static List<string> notifications = new List<string>();
 
         static void Main()
         {
@@ -46,7 +46,7 @@ namespace NyttMOA
                 if (AdminNotifications != null)
                 {
                     notifications = new List<string>();
-                    AdminNotifications(user, null);
+                    AdminNotifications();
                 }
             }
             else if (user is Student)
@@ -54,7 +54,7 @@ namespace NyttMOA
                 if (StudentNotifications != null)
                 {
                     notifications = new List<string>();
-                    StudentNotifications(user, null);
+                    StudentNotifications();
                 }
             }
             else if (user is Teacher)
@@ -62,10 +62,15 @@ namespace NyttMOA
                 if (TeacherNotifications != null)
                 {
                     notifications = new List<string>();
-                    TeacherNotifications(user, null);
+                    TeacherNotifications();
                 }
             }
             return notifications;
+        }
+
+        public static void AddNotification(string msg)
+        {
+            notifications.Add(msg);
         }
     }
 }
