@@ -101,6 +101,108 @@ namespace NyttMOA
         }
 
 
+        public static void AdminManageAdmins()
+        {
+            void DisplayAdmins()
+            {
+                Console.Clear();
+                foreach (var admin in Program.register.UserList.OfType<Admin>())
+                {
+                    if (admin == Program.user)
+                    {
+                        Console.WriteLine("(YOU) Name: {0} Username: {1} Password: {2}",
+                        admin.Name, admin.UserName, admin.Password);
+                    }
+                    Console.WriteLine("Name: {0} Username: {1} Password: {2}",
+                        admin.Name, admin.UserName, admin.Password);
+                }
+                Pause();
+            }
+
+            void AddAdmin()
+            {
+                Console.Clear();
+                if (Program.register.AddUser(new Admin(
+                    CheckTextInput("Enter name:"),
+                    CheckTextInput("Enter username:"),
+                    CheckTextInput("Enter password:"))))
+                {
+                    Console.WriteLine("Admin added!");
+                }
+                else
+                {
+                    Console.WriteLine("Name or username is not available!");
+                }
+                Pause();
+            }
+
+            void RemoveAdmin()
+            {
+                Console.Clear();
+                if (Program.register.UserList.OfType<Admin>().Count() == 1)
+                {
+                    Console.WriteLine("No admins to remove, you can't remove yourself!");
+                    Pause();
+                    return;
+                }
+                int adminIndex;
+                IEnumerable<Admin> sample = Program.register.UserList.OfType<Admin>();
+
+                foreach (var admin in sample)
+                {
+                    if (admin == Program.user)
+                    {
+                        adminIndex = sample.ToList().IndexOf(admin);
+                        Console.WriteLine("[{0}] Name: {1} Username: {2} Password: {3}",
+                            adminIndex, admin.Name, admin.UserName, admin.Password);
+                    }
+                }
+
+                Console.WriteLine("Remove admin by number: ");
+                Program.register.RemoveUser(sample.ToList()[
+                    CheckIntInput(0, sample.Count() - 1)]);
+                Console.WriteLine("Admin removed!");
+                Pause();
+            }
+
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("[1] Display admins");
+                Console.WriteLine("[2] Add admin");
+                Console.WriteLine("[3] Remove admin");
+                Console.WriteLine("[4] Go back");
+
+                switch (Console.ReadKey().Key)
+                {
+                    case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
+                        DisplayAdmins();
+                        break;
+
+                    case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
+                        AddAdmin();
+                        break;
+
+                    case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
+                        RemoveAdmin();
+                        break;
+
+                    case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
+                        return;
+
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Invalid selection, try again");
+                        Pause();
+                        break;
+                }
+            }
+        }
+
         public static void AdminManageStudents()
         {
             void DisplayStudents()
@@ -385,6 +487,50 @@ namespace NyttMOA
                 Pause();
             }
 
+            void ForceRemoveStudentFromCourse()
+            {
+                Console.Clear();
+                if (Program.register.CourseList.Count() == 0)
+                {
+                    Console.WriteLine("No courses in the system!");
+                    Pause();
+                    return;
+                }
+                Console.WriteLine("Select course: ");
+                IEnumerable<Course> courses = Program.register.CourseList;
+                foreach (var course in courses)
+                {
+                    Console.WriteLine("[{0}] : {1}",
+                        courses.ToList().IndexOf(course),
+                        course.Name);
+                }
+                var selectedCourse = courses.ToArray()[
+                    CheckIntInput(0, courses.Count() - 1)];
+
+                Console.Clear();
+                if (selectedCourse.Students.Count() == 0)
+                {
+                    Console.WriteLine("No students in selected course!");
+                    Pause();
+                    return;
+                }
+                Console.WriteLine("Select student: ");
+                IEnumerable<StudentData> students = selectedCourse.Students;
+                foreach (var studentData in students)
+                {
+                    Console.WriteLine("[{0}] : {1}",
+                        students.ToList().IndexOf(studentData),
+                        studentData.Student.Name);
+                }
+                var selectedStudent = students.ToArray()[
+                    CheckIntInput(0, students.Count() - 1)];
+                
+                selectedCourse.RemoveStudent(selectedStudent);
+                Console.WriteLine("Student removed!");
+
+                Pause();
+            }
+
             while (true)
             {
                 Console.Clear();
@@ -392,7 +538,8 @@ namespace NyttMOA
                 Console.WriteLine("[2] Add course");
                 Console.WriteLine("[3] Remove course");
                 Console.WriteLine("[4] Display students in course");
-                Console.WriteLine("[5] Go back");
+                Console.WriteLine("[5] Force remove student from course");
+                Console.WriteLine("[6] Go back");
 
                 switch (Console.ReadKey().Key)
                 {
@@ -414,10 +561,15 @@ namespace NyttMOA
                     case ConsoleKey.D4:
                     case ConsoleKey.NumPad4:
                         DisplayStudentsInCourses();
-                        return;
+                        break;
 
                     case ConsoleKey.D5:
                     case ConsoleKey.NumPad5:
+                        ForceRemoveStudentFromCourse();
+                        return;
+
+                    case ConsoleKey.D6:
+                    case ConsoleKey.NumPad6:
                         return;
 
                     default:
@@ -843,9 +995,9 @@ namespace NyttMOA
         public static void TeacherAddStudentToCourse()
         {
             Console.Clear();
-            if (Program.register.CourseList.Count() == 0)
+            if (Program.register.CourseList.Where(a => a.Teacher == Program.user).Count() == 0)
             {
-                Console.WriteLine("No courses in the system!");
+                Console.WriteLine("You are not assigned to any courses!");
                 Pause();
                 return;
             }
@@ -885,7 +1037,7 @@ namespace NyttMOA
             }
             else
             {
-                Console.WriteLine("Student already participating in course!");
+                Console.WriteLine("Student already participating in selected course!");
             }
             
             Pause();
@@ -894,7 +1046,7 @@ namespace NyttMOA
         public static void TeacherRemoveStudentFromCourse()
         {
             Console.Clear();
-            if (Program.register.CourseList.Count() == 0)
+            if (Program.register.CourseList.Where(a => a.Teacher == Program.user).Count() == 0)
             {
                 Console.WriteLine("No courses in the system!");
                 Pause();
