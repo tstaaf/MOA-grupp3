@@ -18,8 +18,6 @@ namespace NyttMOA
         public string UserName { get; set; }
         public string Password { get; set; }
 
-        
-
         public User(string name, string username, string password)
         {
             Name = name;
@@ -38,16 +36,10 @@ namespace NyttMOA
         }
 
         public abstract void showMenu();
-
-        public abstract void GetNotifications();
     }
     
     public class Admin : User
     {
-        public delegate void AdminNotificationEventHandler(object sender, EventArgs e);
-
-        event AdminNotificationEventHandler AdminNotifications;
-
         public Admin(string name, string username, string password) : base(name, username, password)
         {
 
@@ -71,6 +63,7 @@ namespace NyttMOA
                 Console.WriteLine("[3] Manage courses");
                 Console.WriteLine("[4] Manage classrooms");
                 Console.WriteLine("[5] Manage schedule");
+                Console.WriteLine("[6] Notifications ({0})", Program.GetNotifications().Count());
                 Console.WriteLine("[0] Log Out");
 
                 var choice = Console.ReadKey();
@@ -102,6 +95,10 @@ namespace NyttMOA
                         Menus.AdminManageSchedule();
                         break;
 
+                    case ConsoleKey.D6:
+                    case ConsoleKey.NumPad6:
+                        Menus.ShowNotifications();
+                        break;
 
                     case ConsoleKey.D0:
                     case ConsoleKey.NumPad0:
@@ -117,19 +114,10 @@ namespace NyttMOA
                 }
             }
         }
-
-        public override void GetNotifications()
-        {
-            AdminNotifications(this, null);
-        }
     }
 
     public class Student : User
     {
-        public delegate void StudentNotificationEventHandler(object sender, EventArgs e);
-
-        event StudentNotificationEventHandler AdminNotifications;
-
         public Student(string name, string username, string password) : base(name, username, password)
         {
             
@@ -151,7 +139,8 @@ namespace NyttMOA
                 Console.WriteLine("[1] Schedule");
                 Console.WriteLine("[2] Courses");
                 Console.WriteLine("[3] Classmates");
-                Console.WriteLine("[4] Log Out");
+                Console.WriteLine("[4] Notifications ({0})", Program.GetNotifications().Count());
+                Console.WriteLine("[0] Log Out");
 
                 var choice = Console.ReadKey();
 
@@ -174,6 +163,11 @@ namespace NyttMOA
 
                     case ConsoleKey.D4:
                     case ConsoleKey.NumPad4:
+                        Menus.ShowNotifications();
+                        break;
+
+                    case ConsoleKey.D0:
+                    case ConsoleKey.NumPad0:
                         Program.LogIn();
                         break;
 
@@ -185,19 +179,10 @@ namespace NyttMOA
                 }
             }
         }
-
-        public override void GetNotifications()
-        {
-            StudentNotifications(this, null);
-        }
     }
 
     public class Teacher : User
     {
-        public delegate void TeacherNotificationEventHandler(object sender, EventArgs e);
-
-        event TeacherNotificationEventHandler AdminNotifications;
-
         public Teacher(string name, string username, string password) : base(name, username, password)
         {
 
@@ -221,7 +206,8 @@ namespace NyttMOA
                 Console.WriteLine("[3] Remove student from course");
                 Console.WriteLine("[4] Grades");
                 Console.WriteLine("[5] Schedule");
-                Console.WriteLine("[6] Log Out");
+                Console.WriteLine("[6] Notifications ({0})", Program.GetNotifications().Count());
+                Console.WriteLine("[0] Log Out");
 
                 var choice = Console.ReadKey();
 
@@ -254,7 +240,11 @@ namespace NyttMOA
 
                     case ConsoleKey.D6:
                     case ConsoleKey.NumPad6:
-                        Console.Clear();
+                        Menus.ShowNotifications();
+                        break;
+
+                    case ConsoleKey.D0:
+                    case ConsoleKey.NumPad0:
                         Program.LogIn();
                         break;
 
@@ -265,11 +255,6 @@ namespace NyttMOA
                         break;
                 }
             }
-        }
-
-        public override void GetNotifications()
-        {
-            TeacherNotifications(this, null);
         }
     }
 }

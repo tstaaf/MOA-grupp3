@@ -16,6 +16,8 @@ namespace NyttMOA
         public Teacher Teacher { get; set; }
 
 
+
+
         public List<StudentData> Students { get; set; } = new List<StudentData>();
 
         public Course(string name, DateTime startdate, DateTime enddate, int hours, int maxstudents, Teacher teacher)
@@ -75,6 +77,11 @@ namespace NyttMOA
                 " End date: " + EndDate.ToShortDateString() +
                 " Max students: " + MaxStudents.ToString() +
                 " Teacher: " + Teacher.Name;
+        }
+
+        void OnAdminNotifications()
+        {
+
         }
     }
 }

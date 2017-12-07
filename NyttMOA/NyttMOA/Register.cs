@@ -10,11 +10,14 @@ namespace NyttMOA
 {
     public class Register
     {
-        public string savePath = Directory.GetCurrentDirectory() + @"\XML Data";
+        public string savePath;
 
         public Register()
         {
             userList.Add(new Admin("Admin", "admin", "admin"));
+            savePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            Directory.CreateDirectory(savePath + @"\MOAGrupp3\XML Data");
+            savePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\MOAGrupp3\XML Data";
         }
 
         List<User> userList = new List<User>();
@@ -167,6 +170,7 @@ namespace NyttMOA
 
         public void SaveClassroomListToXml()
         {
+            Directory.CreateDirectory(savePath);
             XmlSerializer serializer = new XmlSerializer(typeof(List<Classroom>));
             TextWriter filestream = new StreamWriter(savePath + @"\classroomlist.xml");
             serializer.Serialize(filestream, ClassroomList);

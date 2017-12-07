@@ -90,6 +90,15 @@ namespace NyttMOA
             }
         }
 
+        public static void ShowNotifications()
+        {
+            Console.Clear();
+            foreach (string i in Program.GetNotifications())
+            {
+                Console.WriteLine(i);
+            }
+        }
+
 
         public static void AdminManageStudents()
         {
@@ -582,13 +591,13 @@ namespace NyttMOA
                 Console.Clear();
                 if (Program.register.CourseList.Count() == 0)
                 {
-                    Console.WriteLine("No courses!");
+                    Console.WriteLine("No courses in the system!");
                     Pause();
                     return;
                 }
                 if (Program.register.ClassroomList.Count() == 0)
                 {
-                    Console.WriteLine("No classrooms!");
+                    Console.WriteLine("No classrooms in the system!");
                     Pause();
                     return;
                 }
@@ -833,6 +842,19 @@ namespace NyttMOA
         public static void TeacherAddStudentToCourse()
         {
             Console.Clear();
+            if (Program.register.UserList.OfType<Course>().Count() == 0)
+            {
+                Console.WriteLine("No courses in the system!");
+                Pause();
+                return;
+            }
+            if (Program.register.UserList.OfType<Student>().Count() == 0)
+            {
+                Console.WriteLine("No students in the system!");
+                Pause();
+                return;
+            }
+            Console.Clear();
             Console.WriteLine("Select course: ");
             IEnumerable<Course> courses = Program.register.CourseList;
             foreach (var course in courses)
@@ -871,6 +893,12 @@ namespace NyttMOA
         public static void TeacherRemoveStudentFromCourse()
         {
             Console.Clear();
+            if (Program.register.CourseList.Count() == 0)
+            {
+                Console.WriteLine("No courses in the system!");
+                Pause();
+                return;
+            }
             Console.WriteLine("Select course: ");
             IEnumerable<Course> courses = Program.register.CourseList;
             foreach (var course in courses)
@@ -883,6 +911,12 @@ namespace NyttMOA
                 CheckIntInput(0, courses.Count() - 1)];
 
             Console.Clear();
+            if (selectedCourse.Students.Count() == 0)
+            {
+                Console.WriteLine("No students in selected course!");
+                Pause();
+                return;
+            }
             Console.WriteLine("Select student: ");
             IEnumerable<StudentData> students = selectedCourse.Students;
             foreach (var studentData in students)
@@ -971,13 +1005,13 @@ namespace NyttMOA
                 Console.Clear();
                 if (Program.register.CourseList.Count() == 0)
                 {
-                    Console.WriteLine("No courses!");
+                    Console.WriteLine("No courses in the system!");
                     Pause();
                     return;
                 }
                 if (Program.register.ClassroomList.Count() == 0)
                 {
-                    Console.WriteLine("No classrooms!");
+                    Console.WriteLine("No classrooms in the system!");
                     Pause();
                     return;
                 }
@@ -1091,6 +1125,12 @@ namespace NyttMOA
                 void ByName()
                 {
                     Console.Clear();
+                    if (Program.register.CourseList.Count() == 0)
+                    {
+                        Console.WriteLine("No courses in the system!");
+                        Pause();
+                        return;
+                    }
                     Console.WriteLine("Select course: ");
                     IEnumerable<Course> courses = Program.register.CourseList;
                     foreach (var course in courses)
@@ -1113,6 +1153,12 @@ namespace NyttMOA
                 void UngradedFirst()
                 {
                     Console.Clear();
+                    if (Program.register.CourseList.Count() == 0)
+                    {
+                        Console.WriteLine("No courses in the system!");
+                        Pause();
+                        return;
+                    }
                     Console.WriteLine("Select course: ");
                     IEnumerable<Course> courses = Program.register.CourseList;
                     foreach (var course in courses)
@@ -1177,6 +1223,12 @@ namespace NyttMOA
             void ChangeGrades()
             {
                 Console.Clear();
+                if (Program.register.CourseList.Count() == 0)
+                {
+                    Console.WriteLine("No courses in the system!");
+                    Pause();
+                    return;
+                }
                 Console.WriteLine("Select course: ");
                 IEnumerable<Course> courses = Program.register.CourseList;
                 foreach (var course in courses)
@@ -1189,6 +1241,12 @@ namespace NyttMOA
                     CheckIntInput(0, courses.Count() - 1)];
 
                 Console.Clear();
+                if (selectedCourse.Students.Count() == 0)
+                {
+                    Console.WriteLine("No students in the selected course!");
+                    Pause();
+                    return;
+                }
                 Console.WriteLine("Select student: ");
                 IEnumerable<StudentData> students = selectedCourse.Students;
                 foreach (var studentData in students)
