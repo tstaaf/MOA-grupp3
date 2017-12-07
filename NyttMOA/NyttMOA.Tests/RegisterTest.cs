@@ -143,43 +143,101 @@ namespace NyttMOA.Tests
         [Test]
         public void LoadUserFromXmlGetsAllUsersSavedInXml()
         {
-            
+            var sut = new Register();
+
+            sut.AddUser(new Student(
+                "Name",
+                "Halloj",
+                "1337"));
+            sut.SaveUserListToXml();
+            sut.LoadUserListFromXml();
+
+            Assert.IsNotNull(sut.UserList);
         }
 
         [Test]
         public void SaveCourseListToXmlSavesAllSavedCoursesToXml()
         {
+            var sut = new Register();
 
+            sut.AddCourse(new Course(
+                "Eaaasy",
+                new DateTime(),
+                new DateTime(),
+                56,
+                30,
+                new Teacher("Name", "Username", "Password")));
+
+            sut.SaveCourseListToXml();
+
+            Assert.True(File.Exists(sut.savePath + @"\courseList.xml"));
         }
 
         [Test]
         public void LoadCourseListFromXmlGetsAllCoursesSavedInXml()
         {
+            var sut = new Register();
 
+            sut.AddCourse(new Course(
+                "",
+                new DateTime(),
+                new DateTime(),
+                3,
+                40,
+                new Teacher("Thename", "Usaaname", "Passord")));
+            sut.SaveCourseListToXml();
+            sut.LoadCourseListFromXml();
+
+            Assert.IsNotNull(sut.CourseList);
         }
 
         [Test]
         public void SaveClassroomListToXmlSavesAllSavedClassroomsToXml()
         {
+            var sut = new Register();
 
+            sut.AddClassroom(new Classroom(
+                "Collegium1",
+                70));
+
+            sut.SaveClassroomListToXml();
+
+            Assert.True(File.Exists(sut.savePath + @"\courseList.xml"));
         }
 
         [Test]
         public void LoadClassrooomListToXmlGetsAllClassroomsSavedToXml()
         {
+            var sut = new Register();
 
+            sut.AddClassroom(new Classroom(
+                "Collegium6",
+                45));
+            sut.SaveClassroomListToXml();
+            sut.LoadClassroomListFromXml();
+
+            Assert.IsNotNull(sut.ClassroomList);
         }
 
         [Test]
         public void SaveScheduleToXmlSavesAllSavedSchedulesToXml()
         {
+            var sut = new Register();
 
+            sut.SaveScheduleToXml();
+            Assert.True(File.Exists(sut.savePath + @"\schedules.xml"));
         }
 
         [Test]
         public void LoadScheduleFromXmlGetsAllSavedSchedulesSavedToXml()
         {
+            var sut = new Register();
+            var schedlule = new ScheduleManager();
 
+            sut.SaveScheduleToXml();
+            sut.LoadScheduleFromXml();
+
+            Assert.IsNotNull(schedlule.mainSchedule);
         }
     }
 }
