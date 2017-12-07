@@ -19,6 +19,8 @@ namespace NyttMOA
 
         public Course(string name, DateTime startdate, DateTime enddate, int hours, int maxstudents, Teacher teacher)
         {
+            Program.AdminNotifications += OnAdminNotifications;
+            Program.TeacherNotifications += OnTeacherNotifications;
             Name = name;
             StartDate = startdate;
             EndDate = enddate;
@@ -29,7 +31,8 @@ namespace NyttMOA
 
         public Course()
         {
-            
+            Program.AdminNotifications += OnAdminNotifications;
+            Program.TeacherNotifications += OnTeacherNotifications;
         }
 
         public bool AddStudent(Student student)
@@ -81,28 +84,40 @@ namespace NyttMOA
                 " Teacher: " + Teacher.Name;
         }
 
-        void OnAdminNotifications(object sender)
+        void OnAdminNotifications()
         {
             //Not all hours scheduled
             if (CalculateScheduledHours() < Hours)
             {
                 Program.AddNotification("Course " + Name + ": Only " + CalculateScheduledHours() + " hours / " + Hours + " hours scheduled!");
             }
+        }
 
-            //Ungraded when course is finished
-            if (DateTime.Now >= EndDate)
+        void OnTeacherNotifications()
+        {
+            if (Teacher == Program.user)
             {
-                int ungraded = 0;
-                foreach (StudentData studentData in Students)
+                //Not all hours scheduled
+                if (CalculateScheduledHours() < Hours)
                 {
-                    if (studentData.Grade == "-")
-                    {
-                        ungraded++;
-                    }
+                    Program.AddNotification("Course " + Name + ": Only " + CalculateScheduledHours() + " hours / " + Hours + " hours scheduled!");
                 }
-                if (ungraded > 0)
+
+                //Ungraded when course is finished
+                if (DateTime.Now >= EndDate)
                 {
-                    Program.AddNotification("Course " + Name + ": Is finished with " + ungraded + " students ungraded");
+                    int ungraded = 0;
+                    foreach (StudentData studentData in Students)
+                    {
+                        if (studentData.Grade == "-")
+                        {
+                            ungraded++;
+                        }
+                    }
+                    if (ungraded > 0)
+                    {
+                        Program.AddNotification("Course " + Name + ": Is finished with " + ungraded + " students ungraded");
+                    }
                 }
             }
         }

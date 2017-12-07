@@ -97,6 +97,7 @@ namespace NyttMOA
             {
                 Console.WriteLine(i);
             }
+            Pause();
         }
 
 
@@ -842,7 +843,7 @@ namespace NyttMOA
         public static void TeacherAddStudentToCourse()
         {
             Console.Clear();
-            if (Program.register.UserList.OfType<Course>().Count() == 0)
+            if (Program.register.CourseList.Count() == 0)
             {
                 Console.WriteLine("No courses in the system!");
                 Pause();
