@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using NyttMOA;
+using System.IO;
 
 namespace NyttMOA.Tests
 {
@@ -115,7 +116,16 @@ namespace NyttMOA.Tests
         [Test]
         public void SaveUserListToXmlSavesAllSavedUsersToXml()
         {
-            
+            var sut = new Register();
+
+            sut.AddUser(new Student(
+                "Namn",
+                "Hej",
+                "Unbreakable"));
+
+            sut.SaveUserListToXml();
+
+            Assert.True(File.Exists(sut.savePath + @"\userlist.xml"));
         }
 
         [Test]
