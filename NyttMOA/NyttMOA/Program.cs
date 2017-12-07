@@ -46,7 +46,7 @@ namespace NyttMOA
                 if (AdminNotifications != null)
                 {
                     notifications = new List<string>();
-                    AdminNotifications(user, null);
+                    AdminNotifications();
                 }
             }
             else if (user is Student)
@@ -54,7 +54,7 @@ namespace NyttMOA
                 if (StudentNotifications != null)
                 {
                     notifications = new List<string>();
-                    StudentNotifications(user, null);
+                    StudentNotifications();
                 }
             }
             else if (user is Teacher)
@@ -62,7 +62,7 @@ namespace NyttMOA
                 if (TeacherNotifications != null)
                 {
                     notifications = new List<string>();
-                    TeacherNotifications(user, null);
+                    TeacherNotifications();
                 }
             }
             return notifications;
