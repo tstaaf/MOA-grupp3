@@ -118,7 +118,7 @@ namespace NyttMOA
             }
             if (lesson.StartTime > lesson.Course.EndDate || lesson.EndTime < lesson.Course.StartDate)
             {
-                return false;
+               return false;
             }
             return lesson.Course.Students.Count() <= lesson.Classroom.Seats;
         }
