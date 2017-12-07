@@ -118,6 +118,7 @@ namespace NyttMOA
             TextWriter filestream = new StreamWriter(savePath + @"\userlist.xml");
             serializer.Serialize(filestream, UserList);
             filestream.Close();
+            LoadUserListFromXml();
         }
 
         public void LoadUserListFromXml()
@@ -135,6 +136,7 @@ namespace NyttMOA
             TextWriter filestream = new StreamWriter(savePath + @"\courseList.xml");
             serializer.Serialize(filestream, courseList);
             filestream.Close();
+            LoadCourseListFromXml();
         }
 
         public void LoadCourseListFromXml()
@@ -177,6 +179,7 @@ namespace NyttMOA
             TextWriter filestream = new StreamWriter(savePath + @"\classroomlist.xml");
             serializer.Serialize(filestream, ClassroomList);
             filestream.Close();
+            LoadClassroomListFromXml();
         }
 
         public void LoadClassroomListFromXml()
@@ -194,6 +197,7 @@ namespace NyttMOA
             TextWriter filestream = new StreamWriter(savePath + @"\schedules.xml");
             serializer.Serialize(filestream, schedule.mainSchedule.Lessons);
             filestream.Close();
+            LoadScheduleFromXml();
         }
 
         public void LoadScheduleFromXml()
