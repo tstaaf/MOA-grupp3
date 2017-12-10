@@ -123,8 +123,6 @@ namespace NyttMOA.Tests
                 "Hej",
                 "Unbreakable"));
 
-            sut.SaveUserListToXml();
-
             Assert.True(File.Exists(sut.savePath + @"\userlist.xml"));
         }
 
@@ -149,8 +147,6 @@ namespace NyttMOA.Tests
                 "Name",
                 "Halloj",
                 "1337"));
-            sut.SaveUserListToXml();
-            sut.LoadUserListFromXml();
 
             Assert.IsNotNull(sut.UserList);
         }
@@ -168,8 +164,6 @@ namespace NyttMOA.Tests
                 30,
                 new Teacher("Name", "Username", "Password")));
 
-            sut.SaveCourseListToXml();
-
             Assert.True(File.Exists(sut.savePath + @"\courseList.xml"));
         }
 
@@ -185,8 +179,6 @@ namespace NyttMOA.Tests
                 3,
                 40,
                 new Teacher("Thename", "Usaaname", "Passord")));
-            sut.SaveCourseListToXml();
-            sut.LoadCourseListFromXml();
 
             Assert.IsNotNull(sut.CourseList);
         }
@@ -200,8 +192,6 @@ namespace NyttMOA.Tests
                 "Collegium1",
                 70));
 
-            sut.SaveClassroomListToXml();
-
             Assert.True(File.Exists(sut.savePath + @"\courseList.xml"));
         }
 
@@ -213,8 +203,6 @@ namespace NyttMOA.Tests
             sut.AddClassroom(new Classroom(
                 "Collegium6",
                 45));
-            sut.SaveClassroomListToXml();
-            sut.LoadClassroomListFromXml();
 
             Assert.IsNotNull(sut.ClassroomList);
         }
@@ -223,8 +211,7 @@ namespace NyttMOA.Tests
         public void SaveScheduleToXmlSavesAllSavedSchedulesToXml()
         {
             var sut = new Register();
-
-            sut.SaveScheduleToXml();
+            
             Assert.True(File.Exists(sut.savePath + @"\schedules.xml"));
         }
 
@@ -233,9 +220,7 @@ namespace NyttMOA.Tests
         {
             var sut = new Register();
             var schedlule = new ScheduleManager();
-
-            sut.SaveScheduleToXml();
-            sut.LoadScheduleFromXml();
+            
 
             Assert.IsNotNull(schedlule.mainSchedule);
         }
@@ -253,6 +238,7 @@ namespace NyttMOA.Tests
                 new DateTime(2010,07,09)));
 
             Assert.AreEqual(1, schedlue.Lessons.Count);
+            //Assert.AreEqual("hej", schedlue.ToString());
         }
 
         [Test]

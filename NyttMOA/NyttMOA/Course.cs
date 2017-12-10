@@ -40,7 +40,7 @@ namespace NyttMOA
             if (!Students.Any(a => a.Student == student) && Students.Count() < MaxStudents)
             {
                 Students.Add(new StudentData(student));
-                Program.register.SaveCourseListToXml();
+                Program.register.SaveEverything();
                 return true;
             }
             return false;
@@ -49,7 +49,7 @@ namespace NyttMOA
         public void RemoveStudent(StudentData student)
         {
             Students.Remove(student);
-            Program.register.SaveCourseListToXml();
+            Program.register.SaveEverything();
         }
 
         public void ReplaceStudents(IEnumerable<StudentData> newStudents)

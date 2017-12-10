@@ -26,10 +26,7 @@ namespace NyttMOA
         static void Main()
         {
             Directory.CreateDirectory(register.savePath);
-            register.LoadUserListFromXml();
-            register.LoadClassroomListFromXml();
-            register.LoadCourseListFromXml();
-            register.LoadScheduleFromXml();
+            register.LoadEverything();
             if (register.UserList.OfType<Admin>().Count() == 0)
             {
                 register.AddUser(new Admin("Admin", "admin", "admin"));

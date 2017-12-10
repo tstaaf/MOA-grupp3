@@ -32,7 +32,7 @@ namespace NyttMOA
             if (!userList.Any(a => a.Name == user.Name || a.UserName == user.UserName))
             {
                 userList.Add(user);
-                SaveUserListToXml();
+                SaveEverything();
                 return true;
             }
             return false;
@@ -43,7 +43,7 @@ namespace NyttMOA
             if (courseList.All(a => a.Name != course.Name))
             {
                 courseList.Add(course);
-                SaveCourseListToXml();
+                SaveEverything();
                 return true;
             }
             return false;
@@ -54,7 +54,7 @@ namespace NyttMOA
             if (classroomList.All(a => a.Name != classroom.Name))
             {
                 classroomList.Add(classroom);
-                SaveClassroomListToXml();
+                SaveEverything();
                 return true;
             }
             return false;
@@ -64,7 +64,7 @@ namespace NyttMOA
         {
             if (schedule.AddLesson(lesson))
             {
-                SaveScheduleToXml();
+                SaveEverything();
                 return true;
             }
             return false;
@@ -73,7 +73,6 @@ namespace NyttMOA
         public void RemoveUser(User user)
         {
             userList.Remove(user);
-            SaveUserListToXml();
             if (user is Teacher)
             {
                 var sample = courseList.Where(a => a.Teacher == user).ToList();
@@ -82,46 +81,82 @@ namespace NyttMOA
                     RemoveCourse(sample[course]);
                 }
             }
+            else if (user is Student)
+            {
+                foreach (Course course in courseList)
+                {
+                    for (int studentData = course.Students.Count() - 1; studentData >= 0; studentData--)
+                    {
+                        if (course.Students[studentData].Student == user)
+                        {
+                            course.RemoveStudent(course.Students[studentData]);
+                        }
+                    }
+                }
+            }
+            SaveEverything();
         }
 
         public void RemoveClassroom(Classroom classroom)
         {
             classroomList.Remove(classroom);
-            SaveClassroomListToXml();
 
             var sample = schedule.Lessons.Where(a => a.Classroom == classroom).ToList();
             for (int lesson = sample.Count() - 1; lesson >= 0; lesson--)
             {
                 schedule.RemoveLesson(sample[lesson]);
             }
+            SaveEverything();
         }
 
         public void RemoveCourse(Course course)
         {
-            course.Disconnect();
+            for (int lesson = schedule.Lessons.Count() - 1; lesson >= 0; lesson--)
+            {
+                if (schedule.Lessons.ToList()[lesson].Course == course)
+                {
+                    schedule.RemoveLesson(schedule.Lessons.ToList()[lesson]);
+                }
+            }
             courseList.Remove(course);
-            SaveCourseListToXml();
+            SaveEverything();
         }
 
         public void RemoveLesson(Lesson lesson)
         {
             schedule.RemoveLesson(lesson);
-            SaveScheduleToXml();
+            SaveEverything();
         }
 
 
         public ScheduleManager schedule = new ScheduleManager();
 
-        public void SaveUserListToXml()
+        public void SaveEverything()
+        {
+            SaveUserListToXml();
+            SaveCourseListToXml();
+            SaveClassroomListToXml();
+            SaveScheduleToXml();
+            LoadEverything();
+        }
+
+        public void LoadEverything()
+        {
+            LoadUserListFromXml();
+            LoadClassroomListFromXml();
+            LoadCourseListFromXml();
+            LoadScheduleFromXml();
+        }
+
+        void SaveUserListToXml()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<User>));
             TextWriter filestream = new StreamWriter(savePath + @"\userlist.xml");
             serializer.Serialize(filestream, UserList);
             filestream.Close();
-            LoadUserListFromXml();
         }
 
-        public void LoadUserListFromXml()
+        void LoadUserListFromXml()
         {
             if (!File.Exists(savePath + @"\userlist.xml"))
                 return;
@@ -130,16 +165,15 @@ namespace NyttMOA
                 userList = (List<User>)deSerializer.Deserialize(stream);
         }
 
-        public void SaveCourseListToXml()
+        void SaveCourseListToXml()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<Course>));
             TextWriter filestream = new StreamWriter(savePath + @"\courseList.xml");
             serializer.Serialize(filestream, courseList);
             filestream.Close();
-            LoadCourseListFromXml();
         }
 
-        public void LoadCourseListFromXml()
+        void LoadCourseListFromXml()
         {
             if (!File.Exists(savePath + @"\courseList.xml"))
                 return;
@@ -172,17 +206,16 @@ namespace NyttMOA
             }
         }
 
-        public void SaveClassroomListToXml()
+        void SaveClassroomListToXml()
         {
             Directory.CreateDirectory(savePath);
             XmlSerializer serializer = new XmlSerializer(typeof(List<Classroom>));
             TextWriter filestream = new StreamWriter(savePath + @"\classroomlist.xml");
             serializer.Serialize(filestream, ClassroomList);
             filestream.Close();
-            LoadClassroomListFromXml();
         }
 
-        public void LoadClassroomListFromXml()
+        void LoadClassroomListFromXml()
         {
             if (!File.Exists(savePath + @"\classroomlist.xml"))
                 return;
@@ -191,16 +224,15 @@ namespace NyttMOA
                 classroomList = (List<Classroom>)deSerializer.Deserialize(stream);
         }
 
-        public void SaveScheduleToXml()
+        void SaveScheduleToXml()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<Lesson>));
             TextWriter filestream = new StreamWriter(savePath + @"\schedules.xml");
             serializer.Serialize(filestream, schedule.mainSchedule.Lessons);
             filestream.Close();
-            LoadScheduleFromXml();
         }
 
-        public void LoadScheduleFromXml()
+        void LoadScheduleFromXml()
         {
             if (!File.Exists(savePath + @"\schedules.xml"))
                 return;
