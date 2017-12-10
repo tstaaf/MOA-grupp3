@@ -248,7 +248,7 @@ namespace NyttMOA.Tests
 
             sut.AddLesson(new Lesson(
                 new Classroom("Biggestclassroomever", 400),
-                new Course("Swedish", new DateTime(2009,11,11), new DateTime(2010,08,20), 4, 400, new Teacher("Name", "Username", "Passord")),
+                new Course("Swedish", new DateTime(2009,11,11), new DateTime(2010,08,20), 4, 50, new Teacher("Name", "Username", "Passord")),
                 new DateTime(2010,07,08),
                 new DateTime(2010,07,09)));
 
